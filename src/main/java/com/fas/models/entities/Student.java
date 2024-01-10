@@ -3,6 +3,7 @@ package com.fas.models.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,28 +27,28 @@ public class Student {
     @Email(message = "Email must be valid")
     private String email;
 
-    //@NotBlank(message = "Username must not be blank")
+    @NotBlank(message = "Username must not be blank")
     private String username;
 
-    //@NotBlank(message = "First name must not be blank")
+    @NotBlank(message = "First name must not be blank")
     private String firstName;
 
     private String middleName;
 
-    //@NotBlank(message = "Last name must not be blank")
+    @NotBlank(message = "Last name must not be blank")
     private String lastName;
 
-    //@URL(message = "Profile image must be valid")
+    @URL(message = "Profile image must be valid")
     private String profileImage;
 
-    //@NotBlank(message = "Phone number must not be blank")
-    //@Size(min = 10, max = 10, message = "Phone number must be 10 digits")
+    @NotBlank(message = "Phone number must not be blank")
+    @Size(min = 10, max = 10, message = "Phone number must be 10 digits")
     private String phone;
 
-    //@NotBlank(message = "Address must not be blank")
+    @NotBlank(message = "Address must not be blank")
     private String address;
 
-    //@NotBlank(message = "Birth day must not be blank")
+    @NotNull(message = "Birth day must not be null")
     private Date birthDay;
 
     @ManyToOne
@@ -69,11 +70,17 @@ public class Student {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Student(UUID id, String email, String username, LocalDateTime createAt, LocalDateTime updateAt) {
-        this.id = id;
+
+    public Student(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
         this.email = email;
         this.username = username;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.profileImage = profileImage;
+        this.phone = phone;
+        this.address = address;
+        this.birthDay = birthDay;
     }
+
 }
