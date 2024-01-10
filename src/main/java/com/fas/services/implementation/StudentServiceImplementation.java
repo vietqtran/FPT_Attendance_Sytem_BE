@@ -63,7 +63,14 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public void deleteStudent(UUID studentId) {
+    public StudentResponseDTO deleteStudent(UUID studentId) throws Exception {
+        Student oldStudent = findStudentById(studentId);
 
+        oldStudent.setUpdateAt(LocalDateTime.now());
+        oldStudent.setStatus(false);
+        Student updateStudent = studentRepository.save(oldStudent);
+
+        StudentResponseDTO studentResponseDTO = new StudentResponseDTO(updateStudent);
+        return studentResponseDTO ;
     }
 }

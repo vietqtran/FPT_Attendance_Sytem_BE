@@ -17,5 +17,5 @@ public interface StudentService {
 
     public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws Exception;
 
-    public void deleteStudent(UUID studentId);
+    public StudentResponseDTO deleteStudent(UUID studentId) throws Exception;
 }

@@ -20,9 +20,13 @@ public class StudentController {
         return studentService.createStudent(student);
     }
 
-    @PutMapping("/student/{studentId}")
+    @PutMapping("/student/update/{studentId}")
     private StudentResponseDTO updateStudent(@Valid @RequestBody StudentRequestDTO student, @PathVariable UUID studentId) throws Exception {
         return studentService.updateStudent(studentId, student);
     }
 
+    @PutMapping("/student/delete/{studentId}")
+    private StudentResponseDTO deleteStudent(@PathVariable UUID studentId) throws Exception {
+        return studentService.deleteStudent(studentId);
+    }
 }
