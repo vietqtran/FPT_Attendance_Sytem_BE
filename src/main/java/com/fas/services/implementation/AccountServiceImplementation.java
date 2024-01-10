@@ -17,9 +17,10 @@ public class AccountServiceImplementation implements AccountService {
     @Override
     public AccountResponseDto createAccount(AccountRequestDto accountRequestDto) {
         Account account = accountRequestDto.getAccount();
-        System.out.println(account);
         account = accountRepository.save(account);
+
         AccountResponseDto accountResponseDto = new AccountResponseDto(account);
+
         return accountResponseDto;
     }
 }
