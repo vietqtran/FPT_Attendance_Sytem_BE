@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -25,28 +26,28 @@ public class Student {
     @Email(message = "Email must be valid")
     private String email;
 
-    @NotBlank(message = "Username must not be blank")
+    //@NotBlank(message = "Username must not be blank")
     private String username;
 
-    @NotBlank(message = "First name must not be blank")
+    //@NotBlank(message = "First name must not be blank")
     private String firstName;
 
     private String middleName;
 
-    @NotBlank(message = "Last name must not be blank")
+    //@NotBlank(message = "Last name must not be blank")
     private String lastName;
 
-    @URL(message = "Profile image must be valid")
+    //@URL(message = "Profile image must be valid")
     private String profileImage;
 
-    @NotBlank(message = "Phone number must not be blank")
-    @Size(min = 10, max = 10, message = "Phone number must be 10 digits")
+    //@NotBlank(message = "Phone number must not be blank")
+    //@Size(min = 10, max = 10, message = "Phone number must be 10 digits")
     private String phone;
 
-    @NotBlank(message = "Address must not be blank")
+    //@NotBlank(message = "Address must not be blank")
     private String address;
 
-    @NotBlank(message = "Birth day must not be blank")
+    //@NotBlank(message = "Birth day must not be blank")
     private Date birthDay;
 
     @ManyToOne
@@ -58,10 +59,21 @@ public class Student {
     private Major major;
 
     @ManyToOne
-    @JoinColumn(name = "term_id")
-    private Term term;
+    @JoinColumn(name = "semester_id")
+    private Semester semester;
+
+
+    private boolean status = true;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    public Student(UUID id, String email, String username, LocalDateTime createAt, LocalDateTime updateAt) {
+        this.id = id;
+        this.email = email;
+        this.username = username;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+    }
 }

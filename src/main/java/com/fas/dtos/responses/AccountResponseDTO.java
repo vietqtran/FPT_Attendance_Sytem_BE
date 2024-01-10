@@ -1,20 +1,18 @@
 package com.fas.dtos.responses;
 
 import com.fas.models.entities.Account;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class AccountResponseDto {
+public class AccountResponseDTO {
     private UUID id;
 
     private String email;
 
-    private String password;
+//    private String password;
 
     private String username;
 
@@ -22,10 +20,10 @@ public class AccountResponseDto {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public AccountResponseDto(Account account) {
+    public AccountResponseDTO(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
-        this.password = account.getPassword();
+//       this.password = account.getPassword();
         this.username = account.getUsername();
         this.createAt = account.getCreateAt();
         this.updateAt = account.getUpdateAt();

@@ -1,7 +1,7 @@
 package com.fas.controllers;
 
-import com.fas.dtos.requests.AccountRequestDto;
-import com.fas.dtos.responses.AccountResponseDto;
+import com.fas.dtos.requests.AccountRequestDTO;
+import com.fas.dtos.responses.AccountResponseDTO;
 import com.fas.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,9 @@ public class AccountController {
     private AccountService accountService;
 
     @PostMapping("/account")
-    public AccountResponseDto createAccount(@RequestBody AccountRequestDto accountRequestDto) {
+    public AccountResponseDTO createAccount(@RequestBody AccountRequestDTO accountRequestDto) {
         return accountService.createAccount(accountRequestDto);
     }
+
+
 }

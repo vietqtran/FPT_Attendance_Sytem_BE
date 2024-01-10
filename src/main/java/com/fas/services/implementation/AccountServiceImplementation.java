@@ -1,7 +1,7 @@
 package com.fas.services.implementation;
 
-import com.fas.dtos.requests.AccountRequestDto;
-import com.fas.dtos.responses.AccountResponseDto;
+import com.fas.dtos.requests.AccountRequestDTO;
+import com.fas.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.repositories.AccountRepository;
 import com.fas.services.AccountService;
@@ -15,11 +15,11 @@ public class AccountServiceImplementation implements AccountService {
 
 
     @Override
-    public AccountResponseDto createAccount(AccountRequestDto accountRequestDto) {
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto) {
         Account account = accountRequestDto.getAccount();
         System.out.println(account);
         account = accountRepository.save(account);
-        AccountResponseDto accountResponseDto = new AccountResponseDto(account);
+        AccountResponseDTO accountResponseDto = new AccountResponseDTO(account);
         return accountResponseDto;
     }
 }

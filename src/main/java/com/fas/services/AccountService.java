@@ -1,8 +1,10 @@
 package com.fas.services;
 
-import com.fas.dtos.requests.AccountRequestDto;
-import com.fas.dtos.responses.AccountResponseDto;
+import com.fas.dtos.requests.AccountRequestDTO;
+import com.fas.dtos.responses.AccountResponseDTO;
 
 public interface AccountService {
-    public AccountResponseDto createAccount(AccountRequestDto accountRequestDto);
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto);
+
+
 }

@@ -49,7 +49,7 @@ public class Instructor {
     @NotBlank(message = "Birth day must not be blank")
     private Date birthDay;
 
-    
+    private boolean status = true;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
