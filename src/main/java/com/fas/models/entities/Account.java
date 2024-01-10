@@ -22,10 +22,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Email(message = "Email must be valid")
     private String email;
 
+    @NotBlank(message = "Password must not be blank")
     private String password;
 
+    @NotBlank(message = "Username must not be blank")
     private String username;
 
     private LocalDateTime createAt = LocalDateTime.now();
