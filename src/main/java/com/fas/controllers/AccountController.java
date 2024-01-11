@@ -1,8 +1,9 @@
 package com.fas.controllers;
 
-import com.fas.dtos.requests.AccountRequestDTO;
-import com.fas.dtos.responses.AccountResponseDTO;
+import com.fas.models.dtos.requests.AccountRequestDTO;
+import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
+import com.fas.models.exceptions.AccountExceptions;
 import com.fas.models.utils.MessageDetails;
 import com.fas.securities.jwt.JwtProvider;
 import com.fas.securities.services.AccountDetailsService;
@@ -33,7 +34,7 @@ public class AccountController {
 
 
     @PostMapping("/signup")
-    public MessageDetails<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO accountRequestDto) throws RuntimeException {
+    public MessageDetails<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO accountRequestDto) throws AccountExceptions {
         AccountResponseDTO accountResponseDTO = accountService.createAccount(accountRequestDto);
         return new MessageDetails<>("Account created successfully", accountResponseDTO, "Success");
     }
@@ -45,21 +46,26 @@ public class AccountController {
 
         String token = jwtProvider.generateToken(authentication);
 
-        AccountResponseDTO accountResponseDTO = new AccountResponseDTO(account);
-        accountResponseDTO.setAccessToken(token);
+        Account existingAccount = accountService.findAccountByEmail(account.getEmail());
+        if(existingAccount != null) {
+            AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
+            accountResponseDTO.setAccessToken(token);
 
-        return new MessageDetails<>("Login successfully", accountResponseDTO, "Success");
+            return new MessageDetails<>("Login successfully", accountResponseDTO, "Success");
+        }
+
+        return new MessageDetails<>("Login successfully", null, "Success");
     }
 
     private Authentication authenticate(String email, String password) {
         UserDetails userDetails = accountDetailsService.loadUserByUsername(email);
 
         if(userDetails == null) {
-            throw new BadCredentialsException("Invalid username");
+            throw new BadCredentialsException("Your email, or password is incorrect. Please try again");
         }
 
         if(!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new BadCredentialsException("Your password not matched");
+            throw new BadCredentialsException("Your email, or password is incorrect. Please try again");
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

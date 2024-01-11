@@ -1,4 +1,4 @@
-package com.fas.dtos.responses;
+package com.fas.models.dtos.responses;
 
 import com.fas.models.entities.Account;
 import lombok.Data;

@@ -1,6 +1,5 @@
-package com.fas.dtos.responses;
+package com.fas.models.dtos.responses;
 
-import com.fas.models.entities.Account;
 import com.fas.models.entities.Student;
 import lombok.Data;
 

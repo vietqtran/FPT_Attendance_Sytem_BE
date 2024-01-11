@@ -1,7 +1,7 @@
 package com.fas.services.implementation;
 
-import com.fas.dtos.requests.StudentRequestDTO;
-import com.fas.dtos.responses.StudentResponseDTO;
+import com.fas.models.dtos.requests.StudentRequestDTO;
+import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.models.entities.Student;
 import com.fas.repositories.StudentRepository;
 import com.fas.services.StudentService;

@@ -1,10 +1,14 @@
 package com.fas.securities.services;
 
+import com.fas.models.entities.Account;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountDetails implements UserDetails {
     private String email;
@@ -15,6 +19,17 @@ public class AccountDetails implements UserDetails {
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+    }
+
+    public static UserDetails buildUserDetails(Account account) {
+
+        GrantedAuthority authority = new SimpleGrantedAuthority(account.getRole().getType().name());
+
+        List<GrantedAuthority> authorities = new ArrayList();
+
+        authorities.add(authority);
+
+        return new AccountDetails(account.getEmail(), account.getPassword(), authorities);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.fas.controllers;
 
-import com.fas.dtos.requests.StudentRequestDTO;
-import com.fas.dtos.responses.StudentResponseDTO;
+import com.fas.models.dtos.requests.StudentRequestDTO;
+import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.services.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

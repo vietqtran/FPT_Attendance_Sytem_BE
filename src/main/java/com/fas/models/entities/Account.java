@@ -3,6 +3,7 @@ package com.fas.models.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+//    @NotNull(message = "Role must not be null")
     private Role role;
 
     private LocalDateTime createAt = LocalDateTime.now();

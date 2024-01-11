@@ -1,7 +1,7 @@
 package com.fas.services;
 
-import com.fas.dtos.requests.StudentRequestDTO;
-import com.fas.dtos.responses.StudentResponseDTO;
+import com.fas.models.dtos.requests.StudentRequestDTO;
+import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.models.entities.Student;
 
 import java.util.UUID;

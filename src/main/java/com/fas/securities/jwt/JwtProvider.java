@@ -1,5 +1,6 @@
 package com.fas.securities.jwt;
 
+import com.fas.securities.services.AccountDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class JwtProvider {
@@ -16,10 +19,18 @@ public class JwtProvider {
     private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generateToken(Authentication authentication) {
+        AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
+
+        List<String> roles = accountDetails.getAuthorities()
+                .stream()
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
         String jwt = Jwts.builder()
-                .setIssuer("MinhManh").setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + JwtConstant.EXPIRATION_TIME)) // Adjusted expiration calculation
-                .claim("email", authentication.getName())
+                .setSubject(accountDetails.getUsername())
+                .claim("role", roles.get(0))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + JwtConstant.EXPIRATION_TIME))
                 .signWith(key).compact();
 
         return jwt;

@@ -20,10 +20,9 @@ public class AccountDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Account account = accountService.findAccountByEmail(email);
         if(account == null) {
-            throw new UsernameNotFoundException("Account not found with email: " + email);
+            throw new UsernameNotFoundException("Your email, or password is incorrect. Please try again");
         }
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        return new AccountDetails(account.getEmail(), account.getPassword(), authorities);
+        return AccountDetails.buildUserDetails(account);
     }
 }

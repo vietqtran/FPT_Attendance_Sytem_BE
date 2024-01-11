@@ -1,13 +1,16 @@
 package com.fas.services.implementation;
 
-import com.fas.dtos.requests.AccountRequestDTO;
-import com.fas.dtos.responses.AccountResponseDTO;
+import com.fas.models.dtos.requests.AccountRequestDTO;
+import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
+import com.fas.models.exceptions.AccountExceptions;
 import com.fas.repositories.AccountRepository;
 import com.fas.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AccountServiceImplementation implements AccountService {
@@ -19,12 +22,12 @@ public class AccountServiceImplementation implements AccountService {
 
 
     @Override
-    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto) throws RuntimeException {
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto) throws AccountExceptions {
         Account account = accountRequestDto.getAccount();
 
         Account existedAccount = accountRepository.findByEmail(account.getEmail());
         if(existedAccount != null) {
-            throw new RuntimeException("Account is existed with email: " + existedAccount.getEmail());
+            throw new AccountExceptions("Account is existed with email: " + existedAccount.getEmail());
         }
 
         Account newAccount = new Account();
