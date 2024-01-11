@@ -7,11 +7,15 @@ import com.fas.models.entities.Student;
 import java.util.UUID;
 
 public interface StudentService {
-    public StudentResponseDTO createStudent(StudentRequestDTO student);
 
-    public StudentResponseDTO getStudent(UUID studentId);
+    public Student findStudentByEmail(String email);
 
-    public StudentResponseDTO updateStudent(UUID studentId, Student student);
+    public StudentResponseDTO createStudent(StudentRequestDTO student) throws Exception;
 
-    public void deleteStudent(UUID studentId);
+
+    public Student findStudentById(UUID studentId) throws Exception;
+
+    public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws Exception;
+
+    public StudentResponseDTO deleteStudent(UUID studentId) throws Exception;
 }

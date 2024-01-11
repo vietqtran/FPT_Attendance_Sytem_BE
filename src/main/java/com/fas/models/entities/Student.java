@@ -69,11 +69,17 @@ public class Student {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Student(UUID id, String email, String username, LocalDateTime createAt, LocalDateTime updateAt) {
-        this.id = id;
+
+    public Student(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
         this.email = email;
         this.username = username;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.profileImage = profileImage;
+        this.phone = phone;
+        this.address = address;
+        this.birthDay = birthDay;
     }
+
 }

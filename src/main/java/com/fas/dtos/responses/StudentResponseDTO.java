@@ -13,7 +13,7 @@ public class StudentResponseDTO {
 
     private String email;
 
-//  private String password;
+    private boolean status;
 
     private String username;
 
@@ -24,7 +24,7 @@ public class StudentResponseDTO {
     public StudentResponseDTO(Student student) {
         this.id = student.getId();
         this.email = student.getEmail();
-//        this.password = account.getPassword();
+        this.status = student.isStatus();
         this.username = student.getUsername();
         this.createAt = student.getCreateAt();
         this.updateAt = student.getUpdateAt();
