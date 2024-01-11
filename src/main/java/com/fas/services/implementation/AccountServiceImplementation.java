@@ -6,6 +6,7 @@ import com.fas.models.entities.Account;
 import com.fas.repositories.AccountRepository;
 import com.fas.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,13 +14,31 @@ public class AccountServiceImplementation implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     @Override
-    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto) {
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto) throws RuntimeException {
         Account account = accountRequestDto.getAccount();
-        System.out.println(account);
-        account = accountRepository.save(account);
-        AccountResponseDTO accountResponseDto = new AccountResponseDTO(account);
-        return accountResponseDto;
+
+        Account existedAccount = accountRepository.findByEmail(account.getEmail());
+        if(existedAccount != null) {
+            throw new RuntimeException("Account is existed with email: " + existedAccount.getEmail());
+        }
+
+        Account newAccount = new Account();
+        newAccount.setEmail(account.getEmail());
+        newAccount.setPassword(passwordEncoder.encode(account.getPassword()));
+        newAccount.setUsername(account.getUsername());
+
+        Account savedAccount = accountRepository.save(newAccount);
+
+        return new AccountResponseDTO(savedAccount);
+    }
+
+    @Override
+    public Account findAccountByEmail(String email) {
+        return accountRepository.findByEmail(email);
     }
 }

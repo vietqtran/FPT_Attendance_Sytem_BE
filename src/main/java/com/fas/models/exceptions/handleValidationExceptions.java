@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ControllerAdvice
+public class handleValidationExceptions {
 
-public class validationException {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {

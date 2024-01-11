@@ -12,9 +12,9 @@ public class AccountResponseDTO {
 
     private String email;
 
-//    private String password;
-
     private String username;
+
+    private String accessToken;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
@@ -23,8 +23,8 @@ public class AccountResponseDTO {
     public AccountResponseDTO(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
-//       this.password = account.getPassword();
         this.username = account.getUsername();
+        this.accessToken = accessToken;
         this.createAt = account.getCreateAt();
         this.updateAt = account.getUpdateAt();
     }
