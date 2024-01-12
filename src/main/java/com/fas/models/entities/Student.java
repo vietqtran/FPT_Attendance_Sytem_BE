@@ -38,6 +38,7 @@ public class Student {
     private String lastName;
 
     @URL(message = "Profile image must be valid")
+    @NotBlank(message = "Profile image must not be blank")
     private String profileImage;
 
     @NotBlank(message = "Phone number must not be blank")

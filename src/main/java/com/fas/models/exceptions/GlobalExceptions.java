@@ -5,6 +5,7 @@ import com.fas.models.utils.MessageDetails;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,31 +35,37 @@ public class GlobalExceptions {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<?> handleNullPointerException(UsernameNotFoundException ex, WebRequest request) {
-
-        ErrorObject errorObject = new ErrorObject("account", ex.getMessage());
-
-        MessageDetails errorDetails = new MessageDetails("Error", errorObject, "Failure");
+    public ResponseEntity<?> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), "Failure");
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AccountExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleNullPointerException(AccountExceptions ex, WebRequest request) {
-
-        ErrorObject errorObject = new ErrorObject("account", ex.getMessage());
-
-        MessageDetails errorDetails = new MessageDetails("Error", errorObject, "Failure");
+        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), "Failure");
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), "Failure");
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 
-        ErrorObject errorObject = new ErrorObject("account", ex.getMessage());
 
-        MessageDetails errorDetails = new MessageDetails("Error", errorObject, "Failure");
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleRoleExceptions(HttpMessageNotReadableException ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Error information role", ex.getMessage(), "Failure");
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(StudentExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleStudentExceptions(StudentExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Error information student", ex.getMessage(), "Failure");
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 }

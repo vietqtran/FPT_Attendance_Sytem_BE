@@ -4,6 +4,7 @@ import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.models.exceptions.AccountExceptions;
+import com.fas.models.exceptions.RoleExceptions;
 import com.fas.models.utils.MessageDetails;
 import com.fas.securities.jwt.JwtProvider;
 import com.fas.securities.services.AccountDetailsService;
@@ -34,7 +35,7 @@ public class AccountController {
 
 
     @PostMapping("/signup")
-    public MessageDetails<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO accountRequestDto) throws AccountExceptions {
+    public MessageDetails<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO accountRequestDto) throws AccountExceptions, RoleExceptions {
         AccountResponseDTO accountResponseDTO = accountService.createAccount(accountRequestDto);
         return new MessageDetails<>("Account created successfully", accountResponseDTO, "Success");
     }

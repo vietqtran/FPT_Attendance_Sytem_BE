@@ -3,6 +3,7 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.models.entities.Student;
+import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.StudentRepository;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,9 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO createStudent(StudentRequestDTO student) throws Exception {
+    public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
         if (findStudentByEmail(student.getEmail()) != null) {
-            throw new Exception("Email already exists");
+            throw new StudentExceptions("Email already exists");
         }
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
@@ -34,16 +35,16 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public Student findStudentById(UUID studentId) throws Exception {
-        Optional<Student> checkStudent = studentRepository.findById(studentId);
-        if(checkStudent.isEmpty()){
-            throw new Exception("Student not found");
+    public Student findStudentById(UUID studentId) throws StudentExceptions {
+        Optional<Student> existedStudent = studentRepository.findById(studentId);
+        if(existedStudent.isEmpty()){
+            throw new StudentExceptions("Student not found");
         }
-        return checkStudent.get();
+        return existedStudent.get();
     }
 
     @Override
-    public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws Exception {
+    public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
         Student newStudent = student.getStudent();
 
@@ -63,7 +64,7 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO deleteStudent(UUID studentId) throws Exception {
+    public StudentResponseDTO deleteStudent(UUID studentId) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
 
         oldStudent.setUpdateAt(LocalDateTime.now());

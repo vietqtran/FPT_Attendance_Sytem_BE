@@ -41,7 +41,6 @@ public class WebSecurityConfig {
                         .anyRequest().permitAll())
                 .addFilterBefore(new JwtValidator(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
-
         return http.build();
     }
 
