@@ -48,14 +48,15 @@ public class AccountController {
         String token = jwtProvider.generateToken(authentication);
 
         Account existingAccount = accountService.findAccountByEmail(account.getEmail());
-        if(existingAccount != null) {
+        if(existingAccount != null && account.getCampus() != null &&
+                existingAccount.getCampus().getName().name().equals(account.getCampus().getName().name())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
             return new MessageDetails<>("Login successfully", accountResponseDTO, "Success");
         }
 
-        return new MessageDetails<>("Login successfully", null, "Success");
+        return new MessageDetails<>("Login failed", null, "Failure");
     }
 
     private Authentication authenticate(String email, String password) {

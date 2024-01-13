@@ -34,6 +34,11 @@ public class Account {
     @NotNull(message = "Role must not be null")
     private Role role;
 
+    @ManyToOne
+    @JoinColumn(name = "campus_id")
+    @NotNull(message = "Campus must not be null")
+    private Campus campus;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
