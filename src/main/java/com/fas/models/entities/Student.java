@@ -49,6 +49,7 @@ public class Student {
     private String address;
 
     @NotNull(message = "Birth day must not be null")
+
     private Date birthDay;
 
     @ManyToOne
