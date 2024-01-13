@@ -1,11 +1,9 @@
 package com.fas.models.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,7 +29,26 @@ public class Account {
     @NotBlank(message = "Username must not be blank")
     private String username;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    @NotNull(message = "Role must not be null")
+    private Role role;
+
+    @ManyToOne
+    @JoinColumn(name = "campus_id")
+    @NotNull(message = "Campus must not be null")
+    private Campus campus;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    public Account(UUID id, String email, String password, String username, LocalDateTime createAt, LocalDateTime updateAt) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.username = username;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+    }
 }

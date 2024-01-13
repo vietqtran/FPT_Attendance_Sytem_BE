@@ -1,4 +1,4 @@
-package com.fas.dtos.responses;
+package com.fas.models.dtos.responses;
 
 import com.fas.models.entities.Account;
 import lombok.Data;
@@ -12,9 +12,13 @@ public class AccountResponseDTO {
 
     private String email;
 
-//    private String password;
-
     private String username;
+
+    private String accessToken;
+
+    private RoleResponseDTO role;
+
+    private CampusResponseDTO campus;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
@@ -23,8 +27,10 @@ public class AccountResponseDTO {
     public AccountResponseDTO(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
-//       this.password = account.getPassword();
         this.username = account.getUsername();
+        this.role = new RoleResponseDTO(account.getRole());
+        this.campus = new CampusResponseDTO(account.getCampus());
+        this.accessToken = accessToken;
         this.createAt = account.getCreateAt();
         this.updateAt = account.getUpdateAt();
     }

@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -39,6 +38,7 @@ public class Student {
     private String lastName;
 
     @URL(message = "Profile image must be valid")
+    @NotBlank(message = "Profile image must not be blank")
     private String profileImage;
 
     @NotBlank(message = "Phone number must not be blank")
