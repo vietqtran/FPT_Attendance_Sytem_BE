@@ -76,4 +76,11 @@ public class GlobalExceptions {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(CourseExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleCourseExceptions(CourseExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Major information is not true", ex.getMessage(), "Failure");
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
 }

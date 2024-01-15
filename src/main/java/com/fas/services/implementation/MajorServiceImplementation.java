@@ -24,9 +24,7 @@ public class MajorServiceImplementation implements MajorService {
 
     @Override
     public MajorResponseDTO createMajor(MajorRequestDTO majorReq) {
-        System.out.println(majorReq);
         Major newMajor = majorReq.getMajor();
-        System.out.println(newMajor);
         Major savedMajor = majorRepository.save(newMajor);
         return new MajorResponseDTO(savedMajor);
     }
