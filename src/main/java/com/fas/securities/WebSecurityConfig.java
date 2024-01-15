@@ -41,8 +41,6 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").authenticated()
                         .anyRequest().permitAll())
-                .oauth2Login(withDefaults())
-                .formLogin(withDefaults())
                 .addFilterBefore(new JwtValidator(jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
