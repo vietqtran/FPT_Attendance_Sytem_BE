@@ -53,10 +53,6 @@ public class Student {
     private Date birthDay;
 
     @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
-
-    @ManyToOne
     @JoinColumn(name = "major_id")
     private Major major;
 
