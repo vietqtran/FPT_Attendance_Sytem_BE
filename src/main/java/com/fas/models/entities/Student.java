@@ -60,11 +60,6 @@ public class Student {
     @JoinColumn(name = "major_id")
     private Major major;
 
-    @ManyToOne
-    @JoinColumn(name = "semester_id")
-    private Semester semester;
-
-
     private boolean status = true;
 
     private LocalDateTime createAt = LocalDateTime.now();

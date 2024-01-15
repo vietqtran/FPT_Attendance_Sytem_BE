@@ -8,6 +8,7 @@ import com.fas.services.CampusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,4 +24,10 @@ public class CampusServiceImplementation implements CampusService {
         }
         return campus.get();
     }
+
+    @Override
+    public List<Campus> findAllCampuses() {
+        return campusRepository.findAll();
+    }
+
 }

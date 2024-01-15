@@ -8,6 +8,7 @@ import com.fas.services.RoleSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +22,9 @@ public class RoleServiceImplementation implements RoleSevice {
             throw new RoleExceptions("Role not found");
         }
         return role.get();
+    }
+
+    public List<Role> findAllRoles() {
+        return roleRepository.findAll();
     }
 }
