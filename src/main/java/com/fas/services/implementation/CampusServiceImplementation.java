@@ -27,12 +27,10 @@ public class CampusServiceImplementation implements CampusService {
     }
 
     @Override
-<<<<<<< HEAD
     public List<Campus> findAllCampuses() {
         return campusRepository.findAll();
     }
 
-=======
     public Campus findByCampusId(Long campusId) {
         Optional<Campus> campus = campusRepository.findById(campusId);
         if(campus.isEmpty()) {
@@ -40,5 +38,4 @@ public class CampusServiceImplementation implements CampusService {
         }
         return campus.get();
     }
->>>>>>> 0f7f0144a64ad94ec626e3a7422bb34599b8bf69
 }
