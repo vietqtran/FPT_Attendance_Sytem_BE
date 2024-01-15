@@ -1,7 +1,6 @@
 package com.fas.models.entities;
 
 import com.fas.models.enums.CampusName;
-import com.fas.models.enums.RoleType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

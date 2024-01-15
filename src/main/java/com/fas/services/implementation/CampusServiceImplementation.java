@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CampusServiceImplementation implements CampusService {
@@ -20,6 +21,15 @@ public class CampusServiceImplementation implements CampusService {
         Optional<Campus> campus = campusRepository.findByName(name);
         if(campus.isEmpty()) {
             throw new CampusExceptions("Campus is not existed with name: " + name);
+        }
+        return campus.get();
+    }
+
+    @Override
+    public Campus findByCampusId(Long campusId) {
+        Optional<Campus> campus = campusRepository.findById(campusId);
+        if(campus.isEmpty()) {
+            throw new CampusExceptions("Campus is not found" );
         }
         return campus.get();
     }

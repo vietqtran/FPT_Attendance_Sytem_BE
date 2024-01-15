@@ -29,6 +29,7 @@ public class StudentServiceImplementation implements StudentService {
         if (findStudentByEmail(student.getEmail()) != null) {
             throw new StudentExceptions("Email already exists");
         }
+
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
         return new StudentResponseDTO(savedStudent);
