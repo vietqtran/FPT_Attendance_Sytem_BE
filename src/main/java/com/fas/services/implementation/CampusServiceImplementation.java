@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CampusServiceImplementation implements CampusService {
@@ -26,8 +27,18 @@ public class CampusServiceImplementation implements CampusService {
     }
 
     @Override
+<<<<<<< HEAD
     public List<Campus> findAllCampuses() {
         return campusRepository.findAll();
     }
 
+=======
+    public Campus findByCampusId(Long campusId) {
+        Optional<Campus> campus = campusRepository.findById(campusId);
+        if(campus.isEmpty()) {
+            throw new CampusExceptions("Campus is not found" );
+        }
+        return campus.get();
+    }
+>>>>>>> 0f7f0144a64ad94ec626e3a7422bb34599b8bf69
 }

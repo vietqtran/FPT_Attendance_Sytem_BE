@@ -37,8 +37,6 @@ public class AccountServiceImplementation implements AccountService {
     public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDto) throws AccountExceptions {
         Account account = accountRequestDto.getAccount();
 
-        System.out.println(account);
-
         Account existedAccount = accountRepository.findByEmail(account.getEmail());
         if(existedAccount != null) {
             throw new AccountExceptions("Account is existed with email: " + existedAccount.getEmail());

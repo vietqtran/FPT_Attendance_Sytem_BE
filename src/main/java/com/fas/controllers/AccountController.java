@@ -3,12 +3,14 @@ package com.fas.controllers;
 import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
+import com.fas.models.entities.Campus;
 import com.fas.models.exceptions.AccountExceptions;
 import com.fas.models.exceptions.RoleExceptions;
 import com.fas.models.utils.MessageDetails;
 import com.fas.securities.jwt.JwtProvider;
 import com.fas.securities.services.AccountDetailsService;
 import com.fas.services.AccountService;
+import com.fas.services.CampusService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,16 +18,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/account")
 public class AccountController {
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private CampusService campusService;
     @Autowired
     private JwtProvider jwtProvider;
     @Autowired
@@ -48,7 +49,9 @@ public class AccountController {
         String token = jwtProvider.generateToken(authentication);
 
         Account existingAccount = accountService.findAccountByEmail(account.getEmail());
-        if(existingAccount != null && account.getCampus() != null && account.getRole() != null) {
+        if(existingAccount != null && account.getCampus() != null && account.getRole() != null
+                && existingAccount.getRole().getType().equals(account.getRole().getType())
+                && existingAccount.getCampus().getName().equals(account.getCampus().getName())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
@@ -58,6 +61,27 @@ public class AccountController {
         return new MessageDetails<>("Login failed", null, "Failure");
     }
 
+    @PostMapping("/signin/google")
+    public MessageDetails<AccountResponseDTO> loginUserByGoogle(@RequestParam String email, @RequestParam Long campusId) throws AccountExceptions, RoleExceptions {
+        Account existingAccount = accountService.findAccountByEmail(email);
+
+        Campus campus = campusService.findByCampusId(campusId);
+
+        Authentication authentication = authenticate(email);
+
+        String token = jwtProvider.generateToken(authentication);
+
+        if(existingAccount != null && existingAccount.getCampus().equals(campus)) {
+            AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
+            accountResponseDTO.setAccessToken(token);
+
+            return new MessageDetails<>("Login successfully", accountResponseDTO, "Success");
+        }
+
+        return new MessageDetails<>("Login failed", null, "Failure");
+    }
+
+
     private Authentication authenticate(String email, String password) {
         UserDetails userDetails = accountDetailsService.loadUserByUsername(email);
 
@@ -66,6 +90,16 @@ public class AccountController {
         }
 
         if(!passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new BadCredentialsException("Your email, or password is incorrect. Please try again");
+        }
+
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    private Authentication authenticate(String email) {
+        UserDetails userDetails = accountDetailsService.loadUserByUsername(email);
+
+        if(userDetails == null) {
             throw new BadCredentialsException("Your email, or password is incorrect. Please try again");
         }
 
