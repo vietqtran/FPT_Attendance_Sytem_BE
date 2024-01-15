@@ -4,13 +4,15 @@ import com.fas.models.entities.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AccountDetails implements UserDetails {
+public class AccountDetails implements UserDetails, OAuth2User {
     private String email;
     private String password;
     private List<GrantedAuthority> authorities;
@@ -30,6 +32,11 @@ public class AccountDetails implements UserDetails {
         authorities.add(authority);
 
         return new AccountDetails(account.getEmail(), account.getPassword(), authorities);
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return null;
     }
 
     @Override
@@ -65,5 +72,10 @@ public class AccountDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

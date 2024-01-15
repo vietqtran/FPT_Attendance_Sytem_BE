@@ -49,7 +49,8 @@ public class AccountController {
 
         Account existingAccount = accountService.findAccountByEmail(account.getEmail());
         if(existingAccount != null && account.getCampus() != null &&
-                existingAccount.getCampus().getName().name().equals(account.getCampus().getName().name())) {
+                existingAccount.getCampus().getName().name().equals(account.getCampus().getName().name()) &&
+                account.getRole() != null && existingAccount.getRole().getType().name().equals(account.getRole().getType().name())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 

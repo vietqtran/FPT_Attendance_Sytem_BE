@@ -16,8 +16,6 @@ public class AccountResponseDTO {
 
     private String accessToken;
 
-    private RoleResponseDTO role;
-
     private CampusResponseDTO campus;
 
     private LocalDateTime createAt = LocalDateTime.now();
@@ -28,7 +26,6 @@ public class AccountResponseDTO {
         this.id = account.getId();
         this.email = account.getEmail();
         this.username = account.getUsername();
-        this.role = new RoleResponseDTO(account.getRole());
         this.campus = new CampusResponseDTO(account.getCampus());
         this.accessToken = accessToken;
         this.createAt = account.getCreateAt();

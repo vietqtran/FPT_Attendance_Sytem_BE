@@ -24,7 +24,7 @@ public class JwtProvider {
         List<String> roles = accountDetails.getAuthorities()
                 .stream()
                 .map(Object::toString)
-                .collect(Collectors.toList());
+                .toList();
 
         String jwt = Jwts.builder()
                 .setSubject(accountDetails.getUsername())
