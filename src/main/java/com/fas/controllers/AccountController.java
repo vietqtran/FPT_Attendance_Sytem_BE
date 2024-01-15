@@ -41,15 +41,14 @@ public class AccountController {
     }
 
     @PostMapping("/signin")
-    public MessageDetails<AccountResponseDTO> loginUser(@RequestBody @Valid AccountRequestDTO accountRequestDTO) throws Exception {
+    public MessageDetails<AccountResponseDTO> loginUser(@RequestBody @Valid AccountRequestDTO accountRequestDTO) throws AccountExceptions, RoleExceptions {
         Account account = accountRequestDTO.getAccount();
         Authentication authentication = authenticate(account.getEmail(), account.getPassword());
 
         String token = jwtProvider.generateToken(authentication);
 
         Account existingAccount = accountService.findAccountByEmail(account.getEmail());
-        if(existingAccount != null && account.getCampus() != null &&
-                existingAccount.getCampus().getName().name().equals(account.getCampus().getName().name())) {
+        if(existingAccount != null && account.getCampus() != null && account.getRole() != null) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 

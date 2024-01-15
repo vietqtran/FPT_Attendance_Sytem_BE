@@ -8,9 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-public class AccountDetails implements UserDetails {
+public class AccountDetails implements UserDetails{
     private String email;
     private String password;
     private List<GrantedAuthority> authorities;
@@ -31,6 +32,7 @@ public class AccountDetails implements UserDetails {
 
         return new AccountDetails(account.getEmail(), account.getPassword(), authorities);
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -66,4 +68,5 @@ public class AccountDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
