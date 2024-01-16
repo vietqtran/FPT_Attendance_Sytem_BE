@@ -25,6 +25,10 @@ public class MajorServiceImplementation implements MajorService {
     @Override
     public MajorResponseDTO createMajor(MajorRequestDTO majorReq) {
         Major newMajor = majorReq.getMajor();
+        Major checkMajor = majorRepository.findByCode(newMajor.getCode());
+        if(checkMajor != null) {
+            throw new MajorExceptions("Major already exists");
+        }
         Major savedMajor = majorRepository.save(newMajor);
         return new MajorResponseDTO(savedMajor);
     }
@@ -33,7 +37,10 @@ public class MajorServiceImplementation implements MajorService {
     public MajorResponseDTO updateMajor(MajorRequestDTO major, UUID majorId) {
         Major existedMajor = getMajorById(majorId);
         Major newMajor = major.getMajor();
-
+        Major checkMajor = majorRepository.findByCode(newMajor.getCode());
+        if(checkMajor != null) {
+            throw new MajorExceptions("Major already exists");
+        }
         existedMajor.setCode(newMajor.getCode());
         existedMajor.setName(newMajor.getName());
         existedMajor.setUpdateAt(LocalDateTime.now());
