@@ -1,5 +1,6 @@
 package com.fas.services.implementation;
 
+import com.fas.models.dtos.responses.RoleResponseDTO;
 import com.fas.models.entities.Role;
 import com.fas.models.enums.RoleType;
 import com.fas.models.exceptions.RoleExceptions;
@@ -24,7 +25,9 @@ public class RoleServiceImplementation implements RoleSevice {
         return role.get();
     }
 
-    public List<Role> findAllRoles() {
-        return roleRepository.findAll();
+    public List<RoleResponseDTO> findAllRoles() {
+        List<Role> roles = roleRepository.findAll();
+        List<RoleResponseDTO> roleResponseDTOS = roles.stream().map(role -> new RoleResponseDTO(role)).toList();
+        return roleResponseDTOS;
     }
 }

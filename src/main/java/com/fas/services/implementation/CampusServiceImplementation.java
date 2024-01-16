@@ -1,5 +1,6 @@
 package com.fas.services.implementation;
 
+import com.fas.models.dtos.responses.CampusResponseDTO;
 import com.fas.models.entities.Campus;
 import com.fas.models.enums.CampusName;
 import com.fas.models.exceptions.CampusExceptions;
@@ -27,8 +28,10 @@ public class CampusServiceImplementation implements CampusService {
     }
 
     @Override
-    public List<Campus> findAllCampuses() {
-        return campusRepository.findAll();
+    public List<CampusResponseDTO> findAllCampuses() {
+        List<Campus> campuses = campusRepository.findAll();
+        List<CampusResponseDTO> campusResponseDTOS = campuses.stream().map(campus -> new CampusResponseDTO(campus)).toList();
+        return campusResponseDTOS;
     }
 
     public Campus findByCampusId(Long campusId) {
