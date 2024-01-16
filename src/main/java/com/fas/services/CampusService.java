@@ -1,5 +1,6 @@
 package com.fas.services;
 
+import com.fas.models.dtos.responses.CampusResponseDTO;
 import com.fas.models.entities.Campus;
 import com.fas.models.enums.CampusName;
 
@@ -10,5 +11,5 @@ public interface CampusService {
 
     public Campus findByCampusId(Long campusId);
 
-    public List<Campus> findAllCampuses();
+    public List<CampusResponseDTO> findAllCampuses();
 }
