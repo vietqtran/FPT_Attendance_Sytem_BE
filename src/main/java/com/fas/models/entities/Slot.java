@@ -13,9 +13,7 @@ public class Slot {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     private String name;
-
     private LocalDateTime startAt;
     private LocalDateTime endAt;
     private LocalDateTime createdAt = LocalDateTime.now();

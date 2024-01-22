@@ -23,4 +23,9 @@ public class Campus {
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    public Campus(Long id, CampusName name) {
+        this.id = id;
+        this.name = name;
+    }
 }

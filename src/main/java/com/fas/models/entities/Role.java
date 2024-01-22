@@ -24,4 +24,9 @@ public class Role {
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    public Role(Long id, RoleType type) {
+        this.id = id;
+        this.type = type;
+    }
 }

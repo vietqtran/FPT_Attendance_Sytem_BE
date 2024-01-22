@@ -18,15 +18,15 @@ public class AccountRequestDTO {
 
     private String username;
 
-    private Role role;
+    private RoleRequestDTO role;
 
-    private Campus campus;
+    private CampusRequestDTO campus;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
     public Account getAccount() {
-        return new Account(id, email, password, username, role, campus, createAt, updateAt);
+        return new Account(id, email, password, username, role.getRole(), campus.getCampus(), createAt, updateAt);
     }
 }
