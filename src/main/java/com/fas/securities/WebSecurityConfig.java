@@ -2,6 +2,7 @@ package com.fas.securities;
 
 import com.fas.securities.jwt.JwtProvider;
 import com.fas.securities.jwt.JwtValidator;
+import com.fas.securities.services.AccountDetailsService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class WebSecurityConfig {
     @Autowired
+    private AccountDetailsService accountDetailsService;
+    @Autowired
     private JwtProvider jwtProvider;
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -39,9 +42,9 @@ public class WebSecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/student/**").hasRole("ADMIN")
                         .anyRequest().permitAll())
-                .addFilterBefore(new JwtValidator(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtValidator(jwtProvider, accountDetailsService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

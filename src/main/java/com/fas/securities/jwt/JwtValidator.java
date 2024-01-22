@@ -1,5 +1,6 @@
 package com.fas.securities.jwt;
 
+import com.fas.securities.services.AccountDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -18,8 +20,11 @@ import java.util.List;
 public class JwtValidator extends OncePerRequestFilter {
     private final JwtProvider jwtProvider;
 
-    public JwtValidator(JwtProvider jwtProvider) {
+    private final AccountDetailsService accountDetailsService;
+
+    public JwtValidator(JwtProvider jwtProvider, AccountDetailsService accountDetailsService) {
         this.jwtProvider = jwtProvider;
+        this.accountDetailsService = accountDetailsService;
     }
 
     @Override
@@ -30,11 +35,9 @@ public class JwtValidator extends OncePerRequestFilter {
             try {
                 System.out.println("jwt: " + jwt);
                 String email = jwtProvider.getEmailFromJwtToken(jwt);
+                UserDetails userDetails = accountDetailsService.loadUserByUsername(email);
 
-                List<GrantedAuthority> authorities = new ArrayList<>();
-
-                Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, authorities);
-
+                Authentication authentication = new UsernamePasswordAuthenticationToken(email, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
                 throw new BadCredentialsException("Invalid token ...");

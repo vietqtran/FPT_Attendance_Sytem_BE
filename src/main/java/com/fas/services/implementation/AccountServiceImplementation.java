@@ -49,20 +49,20 @@ public class AccountServiceImplementation implements AccountService {
 
        if(account.getRole() != null) {
            switch (account.getRole().getType().name()) {
-               case "STUDENT":
-                   Role role1 = roleService.findRoleByType(RoleType.STUDENT);
+               case "ROLE_STUDENT":
+                   Role role1 = roleService.findRoleByType(RoleType.ROLE_STUDENT);
                    newAccount.setRole(role1);
                    break;
-               case "INSTRUCTOR":
-                   Role role2 = roleService.findRoleByType(RoleType.INSTRUCTOR);
+               case "ROLE_INSTRUCTOR":
+                   Role role2 = roleService.findRoleByType(RoleType.ROLE_INSTRUCTOR);
                    newAccount.setRole(role2);
                    break;
-               case "ADMIN":
-                   Role role3 = roleService.findRoleByType(RoleType.ADMIN);
+               case "ROLE_ADMIN":
+                   Role role3 = roleService.findRoleByType(RoleType.ROLE_ADMIN);
                    newAccount.setRole(role3);
                    break;
-               case "MANAGER":
-                   Role role4 = roleService.findRoleByType(RoleType.MANAGER);
+               case "ROLE_MANAGER":
+                   Role role4 = roleService.findRoleByType(RoleType.ROLE_MANAGER);
                    newAccount.setRole(role4);
                    break;
            }

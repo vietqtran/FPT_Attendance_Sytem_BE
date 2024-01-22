@@ -1,8 +1,8 @@
 package com.fas.models.enums;
 
 public enum RoleType {
-    STUDENT,
-    INSTRUCTOR,
-    MANAGER,
-    ADMIN,
+    ROLE_STUDENT,
+    ROLE_INSTRUCTOR,
+    ROLE_MANAGER,
+    ROLE_ADMIN,
 }

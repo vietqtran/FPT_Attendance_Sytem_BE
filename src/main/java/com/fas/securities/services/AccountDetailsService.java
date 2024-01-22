@@ -1,6 +1,7 @@
 package com.fas.securities.services;
 
 import com.fas.models.entities.Account;
+import com.fas.repositories.AccountRepository;
 import com.fas.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,10 +16,10 @@ import java.util.List;
 @Service
 public class AccountDetailsService implements UserDetailsService {
     @Autowired
-    private AccountService accountService;
+    private AccountRepository accountRepository;
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Account account = accountService.findAccountByEmail(email);
+        Account account = accountRepository.findByEmail(email);
         if(account == null) {
             throw new UsernameNotFoundException("Your email, or password is incorrect. Please try again");
         }
