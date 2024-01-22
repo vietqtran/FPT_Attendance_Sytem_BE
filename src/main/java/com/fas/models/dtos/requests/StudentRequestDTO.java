@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class StudentRequestDTO {
     private String email;
-
+    private String studentCode;
     private String username;
 
     private String firstName;
@@ -28,6 +28,6 @@ public class StudentRequestDTO {
 
 
     public Student getStudent() {
-        return new Student(email, username, firstName, middleName, lastName, profileImage, phone, address, birthDay);
+        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay);
     }
 }

@@ -4,12 +4,15 @@ import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.models.entities.Student;
 import com.fas.models.exceptions.StudentExceptions;
+import com.fas.repositories.AccountRepository;
 import com.fas.repositories.StudentRepository;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,18 +21,14 @@ public class StudentServiceImplementation implements StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    @Override
-    public Student findStudentByEmail(String email) {
-        Student student = studentRepository.findByEmail(email);
-        return student;
-    }
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Override
     public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
-        if (findStudentByEmail(student.getEmail()) != null) {
+        if (accountRepository.findByEmail(student.getEmail()) != null) {
             throw new StudentExceptions("Email already exists");
         }
-
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
         return new StudentResponseDTO(savedStudent);
@@ -50,6 +49,7 @@ public class StudentServiceImplementation implements StudentService {
         Student newStudent = student.getStudent();
 
         oldStudent.setUpdateAt(LocalDateTime.now());
+        oldStudent.setStudentCode(newStudent.getStudentCode());
         oldStudent.setAddress(newStudent.getAddress());
         oldStudent.setMajor(newStudent.getMajor());
         oldStudent.setPhone(newStudent.getPhone());
@@ -74,5 +74,16 @@ public class StudentServiceImplementation implements StudentService {
 
         StudentResponseDTO studentResponseDTO = new StudentResponseDTO(updateStudent);
         return studentResponseDTO ;
+    }
+
+    @Override
+    public List<StudentResponseDTO> getAllStudents() {
+        List<Student> students = studentRepository.findAll();
+        List<StudentResponseDTO> studentResponseDTOS = new ArrayList<>();
+        for (Student student : students) {
+            StudentResponseDTO studentResponseDTO = new StudentResponseDTO(student);
+            studentResponseDTOS.add(studentResponseDTO);
+        }
+        return studentResponseDTOS;
     }
 }
