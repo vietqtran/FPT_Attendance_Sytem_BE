@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -34,8 +35,13 @@ public class StudentController {
         return new MessageDetails<>("Student updated successfully", studentService.updateStudent(studentId, student), "Success");
     }
 
-    @PutMapping("/student/delete/{studentId}")
+    @DeleteMapping("/student/delete/{studentId}")
     private MessageDetails<StudentResponseDTO>  deleteStudent(@PathVariable UUID studentId) throws StudentExceptions {
         return new MessageDetails<>("Student deleted successfully", studentService.deleteStudent(studentId), "Success");
+    }
+
+    @GetMapping("/student")
+    private MessageDetails<List<StudentResponseDTO>> getAllStudents() {
+        return new MessageDetails<>("Get all students successfully", studentService.getAllStudents(), "Success");
     }
 }

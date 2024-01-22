@@ -10,6 +10,8 @@ import java.util.UUID;
 public class StudentResponseDTO {
     private UUID id;
 
+    private String studentCode;
+
     private String email;
 
     private boolean status;
@@ -22,6 +24,7 @@ public class StudentResponseDTO {
 
     public StudentResponseDTO(Student student) {
         this.id = student.getId();
+        this.studentCode = student.getStudentCode();
         this.email = student.getEmail();
         this.status = student.isStatus();
         this.username = student.getUsername();

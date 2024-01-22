@@ -1,9 +1,6 @@
 package com.fas.models.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -57,4 +54,10 @@ public class SystemUser {
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    @OneToOne
+    private Account account;
+
+    public SystemUser(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
+    }
 }

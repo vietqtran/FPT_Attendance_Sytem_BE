@@ -29,6 +29,9 @@ public class Student {
     @NotBlank(message = "Username must not be blank")
     private String username;
 
+    @NotBlank(message = "Student Code must not be null")
+    private String studentCode;
+
     @NotBlank(message = "First name must not be blank")
     private String firstName;
 
@@ -63,8 +66,9 @@ public class Student {
     private LocalDateTime updateAt = LocalDateTime.now();
 
 
-    public Student(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
+    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
         this.email = email;
+        this.studentCode = studentCode;
         this.username = username;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -74,5 +78,4 @@ public class Student {
         this.address = address;
         this.birthDay = birthDay;
     }
-
 }

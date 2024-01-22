@@ -89,4 +89,11 @@ public class GlobalExceptions {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(SystemUserExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleSystemUserExceptions(SystemUserExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("System user information is not true", ex.getMessage(), "Failure");
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
 }
