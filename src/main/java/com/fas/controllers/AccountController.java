@@ -1,6 +1,7 @@
 package com.fas.controllers;
 
 import com.fas.models.dtos.requests.AccountRequestDTO;
+import com.fas.models.dtos.requests.LoginGoogleRequest;
 import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.models.entities.Campus;
@@ -37,17 +38,10 @@ public class AccountController {
     private AccountDetailsService accountDetailsService;
 
 
-    @PostMapping("/signup")
-    public MessageDetails<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO accountRequestDto) throws AccountExceptions, RoleExceptions {
-        AccountResponseDTO accountResponseDTO = accountService.createAccount(accountRequestDto);
-        return new MessageDetails<>("Account created successfully", accountResponseDTO, Code.SUCCESS);
-    }
-
     @PostMapping("/signin")
     public MessageDetails<AccountResponseDTO> loginUser(@RequestBody @Valid AccountRequestDTO accountRequestDTO) throws AccountExceptions, RoleExceptions {
         Account account = accountRequestDTO.getAccount();
         Authentication authentication = authenticate(account.getEmail(), account.getPassword());
-        System.out.println(authentication.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
 
@@ -65,16 +59,16 @@ public class AccountController {
     }
 
     @PostMapping("/signin/google")
-    public MessageDetails<AccountResponseDTO> loginUserByGoogle(@RequestParam String email, @RequestParam Long campusId) throws AccountExceptions, RoleExceptions {
-        Account existingAccount = accountService.findAccountByEmail(email);
+    public MessageDetails<AccountResponseDTO> loginUserByGoogle(@RequestBody @Valid LoginGoogleRequest request) throws AccountExceptions, RoleExceptions {
+        System.out.println(request);
+        Account account = request.getAccount();
+        Account existingAccount = accountService.findAccountByEmail(account.getEmail());
 
-        Campus campus = campusService.findByCampusId(campusId);
-
-        Authentication authentication = authenticate(email);
+        Authentication authentication = authenticate(account.getEmail());
 
         String token = jwtProvider.generateToken(authentication);
 
-        if(existingAccount != null && existingAccount.getCampus().equals(campus)) {
+        if(existingAccount != null && existingAccount.getCampus().getName().equals(request.getCampus().getName())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 

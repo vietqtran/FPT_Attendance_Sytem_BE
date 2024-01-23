@@ -20,6 +20,8 @@ public class Campus {
     @Enumerated(EnumType.STRING)
     private CampusName name;
 
+    private String location;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();

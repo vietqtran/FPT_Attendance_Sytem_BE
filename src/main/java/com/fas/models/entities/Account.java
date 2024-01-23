@@ -28,7 +28,6 @@ public class Account {
     @NotBlank(message = "Password must not be blank")
     private String password;
 
-    @NotBlank(message = "Username must not be blank")
     private String username;
 
     @ManyToOne
@@ -49,6 +48,11 @@ public class Account {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.campus = campus;
+    }
+
+    public Account(String email, Campus campus) {
+        this.email = email;
         this.campus = campus;
     }
 }

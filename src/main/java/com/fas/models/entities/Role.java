@@ -21,6 +21,8 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private RoleType type;
 
+    private String name;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
