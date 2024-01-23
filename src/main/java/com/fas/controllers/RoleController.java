@@ -1,6 +1,7 @@
 package com.fas.controllers;
 
 import com.fas.models.dtos.responses.RoleResponseDTO;
+import com.fas.models.enums.Code;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.RoleSevice;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,6 @@ public class RoleController {
 
     @GetMapping("/role")
     public MessageDetails<List<RoleResponseDTO>> findAllRoles() {
-        return new MessageDetails<>("Get roles successfully", roleService.findAllRoles(), "Success");
+        return new MessageDetails<>("Get roles successfully", roleService.findAllRoles(), Code.SUCCESS);
     }
 }

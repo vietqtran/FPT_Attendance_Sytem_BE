@@ -1,5 +1,6 @@
 package com.fas.models.exceptions;
 
+import com.fas.models.enums.Code;
 import com.fas.models.utils.ErrorObject;
 import com.fas.models.utils.MessageDetails;
 import jakarta.validation.ConstraintViolationException;
@@ -29,28 +30,28 @@ public class GlobalExceptions {
             details.add(errorObject);
         });
 
-        MessageDetails errorDetails = new MessageDetails("Validation Failed", details, "Failure");
+        MessageDetails errorDetails = new MessageDetails("Validation Failed", details, Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleUsernameNotFoundException(UsernameNotFoundException ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AccountExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleNullPointerException(AccountExceptions ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Account's information is not true", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Account's information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
@@ -58,41 +59,41 @@ public class GlobalExceptions {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleRoleExceptions(HttpMessageNotReadableException ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Role have not been created", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Role have not been created", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(StudentExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleStudentExceptions(StudentExceptions ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Error information student", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Error information student", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MajorExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleMajorExceptions(MajorExceptions ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Major information is not true", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Major information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(CourseExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleCourseExceptions(CourseExceptions ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Course information is not true", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Course information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(GradeExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleGradeExceptions(GradeExceptions ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Grade information is not true", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("Grade information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(SystemUserExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleSystemUserExceptions(SystemUserExceptions ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("System user information is not true", ex.getMessage(), "Failure");
+        MessageDetails errorDetails = new MessageDetails("System user information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 

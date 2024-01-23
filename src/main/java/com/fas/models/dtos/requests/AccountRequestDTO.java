@@ -10,23 +10,16 @@ import java.util.UUID;
 
 @Data
 public class AccountRequestDTO {
-    private UUID id;
 
     private String email;
 
     private String password;
 
-    private String username;
-
     private RoleRequestDTO role;
 
     private CampusRequestDTO campus;
 
-    private LocalDateTime createAt = LocalDateTime.now();
-
-    private LocalDateTime updateAt = LocalDateTime.now();
-
     public Account getAccount() {
-        return new Account(id, email, password, username, role.getRole(), campus.getCampus(), createAt, updateAt);
+        return new Account(email, password, role.getRole(), campus.getCampus());
     }
 }

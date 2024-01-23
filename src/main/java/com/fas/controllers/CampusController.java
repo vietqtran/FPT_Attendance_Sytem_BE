@@ -1,6 +1,7 @@
 package com.fas.controllers;
 
 import com.fas.models.dtos.responses.CampusResponseDTO;
+import com.fas.models.enums.Code;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.CampusService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,6 @@ public class CampusController {
 
     @GetMapping("/campus")
     public MessageDetails<List<CampusResponseDTO>> findAllCampuses() {
-        return new MessageDetails<>("Get campuses successfully", campusService.findAllCampuses(), "Success");
+        return new MessageDetails<>("Get campuses successfully", campusService.findAllCampuses(), Code.SUCCESS);
     }
 }

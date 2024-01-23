@@ -4,6 +4,7 @@ package com.fas.controllers;
 import com.fas.models.dtos.requests.MajorRequestDTO;
 import com.fas.models.dtos.responses.MajorResponseDTO;
 import com.fas.models.entities.Major;
+import com.fas.models.enums.Code;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.MajorService;
 import jakarta.validation.Valid;
@@ -22,25 +23,25 @@ public class MajorController {
     @PostMapping("/major")
     private MessageDetails<MajorResponseDTO>  createMajor(@RequestBody @Valid MajorRequestDTO majorReq) {
         MajorResponseDTO major = majorService.createMajor(majorReq);
-        return new MessageDetails<MajorResponseDTO>("Major created successfully", major, "success");
+        return new MessageDetails<MajorResponseDTO>("Major created successfully", major, Code.SUCCESS);
     }
 
 
     @GetMapping("/major")
     private MessageDetails<List<MajorResponseDTO>> getAllMajor() {
         List<MajorResponseDTO> majors = majorService.getAllMajors();
-        return new MessageDetails<List<MajorResponseDTO>>("Get all majors successfully", majors, "success");
+        return new MessageDetails<List<MajorResponseDTO>>("Get all majors successfully", majors, Code.SUCCESS);
     }
 
     @PutMapping("/major/{majorId}")
     private MessageDetails<MajorResponseDTO> updateMajor(@RequestBody MajorRequestDTO major,@PathVariable  UUID majorId) {
         MajorResponseDTO majorResponseDTO = majorService.updateMajor(major, majorId);
-        return new MessageDetails<MajorResponseDTO>("Update major successfully", majorResponseDTO, "success");
+        return new MessageDetails<MajorResponseDTO>("Update major successfully", majorResponseDTO, Code.SUCCESS);
     }
 
     @DeleteMapping("/major/{majorId}")
     private MessageDetails<MajorResponseDTO> deleteMajor(@PathVariable UUID majorId) {
         majorService.deleteMajor(majorId);
-        return new MessageDetails<MajorResponseDTO>("Delete major successfully", null, "success");
+        return new MessageDetails<MajorResponseDTO>("Delete major successfully", null, Code.SUCCESS);
     }
 }

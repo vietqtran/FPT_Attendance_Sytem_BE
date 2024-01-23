@@ -4,6 +4,7 @@ import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.models.entities.Campus;
+import com.fas.models.enums.Code;
 import com.fas.models.exceptions.AccountExceptions;
 import com.fas.models.exceptions.RoleExceptions;
 import com.fas.models.utils.MessageDetails;
@@ -39,7 +40,7 @@ public class AccountController {
     @PostMapping("/signup")
     public MessageDetails<AccountResponseDTO> createAccount(@Valid @RequestBody AccountRequestDTO accountRequestDto) throws AccountExceptions, RoleExceptions {
         AccountResponseDTO accountResponseDTO = accountService.createAccount(accountRequestDto);
-        return new MessageDetails<>("Account created successfully", accountResponseDTO, "Success");
+        return new MessageDetails<>("Account created successfully", accountResponseDTO, Code.SUCCESS);
     }
 
     @PostMapping("/signin")
@@ -57,10 +58,10 @@ public class AccountController {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
-            return new MessageDetails<>("Login successfully", accountResponseDTO, "Success");
+            return new MessageDetails<>("Login successfully", accountResponseDTO, Code.SUCCESS);
         }
 
-        return new MessageDetails<>("Login failed", null, "Failure");
+        return new MessageDetails<>("Login failed", null, Code.FAILURE);
     }
 
     @PostMapping("/signin/google")
@@ -77,10 +78,10 @@ public class AccountController {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
-            return new MessageDetails<>("Login successfully", accountResponseDTO, "Success");
+            return new MessageDetails<>("Login successfully", accountResponseDTO, Code.SUCCESS);
         }
 
-        return new MessageDetails<>("Login failed", null, "Failure");
+        return new MessageDetails<>("Login failed", null, Code.FAILURE);
     }
 
 

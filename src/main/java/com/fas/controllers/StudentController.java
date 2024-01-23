@@ -2,6 +2,7 @@ package com.fas.controllers;
 
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
+import com.fas.models.enums.Code;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.StudentService;
@@ -27,21 +28,21 @@ public class StudentController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("User Roles: " + authentication);
 
-        return new MessageDetails<>("Student created successfully", studentService.createStudent(student), "Success");
+        return new MessageDetails<>("Student created successfully", studentService.createStudent(student), Code.SUCCESS);
     }
 
     @PutMapping("/student/update/{studentId}")
     private MessageDetails<StudentResponseDTO> updateStudent(@Valid @RequestBody StudentRequestDTO student, @PathVariable UUID studentId) throws StudentExceptions {
-        return new MessageDetails<>("Student updated successfully", studentService.updateStudent(studentId, student), "Success");
+        return new MessageDetails<>("Student updated successfully", studentService.updateStudent(studentId, student), Code.SUCCESS);
     }
 
     @DeleteMapping("/student/delete/{studentId}")
     private MessageDetails<StudentResponseDTO>  deleteStudent(@PathVariable UUID studentId) throws StudentExceptions {
-        return new MessageDetails<>("Student deleted successfully", studentService.deleteStudent(studentId), "Success");
+        return new MessageDetails<>("Student deleted successfully", studentService.deleteStudent(studentId), Code.SUCCESS);
     }
 
     @GetMapping("/student")
     private MessageDetails<List<StudentResponseDTO>> getAllStudents() {
-        return new MessageDetails<>("Get all students successfully", studentService.getAllStudents(), "Success");
+        return new MessageDetails<>("Get all students successfully", studentService.getAllStudents(), Code.SUCCESS);
     }
 }

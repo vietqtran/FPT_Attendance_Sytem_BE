@@ -45,12 +45,10 @@ public class Account {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Account(UUID id, String email, String password, String username, LocalDateTime createAt, LocalDateTime updateAt) {
-        this.id = id;
+    public Account(String email, String password, Role role, Campus campus) {
         this.email = email;
         this.password = password;
-        this.username = username;
-        this.createAt = createAt;
-        this.updateAt = updateAt;
+        this.role = role;
+        this.campus = campus;
     }
 }
