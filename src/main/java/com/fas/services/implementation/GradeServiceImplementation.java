@@ -20,6 +20,13 @@ public class GradeServiceImplementation implements GradeService {
 
     @Autowired
     private GradeRepository gradeRepository;
+
+    /**
+     * Create a new grade based on the provided GradeRequestDTO.
+     *
+     * @param  gradeRequestDTO   the GradeRequestDTO containing the grade information
+     * @return                   the GradeResponseDTO containing the newly created grade
+     */
     @Override
     public GradeResponseDTO createGrade(GradeRequestDTO gradeRequestDTO) {
         Grade grade = gradeRequestDTO.getGrade();
@@ -31,6 +38,13 @@ public class GradeServiceImplementation implements GradeService {
         return new GradeResponseDTO(newGrade);
     }
 
+    /**
+     * Update a grade with the given ID using the provided grade request data.
+     *
+     * @param  id              the ID of the grade to be updated
+     * @param  gradeRequestDTO the data for the updated grade
+     * @return                 the response DTO containing the updated grade
+     */
     @Override
     public GradeResponseDTO updateGrade(UUID id, GradeRequestDTO gradeRequestDTO) {
         Grade existedGrade = getGradeById(id);
@@ -45,6 +59,11 @@ public class GradeServiceImplementation implements GradeService {
         return new GradeResponseDTO(savedGrade);
     }
 
+    /**
+     * Deletes a grade by ID.
+     *
+     * @param  id  the ID of the grade to be deleted
+     */
     @Override
     public void deleteGrade(UUID id) {
         Grade existedGrade = getGradeById(id);
@@ -53,6 +72,11 @@ public class GradeServiceImplementation implements GradeService {
         gradeRepository.save(existedGrade);
     }
 
+    /**
+     * Retrieves all grades and returns a list of GradeResponseDTO objects.
+     *
+     * @return         	list of GradeResponseDTO objects
+     */
     @Override
     public List<GradeResponseDTO> getAllGrade() {
         List<Grade> grades = gradeRepository.findAll();
@@ -64,6 +88,12 @@ public class GradeServiceImplementation implements GradeService {
         return gradeResponseDTOS;
     }
 
+    /**
+     * Retrieves the grade with the specified ID.
+     *
+     * @param  id  the unique identifier of the grade to retrieve
+     * @return     the grade with the specified ID
+     */
     @Override
     public Grade getGradeById(UUID id) {
         Optional<Grade> grade = gradeRepository.findById(id);
@@ -73,6 +103,12 @@ public class GradeServiceImplementation implements GradeService {
         return grade.get();
     }
 
+    /**
+     * Retrieves the grade by the given code.
+     *
+     * @param  code  the code of the grade to retrieve
+     * @return      the grade associated with the given code
+     */
     @Override
     public Grade getGradeByCode(String code) {
         Grade grade = gradeRepository.findByCode(code);

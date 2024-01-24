@@ -29,15 +29,18 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private CampusService campusService;
-    @Autowired
     private JwtProvider jwtProvider;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AccountDetailsService accountDetailsService;
 
-
+    /**
+     * loginUser method to authenticate and generate token for the user, and handle login logic.
+     *
+     * @param  accountRequestDTO	request object for user account
+     * @return         	MessageDetails object containing login status and account details
+     */
     @PostMapping("/signin")
     public MessageDetails<AccountResponseDTO> loginUser(@RequestBody @Valid AccountRequestDTO accountRequestDTO) throws AccountExceptions, RoleExceptions {
         Account account = accountRequestDTO.getAccount();
@@ -58,6 +61,12 @@ public class AccountController {
         return new MessageDetails<>("Login failed", null, Code.FAILURE);
     }
 
+    /**
+     * A method to login a user using Google authentication.
+     *
+     * @param  request   the LoginGoogleRequest containing the user's Google login information
+     * @return          a MessageDetails object containing the login status and account details
+     */
     @PostMapping("/signin/google")
     public MessageDetails<AccountResponseDTO> loginUserByGoogle(@RequestBody @Valid LoginGoogleRequest request) throws AccountExceptions, RoleExceptions {
         System.out.println(request);
@@ -68,7 +77,7 @@ public class AccountController {
 
         String token = jwtProvider.generateToken(authentication);
 
-        if(existingAccount != null && existingAccount.getCampus().getName().equals(request.getCampus().getName())) {
+        if(existingAccount != null && account.getCampus() != null && existingAccount.getCampus().getName().equals(request.getCampus().getName())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
@@ -79,6 +88,13 @@ public class AccountController {
     }
 
 
+    /**
+     * Authenticates the user with the given email and password.
+     *
+     * @param  email     the user's email
+     * @param  password  the user's password
+     * @return           the authenticated user details
+     */
     private Authentication authenticate(String email, String password) {
         UserDetails userDetails = accountDetailsService.loadUserByUsername(email);
 

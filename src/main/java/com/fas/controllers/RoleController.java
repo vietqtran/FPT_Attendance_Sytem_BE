@@ -15,6 +15,11 @@ public class RoleController {
     @Autowired
     private RoleSevice roleService;
 
+    /**
+     * Find all roles.
+     *
+     * @return          Get roles successfully
+     */
     @GetMapping("/role")
     public MessageDetails<List<RoleResponseDTO>> findAllRoles() {
         return new MessageDetails<>("Get roles successfully", roleService.findAllRoles(), Code.SUCCESS);

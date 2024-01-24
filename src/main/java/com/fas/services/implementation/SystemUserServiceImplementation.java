@@ -34,7 +34,7 @@ public class SystemUserServiceImplementation implements SystemUserService {
     @Override
     public SystemUser getSystemUserByEmail(String email) {
         SystemUser systemUser = systemUserRepository.findByEmail(email);
-        return null;
+        return systemUser;
     }
 
     @Override

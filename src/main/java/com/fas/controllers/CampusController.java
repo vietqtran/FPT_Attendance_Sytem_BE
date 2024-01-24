@@ -15,6 +15,11 @@ public class CampusController {
     @Autowired
     private CampusService campusService;
 
+    /**
+     * Find all campuses.
+     *
+     * @return Get campuses successfully
+     */
     @GetMapping("/campus")
     public MessageDetails<List<CampusResponseDTO>> findAllCampuses() {
         return new MessageDetails<>("Get campuses successfully", campusService.findAllCampuses(), Code.SUCCESS);

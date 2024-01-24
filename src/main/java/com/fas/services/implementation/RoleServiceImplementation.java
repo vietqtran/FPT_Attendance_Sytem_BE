@@ -16,6 +16,13 @@ import java.util.Optional;
 public class RoleServiceImplementation implements RoleSevice {
     @Autowired
     private RoleRepository roleRepository;
+
+    /**
+     * Find a role by type.
+     *
+     * @param  roleType   the type of the role to find
+     * @return           the role found by the type
+     */
     @Override
     public Role findRoleByType(RoleType roleType) {
         Optional<Role> role = roleRepository.findByType(roleType);
@@ -25,6 +32,11 @@ public class RoleServiceImplementation implements RoleSevice {
         return role.get();
     }
 
+    /**
+     * Find all roles and map them to RoleResponseDTOs.
+     *
+     * @return          list of RoleResponseDTOs
+     */
     public List<RoleResponseDTO> findAllRoles() {
         List<Role> roles = roleRepository.findAll();
         List<RoleResponseDTO> roleResponseDTOS = roles.stream().map(role -> new RoleResponseDTO(role)).toList();

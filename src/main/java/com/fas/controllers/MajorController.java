@@ -20,25 +20,48 @@ public class MajorController {
     @Autowired
     private MajorService majorService;
 
+    /**
+     * Create a major using the provided MajorRequestDTO.
+     *
+     * @param  majorReq  the MajorRequestDTO object for creating a major
+     * @return           the message details with the created MajorResponseDTO and success code
+     */
     @PostMapping("/major")
     private MessageDetails<MajorResponseDTO>  createMajor(@RequestBody @Valid MajorRequestDTO majorReq) {
         MajorResponseDTO major = majorService.createMajor(majorReq);
         return new MessageDetails<MajorResponseDTO>("Major created successfully", major, Code.SUCCESS);
     }
 
-
+    /**
+     * Get all major details.
+     *
+     * @return         	description of return value
+     */
     @GetMapping("/major")
     private MessageDetails<List<MajorResponseDTO>> getAllMajor() {
         List<MajorResponseDTO> majors = majorService.getAllMajors();
         return new MessageDetails<List<MajorResponseDTO>>("Get all majors successfully", majors, Code.SUCCESS);
     }
 
+    /**
+     * Update a major with the given major ID.
+     *
+     * @param  major     the MajorRequestDTO containing the updated major information
+     * @param  majorId   the UUID of the major to be updated
+     * @return          a MessageDetails containing the updated MajorResponseDTO
+     */
     @PutMapping("/major/{majorId}")
     private MessageDetails<MajorResponseDTO> updateMajor(@RequestBody MajorRequestDTO major,@PathVariable  UUID majorId) {
         MajorResponseDTO majorResponseDTO = majorService.updateMajor(major, majorId);
         return new MessageDetails<MajorResponseDTO>("Update major successfully", majorResponseDTO, Code.SUCCESS);
     }
 
+    /**
+     * Deletes a major by ID.
+     *
+     * @param  majorId   the ID of the major to be deleted
+     * @return          a message details object with the result of the delete operation
+     */
     @DeleteMapping("/major/{majorId}")
     private MessageDetails<MajorResponseDTO> deleteMajor(@PathVariable UUID majorId) {
         majorService.deleteMajor(majorId);

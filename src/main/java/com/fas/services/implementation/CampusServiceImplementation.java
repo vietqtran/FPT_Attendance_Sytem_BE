@@ -18,6 +18,12 @@ public class CampusServiceImplementation implements CampusService {
     @Autowired
     private CampusRepository campusRepository;
 
+    /**
+     * Finds a campus by its name.
+     *
+     * @param  name   the name of the campus to find
+     * @return       the campus with the specified name
+     */
     @Override
     public Campus findByCampusName(CampusName name) {
         Optional<Campus> campus = campusRepository.findByName(name);
@@ -27,6 +33,11 @@ public class CampusServiceImplementation implements CampusService {
         return campus.get();
     }
 
+    /**
+     * Find all campuses and return a list of campus response DTOs.
+     *
+     * @return  a list of campus response DTOs
+     */
     @Override
     public List<CampusResponseDTO> findAllCampuses() {
         List<Campus> campuses = campusRepository.findAll();
@@ -34,6 +45,12 @@ public class CampusServiceImplementation implements CampusService {
         return campusResponseDTOS;
     }
 
+    /**
+     * Finds a campus by its ID.
+     *
+     * @param  campusId   the ID of the campus to find
+     * @return            the campus found by the ID
+     */
     public Campus findByCampusId(Long campusId) {
         Optional<Campus> campus = campusRepository.findById(campusId);
         if(campus.isEmpty()) {
