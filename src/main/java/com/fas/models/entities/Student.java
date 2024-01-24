@@ -50,7 +50,6 @@ public class Student {
     private String address;
 
     @NotNull(message = "Birth day must not be null")
-
     private Date birthDay;
 
     @ManyToOne
@@ -63,8 +62,7 @@ public class Student {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-
-    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
+    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, LocalDateTime createAt, LocalDateTime updateAt, boolean status) {
         this.email = email;
         this.studentCode = studentCode;
         this.username = username;
@@ -75,5 +73,8 @@ public class Student {
         this.phone = phone;
         this.address = address;
         this.birthDay = birthDay;
+        this.createAt = createAt;
+        this.updateAt = updateAt;
+        this.status = status;
     }
 }

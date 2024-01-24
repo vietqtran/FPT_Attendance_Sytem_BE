@@ -115,4 +115,10 @@ public class GlobalExceptions {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(InstructorExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleInstructorExceptions(InstructorExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Instructor information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

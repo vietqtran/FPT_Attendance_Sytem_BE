@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/student/**").hasAnyRole("ADMIN", "MANAGER")
+                        .requestMatchers("/instructor/**").hasAnyRole("ADMIN", "MANAGER")
                         .anyRequest().permitAll())
                 .addFilterBefore(new JwtValidator(jwtProvider, accountDetailsService), UsernamePasswordAuthenticationFilter.class);
 

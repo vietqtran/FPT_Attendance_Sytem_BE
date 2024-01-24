@@ -68,16 +68,37 @@ public class StudentServiceImplementation implements StudentService {
         Student oldStudent = findStudentById(studentId);
         Student newStudent = student.getStudent();
 
+        if(newStudent.getEmail() != null){
+            oldStudent.setEmail(newStudent.getEmail());
+        }
+        if(newStudent.getUsername() != null){
+            oldStudent.setUsername(newStudent.getUsername());
+        }
+        if(newStudent.getFirstName() != null){
+            oldStudent.setFirstName(newStudent.getFirstName());
+        }
+        if(newStudent.getMiddleName() != null){
+            oldStudent.setMiddleName(newStudent.getMiddleName());
+        }
+        if(newStudent.getLastName() != null){
+            oldStudent.setLastName(newStudent.getLastName());
+        }
+        if(newStudent.getProfileImage() != null){
+            oldStudent.setProfileImage(newStudent.getProfileImage());
+        }
+        if(newStudent.getPhone() != null){
+            oldStudent.setPhone(newStudent.getPhone());
+        }
+        if(newStudent.getAddress() != null){
+            oldStudent.setAddress(newStudent.getAddress());
+        }
+        if(newStudent.getBirthDay() != null){
+            oldStudent.setBirthDay(newStudent.getBirthDay());
+        }
+        if(newStudent.getMajor() != null){
+            oldStudent.setMajor(newStudent.getMajor());
+        }
         oldStudent.setUpdateAt(LocalDateTime.now());
-        oldStudent.setStudentCode(newStudent.getStudentCode());
-        oldStudent.setAddress(newStudent.getAddress());
-        oldStudent.setMajor(newStudent.getMajor());
-        oldStudent.setPhone(newStudent.getPhone());
-        oldStudent.setBirthDay(newStudent.getBirthDay());
-        oldStudent.setFirstName(newStudent.getFirstName());
-        oldStudent.setMiddleName(newStudent.getMiddleName());
-        oldStudent.setLastName(newStudent.getLastName());
-        oldStudent.setProfileImage(newStudent.getProfileImage());
 
         Student savedStudent = studentRepository.save(oldStudent);
         StudentResponseDTO studentResponseDTO = new StudentResponseDTO(savedStudent);
@@ -95,7 +116,7 @@ public class StudentServiceImplementation implements StudentService {
         Student oldStudent = findStudentById(studentId);
 
         oldStudent.setUpdateAt(LocalDateTime.now());
-        oldStudent.setStatus(false);
+        oldStudent.setStatus(!oldStudent.isStatus());
         Student updateStudent = studentRepository.save(oldStudent);
 
         StudentResponseDTO studentResponseDTO = new StudentResponseDTO(updateStudent);

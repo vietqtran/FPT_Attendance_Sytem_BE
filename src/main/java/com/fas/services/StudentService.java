@@ -19,5 +19,4 @@ public interface StudentService {
     public StudentResponseDTO deleteStudent(UUID studentId) throws StudentExceptions;
 
     public List<StudentResponseDTO> getAllStudents();
-
 }

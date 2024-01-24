@@ -4,19 +4,34 @@ import com.fas.models.entities.Student;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
 @Data
 public class StudentResponseDTO {
     private UUID id;
 
-    private String studentCode;
-
     private String email;
 
-    private boolean status;
+    private String studentCode;
 
     private String username;
+
+    private String firstName;
+
+    private String middleName;
+
+    private String lastName;
+
+    private String profileImage;
+
+    private String phone;
+
+    private String address;
+
+    private Date birthDay;
+
+    private boolean status = true;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
@@ -24,11 +39,18 @@ public class StudentResponseDTO {
 
     public StudentResponseDTO(Student student) {
         this.id = student.getId();
-        this.studentCode = student.getStudentCode();
         this.email = student.getEmail();
-        this.status = student.isStatus();
+        this.studentCode = student.getStudentCode();
         this.username = student.getUsername();
+        this.firstName = student.getFirstName();
+        this.middleName = student.getMiddleName();
+        this.lastName = student.getLastName();
+        this.profileImage = student.getProfileImage();
+        this.phone = student.getPhone();
+        this.address = student.getAddress();
+        this.birthDay = student.getBirthDay();
         this.createAt = student.getCreateAt();
         this.updateAt = student.getUpdateAt();
+        this.status = student.isStatus();
     }
 }
