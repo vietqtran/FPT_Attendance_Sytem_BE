@@ -1,28 +1,51 @@
 package com.fas.models.dtos.responses;
 
 import com.fas.models.entities.Instructor;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.UUID;
 
+@Data
 public class InstructorResponseDTO {
+
     private UUID id;
-
     private String email;
-
-    private boolean status;
 
     private String username;
 
-    private LocalDateTime createAt = LocalDateTime.now();
+    private String firstName;
 
+    private String middleName;
+
+    private String lastName;
+
+    private String profileImage;
+
+    private String phone;
+
+    private String address;
+
+    private Date birthDay;
+
+    private boolean status = true;
+
+    private LocalDateTime createAt = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
 
     public InstructorResponseDTO(Instructor instructor) {
         this.id = instructor.getId();
         this.email = instructor.getEmail();
-        this.status = instructor.isStatus();
         this.username = instructor.getUsername();
+        this.firstName = instructor.getFirstName();
+        this.middleName = instructor.getMiddleName();
+        this.lastName = instructor.getLastName();
+        this.profileImage = instructor.getProfileImage();
+        this.phone = instructor.getPhone();
+        this.address = instructor.getAddress();
+        this.birthDay = instructor.getBirthDay();
+        this.status = instructor.isStatus();
         this.createAt = instructor.getCreateAt();
         this.updateAt = instructor.getUpdateAt();
     }

@@ -1,58 +1,114 @@
 package com.fas.services.implementation;
 
-import com.fas.models.dtos.requests.StudentRequestDTO;
+import com.fas.models.dtos.requests.InstructorRequestDTO;
 import com.fas.models.dtos.responses.InstructorResponseDTO;
 import com.fas.models.entities.Instructor;
-import com.fas.models.exceptions.StudentExceptions;
+import com.fas.models.exceptions.InstructorExceptions;
+import com.fas.repositories.AccountRepository;
+import com.fas.repositories.InstructorRepository;
 import com.fas.services.InstructorService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class InstructorServiceImplementation implements InstructorService {
 
-    /**
-     * Creates a new student with the provided information.
-     *
-     * @param  student  the student request data transfer object
-     * @return          the instructor response data transfer object
-     */
+    @Autowired
+    private InstructorRepository instructorRepository;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
     @Override
-    public InstructorResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
-        return null;
+    public InstructorResponseDTO createInstructor(InstructorRequestDTO instructor) throws InstructorExceptions {
+        if (accountRepository.findByEmail(instructor.getEmail()) != null) {
+            throw new InstructorExceptions("Email already exists");
+        }
+        Instructor newInstructor = instructor.getIntructor();
+        Instructor savedInstructor = instructorRepository.save(newInstructor);
+        return new InstructorResponseDTO(savedInstructor);
     }
 
-    /**
-     * Find a student by their ID.
-     *
-     * @param  studentId  the ID of the student to find
-     * @return            the instructor associated with the student ID
-     */
     @Override
-    public Instructor findStudentById(UUID studentId) throws StudentExceptions {
-        return null;
+    public Instructor findInstructorByEmail(String email) throws InstructorExceptions {
+        Instructor instructor = instructorRepository.findByEmail(email);
+        if (instructor == null) {
+            throw new InstructorExceptions("Instructor not found with email: " + email);
+        }
+        return instructor;
     }
 
-    /**
-     * Updates a student with the given studentId using the provided student information.
-     *
-     * @param  studentId  the unique identifier of the student to be updated
-     * @param  student    the updated information of the student
-     * @return            an InstructorResponseDTO representing the updated student
-     * @throws StudentExceptions if an error occurs during the update process
-     */
     @Override
-    public InstructorResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws StudentExceptions {
-        return null;
+    public Instructor findInstructorById(UUID instructorId) throws InstructorExceptions {
+        Optional<Instructor> instructor = instructorRepository.findById(instructorId);
+        if (instructor.isEmpty()) {
+            throw new InstructorExceptions("Instructor not found");
+        }
+        return instructor.get();
     }
 
-    /**
-     * Deletes a student with the given ID.
-     *
-     * @param  studentId   the ID of the student to be deleted
-     * @return             an InstructorResponseDTO representing the deletion result
-     */
     @Override
-    public InstructorResponseDTO deleteStudent(UUID studentId) throws StudentExceptions {
-        return null;
+    public InstructorResponseDTO updateInstructor(UUID instructorId, InstructorRequestDTO instructorRequest) throws InstructorExceptions {
+        Instructor instructor = findInstructorById(instructorId);
+        Instructor newInstructor = instructorRequest.getIntructor();
+
+        if (newInstructor.getEmail() != null) {
+            instructor.setEmail(newInstructor.getEmail());
+        }
+        if (newInstructor.getUsername() != null) {
+            instructor.setUsername(newInstructor.getUsername());
+        }
+        if (newInstructor.getFirstName() != null) {
+            instructor.setFirstName(newInstructor.getFirstName());
+        }
+        if (newInstructor.getMiddleName() != null) {
+            instructor.setMiddleName(newInstructor.getMiddleName());
+        }
+        if (newInstructor.getLastName() != null) {
+            instructor.setLastName(newInstructor.getLastName());
+        }
+        if (newInstructor.getProfileImage() != null) {
+            instructor.setProfileImage(newInstructor.getProfileImage());
+        }
+        if (newInstructor.getPhone() != null) {
+            instructor.setPhone(newInstructor.getPhone());
+        }
+        if (newInstructor.getAddress() != null) {
+            instructor.setAddress(newInstructor.getAddress());
+        }
+        if (newInstructor.getBirthDay() != null) {
+            instructor.setBirthDay(newInstructor.getBirthDay());
+        }
+        instructor.setUpdateAt(LocalDateTime.now());
+
+        Instructor savedInstructor = instructorRepository.save(instructor);
+        return new InstructorResponseDTO(savedInstructor);
+    }
+
+    @Override
+    public InstructorResponseDTO deleteInstructor(UUID instructorId) throws InstructorExceptions {
+        Instructor instructor = findInstructorById(instructorId);
+
+        instructor.setUpdateAt(LocalDateTime.now());
+        instructor.setStatus(!instructor.isStatus());
+
+        Instructor savedInstructor = instructorRepository.save(instructor);
+        return new InstructorResponseDTO(savedInstructor);
+    }
+
+    @Override
+    public List<InstructorResponseDTO> getAllInstructors() throws InstructorExceptions {
+        List<Instructor> listInstructors = instructorRepository.findAll();
+        List<InstructorResponseDTO> newListInstructors = new ArrayList<>();
+        for (Instructor instructor : listInstructors) {
+            newListInstructors.add(new InstructorResponseDTO(instructor));
+        }
+        return newListInstructors;
     }
 }

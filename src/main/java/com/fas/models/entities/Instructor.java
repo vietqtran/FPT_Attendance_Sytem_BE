@@ -1,10 +1,7 @@
 package com.fas.models.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -48,7 +45,7 @@ public class Instructor {
     @NotBlank(message = "Address must not be blank")
     private String address;
 
-    @NotBlank(message = "Birth day must not be blank")
+    @NotNull(message = "Birth day must not be null")
     private Date birthDay;
 
     private boolean status = true;
@@ -57,11 +54,17 @@ public class Instructor {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Instructor(UUID id, String email, boolean status, String username, LocalDateTime createAt, LocalDateTime updateAt) {
-        this.id = id;
+    public Instructor(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, boolean status, LocalDateTime createAt, LocalDateTime updateAt) {
         this.email = email;
-        this.status = status;
         this.username = username;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.profileImage = profileImage;
+        this.phone = phone;
+        this.address = address;
+        this.birthDay = birthDay;
+        this.status = status;
         this.createAt = createAt;
         this.updateAt = updateAt;
     }

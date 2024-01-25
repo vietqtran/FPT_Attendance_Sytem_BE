@@ -29,11 +29,7 @@ public class StudentController {
      * @return          description of return value
      */
     @PostMapping("/student")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     private MessageDetails<StudentResponseDTO> createStudent(@Valid @RequestBody StudentRequestDTO student) throws StudentExceptions {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("User Roles: " + authentication);
-
         return new MessageDetails<>("Student created successfully", studentService.createStudent(student), Code.SUCCESS);
     }
 
@@ -49,6 +45,7 @@ public class StudentController {
         return new MessageDetails<>("Student updated successfully", studentService.updateStudent(studentId, student), Code.SUCCESS);
     }
 
+
     /**
      * Deletes a student with the given ID.
      *
@@ -56,7 +53,7 @@ public class StudentController {
      * @return            a MessageDetails object containing the success message, the deleted student, and the code
      * @throws StudentExceptions if an error occurs while deleting the student
      */
-    @DeleteMapping("/student/delete/{studentId}")
+    @PutMapping("/student/delete/{studentId}")
     private MessageDetails<StudentResponseDTO>  deleteStudent(@PathVariable UUID studentId) throws StudentExceptions {
         return new MessageDetails<>("Student deleted successfully", studentService.deleteStudent(studentId), Code.SUCCESS);
     }
