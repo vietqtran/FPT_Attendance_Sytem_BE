@@ -20,7 +20,6 @@ public class Assign {
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-
     @ManyToOne
     @JoinColumn(name = "assign_id")
     public Grade grade;
