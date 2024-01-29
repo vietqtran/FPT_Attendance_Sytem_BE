@@ -20,8 +20,7 @@ public class Instructor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Email(message = "Email must be valid")
-    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email must be valid")
+    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@fpt\\.edu\\.vn$", message = "Email must be valid")
     private String email;
 
     @NotBlank(message = "Username must not be blank")

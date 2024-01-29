@@ -20,10 +20,13 @@ public class AccountResponseDTO {
 
     private CampusResponseDTO campus;
 
+    private RoleResponseDTO role;
+
     public AccountResponseDTO(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
         this.campus = new CampusResponseDTO(account.getCampus());
+        this.role = new RoleResponseDTO(account.getRole());
         this.accessToken = accessToken;
     }
 }

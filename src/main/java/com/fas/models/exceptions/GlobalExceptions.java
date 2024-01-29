@@ -74,13 +74,6 @@ public class GlobalExceptions {
     }
 
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<?> handleRoleExceptions(HttpMessageNotReadableException ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Role have not been created", ex.getMessage(), Code.FAILURE);
-        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(StudentExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleStudentExceptions(StudentExceptions ex, WebRequest request) {
