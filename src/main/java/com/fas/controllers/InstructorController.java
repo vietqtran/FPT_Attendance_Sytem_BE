@@ -4,6 +4,7 @@ import com.fas.models.dtos.requests.InstructorRequestDTO;
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.InstructorResponseDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
+import com.fas.models.entities.Instructor;
 import com.fas.models.enums.Code;
 import com.fas.models.exceptions.InstructorExceptions;
 import com.fas.models.exceptions.StudentExceptions;
@@ -25,28 +26,48 @@ public class InstructorController {
     private InstructorService instructorService;
 
     @PostMapping("/instructor")
-    private MessageDetails<InstructorResponseDTO> createInstructor(@Valid @RequestBody InstructorRequestDTO instructor) throws InstructorExceptions {
-        System.out.println(instructor);
-        return new MessageDetails<>("Instructor created successfully", instructorService.createInstructor(instructor), Code.SUCCESS);
+    private MessageDetails<InstructorResponseDTO> createInstructor(@Valid @RequestBody InstructorRequestDTO instructorRequestDTO) throws InstructorExceptions {
+        InstructorResponseDTO instructor = instructorService.createInstructor(instructorRequestDTO);
+        if(instructor == null){
+            return new MessageDetails<>("Create Instructor failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Instructor created successfully", instructorService.createInstructor(instructorRequestDTO), Code.SUCCESS);
     }
 
     @GetMapping("/instructor")
     private MessageDetails<List<InstructorResponseDTO>> getAllInstructors() throws InstructorExceptions {
+        List<InstructorResponseDTO> instructors = instructorService.getAllInstructors();
+        if(instructors == null){
+            return new MessageDetails<>("Get all Instructors failed", instructorService.getAllInstructors(), Code.FAILURE);
+        }
         return new MessageDetails<>("Get all Instructors successfully", instructorService.getAllInstructors(), Code.SUCCESS);
     }
 
     @GetMapping("/instructor/{instructorId}")
     private MessageDetails<InstructorResponseDTO> getInstructorById(@PathVariable UUID instructorId) throws InstructorExceptions {
-        return new MessageDetails<>("Get Instructor successfully",new InstructorResponseDTO(instructorService.findInstructorById(instructorId)), Code.SUCCESS);
+        Instructor instructor = instructorService.findInstructorById(instructorId);
+        if(instructor == null){
+            return new MessageDetails<>("Get Instructor failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get Instructor successfully",new InstructorResponseDTO(instructor), Code.SUCCESS);
     }
 
     @PutMapping("/instructor/update/{instructorId}")
     private MessageDetails<InstructorResponseDTO> updateInstructor(@Valid @RequestBody InstructorRequestDTO instructor, @PathVariable UUID instructorId) throws InstructorExceptions {
+        InstructorResponseDTO instructorResponseDTO = instructorService.updateInstructor(instructorId, instructor);
+        if(instructorResponseDTO == null){
+            return new MessageDetails<>("Update Instructor failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Instructor updated successfully", instructorService.updateInstructor(instructorId, instructor), Code.SUCCESS);
     }
 
     @PutMapping("/instructor/delete/{instructorId}")
     private MessageDetails<InstructorResponseDTO> deleteInstructor(@PathVariable UUID instructorId) throws InstructorExceptions {
+        InstructorResponseDTO instructorResponseDTO = instructorService.deleteInstructor(instructorId);
+        System.out.println(instructorResponseDTO);
+        if(instructorResponseDTO == null){
+            return new MessageDetails<>("Update Instructor failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Instructor deleted successfully", instructorService.deleteInstructor(instructorId), Code.SUCCESS);
     }
 }

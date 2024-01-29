@@ -30,4 +30,8 @@ public class Campus {
         this.id = id;
         this.name = name;
     }
+
+    public Campus(long campusId) {
+        this.id = campusId;
+    }
 }

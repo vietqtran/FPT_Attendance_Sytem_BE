@@ -8,9 +8,11 @@ import lombok.Data;
 public class CampusResponseDTO {
     private Long id;
     private CampusName name;
+    private String location;
 
     public CampusResponseDTO(Campus campus) {
         this.id = campus.getId();
         this.name = campus.getName();
+        this.location = campus.getLocation();
     }
 }

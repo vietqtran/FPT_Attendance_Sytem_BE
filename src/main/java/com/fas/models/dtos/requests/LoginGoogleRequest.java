@@ -9,9 +9,9 @@ public class LoginGoogleRequest {
     private String email;
 
     @NotNull(message = "Campus must not be null")
-    private CampusRequestDTO campus;
+    private long campusId;
 
     public Account getAccount() {
-        return new Account(email, campus.getCampus());
+        return new Account(email, campusId);
     }
 }

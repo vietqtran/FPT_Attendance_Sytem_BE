@@ -44,15 +44,15 @@ public class Account {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Account(String email, String password, Role role, Campus campus) {
+    public Account(String email, String password, long roleId, long campusId) {
         this.email = email;
         this.password = password;
-        this.role = role;
-        this.campus = campus;
+        this.role = new Role(roleId);
+        this.campus = new Campus(campusId);
     }
 
-    public Account(String email, Campus campus) {
+    public Account(String email, long campusId) {
         this.email = email;
-        this.campus = campus;
+        this.campus = new Campus(campusId);
     }
 }

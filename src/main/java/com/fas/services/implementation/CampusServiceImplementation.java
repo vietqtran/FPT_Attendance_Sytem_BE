@@ -51,7 +51,7 @@ public class CampusServiceImplementation implements CampusService {
      * @param  campusId   the ID of the campus to find
      * @return            the campus found by the ID
      */
-    public Campus findByCampusId(Long campusId) {
+    public Campus findCampusById(Long campusId) {
         Optional<Campus> campus = campusRepository.findById(campusId);
         if(campus.isEmpty()) {
             throw new CampusExceptions("Campus is not found" );

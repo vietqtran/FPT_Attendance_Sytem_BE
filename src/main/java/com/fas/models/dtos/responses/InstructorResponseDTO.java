@@ -1,13 +1,17 @@
 package com.fas.models.dtos.responses;
 
 import com.fas.models.entities.Instructor;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class InstructorResponseDTO {
 
     private UUID id;
