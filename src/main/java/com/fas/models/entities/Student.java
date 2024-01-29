@@ -62,7 +62,7 @@ public class Student {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, LocalDateTime createAt, LocalDateTime updateAt, boolean status) {
+    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId) {
         this.email = email;
         this.studentCode = studentCode;
         this.username = username;
@@ -76,5 +76,6 @@ public class Student {
         this.createAt = createAt;
         this.updateAt = updateAt;
         this.status = status;
+        this.major = new Major(majorId);
     }
 }

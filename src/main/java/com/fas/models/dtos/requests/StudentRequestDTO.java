@@ -1,10 +1,12 @@
 package com.fas.models.dtos.requests;
 
+import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class StudentRequestDTO {
@@ -34,7 +36,9 @@ public class StudentRequestDTO {
 
     private boolean status = true;
 
+    private UUID majorId;
+
     public Student getStudent() {
-        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, createAt, updateAt, status);
+        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, createAt, updateAt, status, majorId);
     }
 }

@@ -30,4 +30,8 @@ public class Major {
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    public Major(UUID majorId) {
+        this.id = majorId;
+    }
 }
