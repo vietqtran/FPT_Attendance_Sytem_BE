@@ -27,18 +27,18 @@ public class InstructorController {
 
     @PostMapping("/instructor")
     private MessageDetails<InstructorResponseDTO> createInstructor(@Valid @RequestBody InstructorRequestDTO instructorRequestDTO) throws InstructorExceptions {
-        InstructorResponseDTO instructor = instructorService.createInstructor(instructorRequestDTO);
-        if(instructor == null){
+        InstructorResponseDTO instructorResponseDTO = instructorService.createInstructor(instructorRequestDTO);
+        if(instructorResponseDTO == null){
             return new MessageDetails<>("Create Instructor failed", null, Code.FAILURE);
         }
-        return new MessageDetails<>("Instructor created successfully", instructorService.createInstructor(instructorRequestDTO), Code.SUCCESS);
+        return new MessageDetails<>("Instructor created successfully", instructorResponseDTO, Code.SUCCESS);
     }
 
     @GetMapping("/instructor")
     private MessageDetails<List<InstructorResponseDTO>> getAllInstructors() throws InstructorExceptions {
         List<InstructorResponseDTO> instructors = instructorService.getAllInstructors();
         if(instructors == null){
-            return new MessageDetails<>("Get all Instructors failed", instructorService.getAllInstructors(), Code.FAILURE);
+            return new MessageDetails<>("Get all Instructors failed", null, Code.FAILURE);
         }
         return new MessageDetails<>("Get all Instructors successfully", instructorService.getAllInstructors(), Code.SUCCESS);
     }
@@ -58,7 +58,7 @@ public class InstructorController {
         if(instructorResponseDTO == null){
             return new MessageDetails<>("Update Instructor failed", null, Code.FAILURE);
         }
-        return new MessageDetails<>("Instructor updated successfully", instructorService.updateInstructor(instructorId, instructor), Code.SUCCESS);
+        return new MessageDetails<>("Instructor updated successfully", instructorResponseDTO, Code.SUCCESS);
     }
 
     @PutMapping("/instructor/delete/{instructorId}")
@@ -68,6 +68,6 @@ public class InstructorController {
         if(instructorResponseDTO == null){
             return new MessageDetails<>("Update Instructor failed", null, Code.FAILURE);
         }
-        return new MessageDetails<>("Instructor deleted successfully", instructorService.deleteInstructor(instructorId), Code.SUCCESS);
+        return new MessageDetails<>("Instructor deleted successfully", instructorResponseDTO, Code.SUCCESS);
     }
 }

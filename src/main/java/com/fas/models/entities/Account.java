@@ -21,8 +21,7 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @Email(message = "Email must be valid")
-    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", message = "Email must be valid")
+    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@fpt\\.edu\\.vn$", message = "Email must be valid")
     private String email;
 
     @NotBlank(message = "Password must not be blank")
@@ -39,6 +38,15 @@ public class Account {
     @JoinColumn(name = "campus_id")
     @NotNull(message = "Campus must not be null")
     private Campus campus;
+
+    @OneToOne
+    private Instructor instructor;
+
+    @OneToOne
+    private SystemUser systemUser;
+
+    @OneToOne
+    private Student student;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
