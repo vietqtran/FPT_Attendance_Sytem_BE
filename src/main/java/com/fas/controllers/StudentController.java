@@ -67,4 +67,9 @@ public class StudentController {
     private MessageDetails<List<StudentResponseDTO>> getAllStudents() {
         return new MessageDetails<>("Get all students successfully", studentService.getAllStudents(), Code.SUCCESS);
     }
+
+    @GetMapping("/student/{studentId}")
+    private MessageDetails<StudentResponseDTO> getStudentById(@PathVariable UUID studentId) {
+        return new MessageDetails<>("Get students successfully", new StudentResponseDTO(studentService.findStudentById(studentId)), Code.SUCCESS);
+    }
 }

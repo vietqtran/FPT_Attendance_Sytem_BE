@@ -1,5 +1,6 @@
 package com.fas.models.dtos.responses;
 
+import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
 import lombok.Data;
 
@@ -37,6 +38,8 @@ public class StudentResponseDTO {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
+    private Major major;
+
     public StudentResponseDTO(Student student) {
         this.id = student.getId();
         this.email = student.getEmail();
@@ -52,5 +55,6 @@ public class StudentResponseDTO {
         this.createAt = student.getCreateAt();
         this.updateAt = student.getUpdateAt();
         this.status = student.isStatus();
+        this.major = student.getMajor();
     }
 }
