@@ -1,5 +1,6 @@
 package com.fas.models.dtos.responses;
 
+import com.fas.models.entities.Campus;
 import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
 import lombok.Data;
@@ -40,6 +41,8 @@ public class StudentResponseDTO {
 
     private Major major;
 
+    private Campus campus;
+
     public StudentResponseDTO(Student student) {
         this.id = student.getId();
         this.email = student.getEmail();
@@ -56,5 +59,6 @@ public class StudentResponseDTO {
         this.updateAt = student.getUpdateAt();
         this.status = student.isStatus();
         this.major = student.getMajor();
+        this.campus = student.getCampus();
     }
 }

@@ -58,11 +58,14 @@ public class Student {
 
     private boolean status = true;
 
+    @ManyToOne
+    private Campus campus;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId) {
+    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId, Long campusId) {
         this.email = email;
         this.studentCode = studentCode;
         this.username = username;
@@ -77,5 +80,6 @@ public class Student {
         this.updateAt = updateAt;
         this.status = status;
         this.major = new Major(majorId);
+        this.campus = new Campus(campusId);
     }
 }

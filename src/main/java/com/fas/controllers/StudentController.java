@@ -2,6 +2,7 @@ package com.fas.controllers;
 
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
+import com.fas.models.entities.Student;
 import com.fas.models.enums.Code;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.models.utils.MessageDetails;
@@ -30,7 +31,11 @@ public class StudentController {
      */
     @PostMapping("/student")
     private MessageDetails<StudentResponseDTO> createStudent(@Valid @RequestBody StudentRequestDTO student) throws StudentExceptions {
-        return new MessageDetails<>("Student created successfully", studentService.createStudent(student), Code.SUCCESS);
+        StudentResponseDTO newStudent = studentService.createStudent(student);
+        if(newStudent == null) {
+            return new MessageDetails<>("Student created failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Student created successfully", newStudent, Code.SUCCESS);
     }
 
     /**
@@ -42,6 +47,10 @@ public class StudentController {
      */
     @PutMapping("/student/update/{studentId}")
     private MessageDetails<StudentResponseDTO> updateStudent(@Valid @RequestBody StudentRequestDTO student, @PathVariable UUID studentId) throws StudentExceptions {
+        StudentResponseDTO updatedStudent = studentService.updateStudent(studentId, student);
+        if(updatedStudent == null) {
+            return new MessageDetails<>("Student updated failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Student updated successfully", studentService.updateStudent(studentId, student), Code.SUCCESS);
     }
 
@@ -55,6 +64,10 @@ public class StudentController {
      */
     @PutMapping("/student/delete/{studentId}")
     private MessageDetails<StudentResponseDTO>  deleteStudent(@PathVariable UUID studentId) throws StudentExceptions {
+        StudentResponseDTO student = studentService.deleteStudent(studentId);
+        if(student == null) {
+            return new MessageDetails<>("Student deleted failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Student deleted successfully", studentService.deleteStudent(studentId), Code.SUCCESS);
     }
 
@@ -65,11 +78,19 @@ public class StudentController {
      */
     @GetMapping("/student")
     private MessageDetails<List<StudentResponseDTO>> getAllStudents() {
+        List<StudentResponseDTO> student = studentService.getAllStudents();
+        if(student == null) {
+            return new MessageDetails<>("Get all students failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Get all students successfully", studentService.getAllStudents(), Code.SUCCESS);
     }
 
     @GetMapping("/student/{studentId}")
     private MessageDetails<StudentResponseDTO> getStudentById(@PathVariable UUID studentId) {
-        return new MessageDetails<>("Get students successfully", new StudentResponseDTO(studentService.findStudentById(studentId)), Code.SUCCESS);
+        Student student = studentService.findStudentById(studentId);
+        if(student == null) {
+            return new MessageDetails<>("Get students failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get students successfully", new StudentResponseDTO(student), Code.SUCCESS);
     }
 }

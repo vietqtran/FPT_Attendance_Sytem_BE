@@ -28,8 +28,6 @@ public class Account {
     @NotBlank(message = "Password must not be blank")
     private String password;
 
-    private String username;
-
     @ManyToOne
     @JoinColumn(name = "role_id")
     @NotNull(message = "Role must not be null")

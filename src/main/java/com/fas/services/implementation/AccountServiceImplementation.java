@@ -30,14 +30,15 @@ public class AccountServiceImplementation implements AccountService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
+    public Account findAccountByEmail(String email) {
+        return null;
+    }
+
     /**
      * Find an account by email.
      *
      * @param  email  the email of the account to find
      * @return       the account found by the email
      */
-    @Override
-    public Account findAccountByEmail(String email) {
-        return accountRepository.findByEmail(email);
-    }
 }

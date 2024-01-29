@@ -38,7 +38,9 @@ public class StudentRequestDTO {
 
     private UUID majorId;
 
+    private Long campusId;
+
     public Student getStudent() {
-        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, createAt, updateAt, status, majorId);
+        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, createAt, updateAt, status, majorId, campusId);
     }
 }
