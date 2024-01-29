@@ -1,6 +1,7 @@
 package com.fas.controllers;
 
 import com.fas.models.dtos.requests.AccountRequestDTO;
+import com.fas.models.dtos.requests.EmailRequestDTO;
 import com.fas.models.dtos.requests.LoginGoogleRequest;
 import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
@@ -14,6 +15,7 @@ import com.fas.securities.jwt.JwtProvider;
 import com.fas.securities.services.AccountDetailsService;
 import com.fas.services.AccountService;
 import com.fas.services.CampusService;
+import com.fas.services.EmailService;
 import com.fas.services.RoleSevice;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,9 @@ public class AccountController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AccountDetailsService accountDetailsService;
+
+    @Autowired
+    private EmailService emailService;
 
     /**
      * loginUser method to authenticate and generate token for the user, and handle login logic.
@@ -100,6 +105,18 @@ public class AccountController {
         return new MessageDetails<>("Login failed", null, Code.FAILURE);
     }
 
+    @GetMapping("/signin/forgotpassword")
+    public MessageDetails<AccountResponseDTO> checkEmailExist(@RequestParam @Valid String email) throws AccountExceptions, RoleExceptions {
+        Account account = accountService.findAccountByEmail(email);
+        System.out.println(email);
+        System.out.println(account);
+        if(account != null) {
+            AccountResponseDTO accountResponseDTO = new AccountResponseDTO(account);
+            return new MessageDetails<>("Login successfully", accountResponseDTO, Code.SUCCESS);
+        }
+        return new MessageDetails<>("Login failed", null, Code.FAILURE);
+    }
+
 
     /**
      * Authenticates the user with the given email and password.
@@ -130,5 +147,26 @@ public class AccountController {
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    @PostMapping("/signin/sendMail")
+    public String
+    sendMail(@RequestBody EmailRequestDTO details)
+    {
+        String status
+                = emailService.sendSimpleMail(details);
+
+        return status;
+    }
+
+    // Sending email with attachment
+    @PostMapping("/sendMailWithAttachment")
+    public String sendMailWithAttachment(
+            @RequestBody EmailRequestDTO details)
+    {
+        String status
+                = emailService.sendMailWithAttachment(details);
+
+        return status;
     }
 }
