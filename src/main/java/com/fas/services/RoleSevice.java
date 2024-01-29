@@ -10,4 +10,6 @@ public interface RoleSevice {
     public Role findRoleByType(RoleType roleType);
 
     public List<RoleResponseDTO> findAllRoles();
+
+    public Role findRoleById(Long id);
 }

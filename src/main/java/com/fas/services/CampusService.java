@@ -9,7 +9,7 @@ import java.util.List;
 public interface CampusService {
     public Campus findByCampusName(CampusName name);
 
-    public Campus findByCampusId(Long campusId);
+    public Campus findCampusById(Long campusId);
 
     public List<CampusResponseDTO> findAllCampuses();
 }

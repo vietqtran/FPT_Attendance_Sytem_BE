@@ -69,7 +69,7 @@ public class GlobalExceptions {
     @ExceptionHandler(BadCredentialsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleBadCredentialsException(BadCredentialsException ex, WebRequest request) {
-        MessageDetails errorDetails = new MessageDetails("Login failed", ex.getMessage(), Code.FAILURE);
+        MessageDetails errorDetails = new MessageDetails("Token's information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
@@ -85,6 +85,20 @@ public class GlobalExceptions {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleStudentExceptions(StudentExceptions ex, WebRequest request) {
         MessageDetails errorDetails = new MessageDetails("Error information student", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RoleExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleRoleExceptions(RoleExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Error information role", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CampusExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleCampusExceptions(CampusExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Error information campus", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 

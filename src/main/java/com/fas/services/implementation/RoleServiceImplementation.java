@@ -39,7 +39,20 @@ public class RoleServiceImplementation implements RoleSevice {
      */
     public List<RoleResponseDTO> findAllRoles() {
         List<Role> roles = roleRepository.findAll();
-        List<RoleResponseDTO> roleResponseDTOS = roles.stream().map(role -> new RoleResponseDTO(role)).toList();
-        return roleResponseDTOS;
+        return roles.stream().map(role -> new RoleResponseDTO(role)).toList();
+    }
+
+    /**
+     * Finds a role by its ID.
+     *
+     * @param  id  the ID of the role to find
+     * @return     the role with the given ID
+     */
+    public Role findRoleById(Long id) {
+        Optional<Role> role = roleRepository.findById(id);
+        if(role.isEmpty()) {
+            throw new RoleExceptions("Role not found");
+        }
+        return role.get();
     }
 }

@@ -5,6 +5,7 @@ import com.fas.models.dtos.requests.LoginGoogleRequest;
 import com.fas.models.dtos.responses.AccountResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.models.entities.Campus;
+import com.fas.models.entities.Role;
 import com.fas.models.enums.Code;
 import com.fas.models.exceptions.AccountExceptions;
 import com.fas.models.exceptions.RoleExceptions;
@@ -13,6 +14,7 @@ import com.fas.securities.jwt.JwtProvider;
 import com.fas.securities.services.AccountDetailsService;
 import com.fas.services.AccountService;
 import com.fas.services.CampusService;
+import com.fas.services.RoleSevice;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +31,10 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
+    private RoleSevice roleSevice;
+    @Autowired
+    private CampusService campusService;
+    @Autowired
     private JwtProvider jwtProvider;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,14 +50,19 @@ public class AccountController {
     @PostMapping("/signin")
     public MessageDetails<AccountResponseDTO> loginUser(@RequestBody @Valid AccountRequestDTO accountRequestDTO) throws AccountExceptions, RoleExceptions {
         Account account = accountRequestDTO.getAccount();
+
         Authentication authentication = authenticate(account.getEmail(), account.getPassword());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.generateToken(authentication);
 
+        Campus existingCampus = campusService.findCampusById(account.getCampus().getId());
+
+        Role existingRole = roleSevice.findRoleById(account.getRole().getId());
+
         Account existingAccount = accountService.findAccountByEmail(account.getEmail());
-        if(existingAccount != null && account.getCampus() != null && account.getRole() != null
-                && existingAccount.getRole().getType().equals(account.getRole().getType())
-                && existingAccount.getCampus().getName().equals(account.getCampus().getName())) {
+        if(existingAccount != null && existingCampus != null && existingRole != null
+                && existingAccount.getRole().getType().equals(existingRole.getType())
+                && existingAccount.getCampus().getName().equals(existingCampus.getName())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
@@ -69,15 +80,17 @@ public class AccountController {
      */
     @PostMapping("/signin/google")
     public MessageDetails<AccountResponseDTO> loginUserByGoogle(@RequestBody @Valid LoginGoogleRequest request) throws AccountExceptions, RoleExceptions {
-        System.out.println(request);
         Account account = request.getAccount();
+
         Account existingAccount = accountService.findAccountByEmail(account.getEmail());
+
+        Campus existingCampus = campusService.findCampusById(account.getCampus().getId());
 
         Authentication authentication = authenticate(account.getEmail());
 
         String token = jwtProvider.generateToken(authentication);
 
-        if(existingAccount != null && account.getCampus() != null && existingAccount.getCampus().getName().equals(request.getCampus().getName())) {
+        if(existingAccount != null && existingCampus != null && existingAccount.getCampus().getName().equals(existingCampus.getName())) {
             AccountResponseDTO accountResponseDTO = new AccountResponseDTO(existingAccount);
             accountResponseDTO.setAccessToken(token);
 
