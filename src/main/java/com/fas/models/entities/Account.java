@@ -50,15 +50,18 @@ public class Account {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Account(String email, String password, long roleId, long campusId) {
+    public Account(String email, long campusId) {
+        this.email = email;
+        this.campus = new Campus(campusId);
+    }
+
+    public Account(String email, String password, long roleId, long campusId, UUID instructorId, UUID systemUserId, UUID studentId) {
         this.email = email;
         this.password = password;
         this.role = new Role(roleId);
         this.campus = new Campus(campusId);
-    }
-
-    public Account(String email, long campusId) {
-        this.email = email;
-        this.campus = new Campus(campusId);
+        this.instructor = new Instructor(instructorId);
+        this.systemUser = new SystemUser(systemUserId);
+        this.student = new Student(studentId);
     }
 }

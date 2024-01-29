@@ -62,4 +62,8 @@ public class SystemUser {
 
     public SystemUser(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay) {
     }
+
+    public SystemUser(UUID systemUserId) {
+        this.id = systemUserId;
+    }
 }

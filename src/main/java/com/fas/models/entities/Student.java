@@ -81,4 +81,8 @@ public class Student {
         this.major = new Major(majorId);
         this.campus = new Campus(campusId);
     }
+
+    public Student(UUID studentId) {
+        this.id = studentId;
+    }
 }

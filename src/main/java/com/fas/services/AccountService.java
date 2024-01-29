@@ -8,5 +8,5 @@ import com.fas.models.exceptions.AccountExceptions;
 public interface AccountService {
     public Account findAccountByEmail(String email);
 
-
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDTO) throws AccountExceptions;
 }

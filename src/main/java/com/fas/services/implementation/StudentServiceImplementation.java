@@ -2,12 +2,15 @@ package com.fas.services.implementation;
 
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
+import com.fas.models.entities.Account;
+import com.fas.models.entities.Role;
 import com.fas.models.entities.Student;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.AccountRepository;
 import com.fas.repositories.StudentRepository;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,6 +27,9 @@ public class StudentServiceImplementation implements StudentService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
 
     /**
      * Creates a new student based on the information provided in the student request DTO.
@@ -39,6 +45,18 @@ public class StudentServiceImplementation implements StudentService {
         }
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
+
+        Account account = new Account();
+
+        account.setCreateAt(LocalDateTime.now());
+        account.setUpdateAt(LocalDateTime.now());
+        account.setEmail(student.getEmail());
+        account.setPassword(passwordEncoder.encode("123456"));
+        account.setRole(new Role(1));
+        account.setStudent(savedStudent);
+        account.setCampus(savedStudent.getCampus());
+        Account savedAccount = accountRepository.save(account);
+
         return new StudentResponseDTO(savedStudent);
     }
 
@@ -98,6 +116,9 @@ public class StudentServiceImplementation implements StudentService {
         }
         if(newStudent.getMajor() != null){
             oldStudent.setMajor(newStudent.getMajor());
+        }
+        if(newStudent.getCampus() != null){
+            oldStudent.setCampus(newStudent.getCampus());
         }
         oldStudent.setUpdateAt(LocalDateTime.now());
 

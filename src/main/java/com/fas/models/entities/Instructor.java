@@ -67,4 +67,8 @@ public class Instructor {
         this.createAt = createAt;
         this.updateAt = updateAt;
     }
+
+    public Instructor(UUID instructorId) {
+        this.id = instructorId;
+    }
 }

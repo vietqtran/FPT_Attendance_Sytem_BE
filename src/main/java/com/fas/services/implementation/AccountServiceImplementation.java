@@ -2,9 +2,11 @@ package com.fas.services.implementation;
 
 import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.responses.AccountResponseDTO;
+import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.models.entities.Campus;
 import com.fas.models.entities.Role;
+import com.fas.models.entities.Student;
 import com.fas.models.enums.CampusName;
 import com.fas.models.enums.RoleType;
 import com.fas.models.exceptions.AccountExceptions;
@@ -35,10 +37,11 @@ public class AccountServiceImplementation implements AccountService {
         return null;
     }
 
-    /**
-     * Find an account by email.
-     *
-     * @param  email  the email of the account to find
-     * @return       the account found by the email
-     */
+
+    @Override
+    public AccountResponseDTO createAccount(AccountRequestDTO accountRequestDTO) {
+        Account account = accountRequestDTO.getAccount();
+        Account savedAccount = accountRepository.save(account);
+        return new AccountResponseDTO(savedAccount);
+    }
 }
