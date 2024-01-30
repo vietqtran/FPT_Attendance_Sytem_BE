@@ -12,12 +12,13 @@ public interface InstructorRepository extends JpaRepository<Instructor, UUID> {
 
     Instructor findByEmail(String email);
 
+    Instructor findByPhone(String phone);
+
     @Query("SELECT i FROM Instructor i WHERE i.phone = :phone AND i.id != :id")
-    Student findByPhoneUpdate(@Param("phone") String phone, @Param("id") UUID id);
+    Instructor findByUniquePhone(@Param("phone") String phone, @Param("id") UUID id);
 
-    @Query("SELECT i FROM Instructor i WHERE i.IDCard = :IDCard")
-    Student findByIDCard(@Param("IDCard") String IDCard);
+    Instructor findByIdCard(String idCard);
 
-    @Query("SELECT i FROM Instructor i WHERE i.IDCard = :IDCard AND i.id != :id")
-    Student findByIDCardUpdate(@Param("IDCard") String IDCard, @Param("id") UUID id);
+    @Query("SELECT i FROM Instructor i WHERE i.idCard = :idCard AND i.id != :id")
+    Instructor findByUniqueIdCard(@Param("idCard") String idCard, @Param("id") UUID id);
 }

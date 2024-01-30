@@ -50,12 +50,17 @@ public class Instructor {
     @Pattern(regexp = "^[0-9]*$", message = "Only number allowed")
     @NotBlank(message = "ID Card must not be blank")
     @Size(min = 12, max = 12, message = "ID Card must be 12 digits")
-    private String IDCard;
+    private String idCard;
 
     @NotNull(message = "Gender must not be null")
     private boolean gender;
 
     private boolean status = true;
+
+    @ManyToOne
+    @NotNull(message = "Campus must not be null")
+    @JoinColumn(name = "campus_id")
+    private Campus campus;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
@@ -65,7 +70,7 @@ public class Instructor {
         this.id = instructorId;
     }
 
-    public Instructor(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, String idCard, boolean gender, boolean status, LocalDateTime createAt, LocalDateTime updateAt) {
+    public Instructor(String email, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, String idCard, Long campusId, boolean gender, boolean status, LocalDateTime createAt, LocalDateTime updateAt) {
         this.email = email;
         this.username = username;
         this.firstName = firstName;
@@ -75,9 +80,10 @@ public class Instructor {
         this.phone = phone;
         this.address = address;
         this.birthDay = birthDay;
-        this.IDCard = idCard;
+        this.idCard = idCard;
         this.gender = gender;
         this.status = status;
+        this.campus = new Campus(campusId);
         this.createAt = createAt;
         this.updateAt = updateAt;
     }

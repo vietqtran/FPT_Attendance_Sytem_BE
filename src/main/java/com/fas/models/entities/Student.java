@@ -77,7 +77,6 @@ public class Student {
         this.id = studentId;
     }
 
-
     public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, String idCard, boolean gender, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId, Long campusId) {
         this.email = email;
         this.studentCode = studentCode;

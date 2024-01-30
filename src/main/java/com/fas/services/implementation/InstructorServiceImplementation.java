@@ -1,13 +1,17 @@
 package com.fas.services.implementation;
 
+import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.requests.InstructorRequestDTO;
 import com.fas.models.dtos.responses.InstructorResponseDTO;
+import com.fas.models.entities.Account;
 import com.fas.models.entities.Instructor;
 import com.fas.models.exceptions.InstructorExceptions;
 import com.fas.repositories.AccountRepository;
 import com.fas.repositories.InstructorRepository;
+import com.fas.services.AccountService;
 import com.fas.services.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -25,13 +29,23 @@ public class InstructorServiceImplementation implements InstructorService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public InstructorResponseDTO createInstructor(InstructorRequestDTO instructor) throws InstructorExceptions {
-        if (accountRepository.findByEmail(instructor.getEmail()) != null) {
+    public InstructorResponseDTO createInstructor(InstructorRequestDTO instructorRequestDTO) throws InstructorExceptions {
+        if (accountRepository.findByEmail(instructorRequestDTO.getEmail()) != null) {
             throw new InstructorExceptions("Email already exists");
         }
-        Instructor newInstructor = instructor.getIntructor();
-        Instructor savedInstructor = instructorRepository.save(newInstructor);
+
+        Instructor instructor = instructorRequestDTO.getIntructor();
+        AccountRequestDTO accountRequestDTO = new AccountRequestDTO(instructor.getEmail(), passwordEncoder.encode("123456"), 2, 1, instructor.getId(), null, null);
+        accountService.createAccount(accountRequestDTO);
+
+        Instructor savedInstructor = instructorRepository.save(instructor);
         return new InstructorResponseDTO(savedInstructor);
     }
 

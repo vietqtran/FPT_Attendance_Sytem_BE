@@ -53,7 +53,7 @@ public class InstructorResponseDTO {
         this.phone = instructor.getPhone();
         this.address = instructor.getAddress();
         this.birthDay = instructor.getBirthDay();
-        this.IDCard = instructor.getIDCard();
+        this.IDCard = instructor.getIdCard();
         this.gender = instructor.isGender();
         this.status = instructor.isStatus();
         this.createAt = instructor.getCreateAt();

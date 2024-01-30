@@ -27,6 +27,15 @@ public class AccountRequestDTO {
 
     private UUID studentId;
 
+    public AccountRequestDTO(String email, String password, long roleId, long campusId, UUID instructorId, UUID systemUserId, UUID studentId) {
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.campusId = campusId;
+        this.instructorId = instructorId;
+        this.systemUserId = systemUserId;
+        this.studentId = studentId;
+    }
 
     public Account getAccount() {
         return new Account(email, password, roleId, campusId, instructorId, systemUserId, studentId);
