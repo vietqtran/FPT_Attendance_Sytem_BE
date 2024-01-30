@@ -68,7 +68,7 @@ public class StudentController {
         if(student == null) {
             return new MessageDetails<>("Student deleted failed", null, Code.FAILURE);
         }
-        return new MessageDetails<>("Student deleted successfully", studentService.deleteStudent(studentId), Code.SUCCESS);
+        return new MessageDetails<>("Student deleted successfully", student, Code.SUCCESS);
     }
 
     /**
