@@ -6,6 +6,7 @@ import com.fas.models.dtos.responses.InstructorResponseDTO;
 import com.fas.models.entities.Account;
 import com.fas.models.entities.Instructor;
 import com.fas.models.exceptions.InstructorExceptions;
+import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.AccountRepository;
 import com.fas.repositories.InstructorRepository;
 import com.fas.services.AccountService;
@@ -41,6 +42,14 @@ public class InstructorServiceImplementation implements InstructorService {
             throw new InstructorExceptions("Email already exists");
         }
 
+        if(instructorRepository.findByPhone(instructorRequestDTO.getPhone()) != null){
+            throw new StudentExceptions("Phone already exists");
+        }
+
+        if(instructorRepository.findByIdCard(instructorRequestDTO.getIdCard()) != null){
+            throw new StudentExceptions("IdCard already exists");
+        }
+
         Instructor instructor = instructorRequestDTO.getIntructor();
         AccountRequestDTO accountRequestDTO = new AccountRequestDTO(instructor.getEmail(), passwordEncoder.encode("123456"), 2, 1, instructor.getId(), null, null);
         accountService.createAccount(accountRequestDTO);
@@ -71,6 +80,13 @@ public class InstructorServiceImplementation implements InstructorService {
     public InstructorResponseDTO updateInstructor(UUID instructorId, InstructorRequestDTO instructorRequest) throws InstructorExceptions {
         Instructor instructor = findInstructorById(instructorId);
         Instructor newInstructor = instructorRequest.getIntructor();
+
+        if(instructorRepository.findByUniquePhone(newInstructor.getPhone(), instructorId) != null) {
+            throw new StudentExceptions("Phone already exists");
+        }
+        if(instructorRepository.findByUniqueIdCard(newInstructor.getIdCard(), instructorId) != null) {
+            throw new StudentExceptions("ID Card already exists");
+        }
 
         if (newInstructor.getEmail() != null) {
             instructor.setEmail(newInstructor.getEmail());
