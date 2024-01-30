@@ -157,13 +157,13 @@ public class StudentServiceImplementation implements StudentService {
     @Override
     public StudentResponseDTO deleteStudent(UUID studentId) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
-        System.out.println(oldStudent.isStatus());
+
         oldStudent.setUpdateAt(LocalDateTime.now());
         oldStudent.setStatus(!oldStudent.isStatus());
         Student updateStudent = studentRepository.save(oldStudent);
-        System.out.println(updateStudent.isStatus());
+
         StudentResponseDTO studentResponseDTO = new StudentResponseDTO(updateStudent);
-        return studentResponseDTO ;
+        return studentResponseDTO;
     }
 
     /**
@@ -180,5 +180,11 @@ public class StudentServiceImplementation implements StudentService {
             studentResponseDTOS.add(studentResponseDTO);
         }
         return studentResponseDTOS;
+    }
+
+    @Override
+    public Student findStudentByEmail(String email) {
+        Student student = studentRepository.findByEmail(email);
+        return student;
     }
 }

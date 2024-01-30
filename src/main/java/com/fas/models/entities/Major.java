@@ -27,9 +27,13 @@ public class Major {
     @NotBlank(message = "Name must not be blank")
     private String name;
 
+    private boolean status = true;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
+
+
 
     public Major(UUID majorId) {
         this.id = majorId;

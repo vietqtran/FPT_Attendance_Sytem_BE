@@ -14,11 +14,13 @@ public class MajorRequestDTO {
 
     private String name;
 
+    private boolean status = true;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
     public Major getMajor() {
-        return new Major(id, code, name, createAt, updateAt);
+        return new Major(id, code, name,status, createAt, updateAt);
     }
 }

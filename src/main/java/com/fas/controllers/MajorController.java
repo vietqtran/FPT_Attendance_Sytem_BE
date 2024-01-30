@@ -50,7 +50,7 @@ public class MajorController {
      * @param  majorId   the UUID of the major to be updated
      * @return          a MessageDetails containing the updated MajorResponseDTO
      */
-    @PutMapping("/major/{majorId}")
+    @PutMapping("/major/update/{majorId}")
     private MessageDetails<MajorResponseDTO> updateMajor(@RequestBody MajorRequestDTO major,@PathVariable  UUID majorId) {
         MajorResponseDTO majorResponseDTO = majorService.updateMajor(major, majorId);
         return new MessageDetails<MajorResponseDTO>("Update major successfully", majorResponseDTO, Code.SUCCESS);
@@ -62,9 +62,13 @@ public class MajorController {
      * @param  majorId   the ID of the major to be deleted
      * @return          a message details object with the result of the delete operation
      */
-    @DeleteMapping("/major/{majorId}")
+    @PutMapping("/major/delete/{majorId}")
     private MessageDetails<MajorResponseDTO> deleteMajor(@PathVariable UUID majorId) {
-        majorService.deleteMajor(majorId);
-        return new MessageDetails<MajorResponseDTO>("Delete major successfully", null, Code.SUCCESS);
+        MajorResponseDTO major =  majorService.deleteMajor(majorId);
+        if(major == null) {
+            return new MessageDetails<MajorResponseDTO>("Delete major failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<MajorResponseDTO>("Delete major successfully", major, Code.SUCCESS);
     }
+
 }
