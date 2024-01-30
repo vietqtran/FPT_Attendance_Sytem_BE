@@ -34,7 +34,8 @@ public class AccountServiceImplementation implements AccountService {
 
     @Override
     public Account findAccountByEmail(String email) {
-        return null;
+        System.out.println(email);
+        return accountRepository.findByEmail(email);
     }
 
 
