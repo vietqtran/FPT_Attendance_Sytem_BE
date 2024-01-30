@@ -33,6 +33,10 @@ public class StudentResponseDTO {
 
     private Date birthDay;
 
+    private String IDCard;
+
+    private boolean gender;
+
     private boolean status = true;
 
     private LocalDateTime createAt = LocalDateTime.now();
@@ -55,6 +59,8 @@ public class StudentResponseDTO {
         this.phone = student.getPhone();
         this.address = student.getAddress();
         this.birthDay = student.getBirthDay();
+        this.IDCard = student.getIDCard();
+        this.gender = student.isGender();
         this.createAt = student.getCreateAt();
         this.updateAt = student.getUpdateAt();
         this.status = student.isStatus();

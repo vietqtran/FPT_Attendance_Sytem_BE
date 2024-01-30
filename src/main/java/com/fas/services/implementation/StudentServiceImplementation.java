@@ -40,8 +40,17 @@ public class StudentServiceImplementation implements StudentService {
      */
     @Override
     public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
+        System.out.println(student);
         if (accountRepository.findByEmail(student.getEmail()) != null) {
             throw new StudentExceptions("Email already exists");
+        }
+
+        if(studentRepository.findByPhone(student.getPhone()) != null){
+            throw new StudentExceptions("Phone already exists");
+        }
+
+        if(studentRepository.findByIDCard(student.getIDCard()) != null){
+            throw new StudentExceptions("IDCard already exists");
         }
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
@@ -86,7 +95,12 @@ public class StudentServiceImplementation implements StudentService {
     public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
         Student newStudent = student.getStudent();
-
+        if(studentRepository.findByPhoneUpdate(newStudent.getPhone(), studentId) != null) {
+            throw new StudentExceptions("Phone already exists");
+        }
+        if(studentRepository.findByIDCardUpdate(newStudent.getIDCard(), studentId) != null) {
+            throw new StudentExceptions("ID Card already exists");
+        }
         if(newStudent.getEmail() != null){
             oldStudent.setEmail(newStudent.getEmail());
         }
@@ -120,6 +134,13 @@ public class StudentServiceImplementation implements StudentService {
         if(newStudent.getCampus() != null){
             oldStudent.setCampus(newStudent.getCampus());
         }
+        if(newStudent.isGender() != oldStudent.isGender()){
+            oldStudent.setGender(newStudent.isGender());
+        }
+        if(newStudent.getIDCard() != null){
+            oldStudent.setIDCard(newStudent.getIDCard());
+        }
+
         oldStudent.setUpdateAt(LocalDateTime.now());
 
         Student savedStudent = studentRepository.save(oldStudent);

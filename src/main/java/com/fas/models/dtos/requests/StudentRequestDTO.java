@@ -30,6 +30,10 @@ public class StudentRequestDTO {
 
     private Date birthDay;
 
+    private String IDCard;
+
+    private boolean gender;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
@@ -41,6 +45,6 @@ public class StudentRequestDTO {
     private Long campusId;
 
     public Student getStudent() {
-        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, createAt, updateAt, status, majorId, campusId);
+        return new Student(email, studentCode, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, IDCard, gender, createAt, updateAt, status, majorId, campusId);
     }
 }

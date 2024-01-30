@@ -41,6 +41,7 @@ public class Student {
     @NotBlank(message = "Profile image must not be blank")
     private String profileImage;
 
+    @Pattern(regexp = "^[0-9]*$", message = "Only number allowed")
     @NotBlank(message = "Phone number must not be blank")
     @Size(min = 10, max = 10, message = "Phone number must be 10 digits")
     private String phone;
@@ -50,6 +51,14 @@ public class Student {
 
     @NotNull(message = "Birth day must not be null")
     private Date birthDay;
+
+    @Pattern(regexp = "^[0-9]*$", message = "Only number allowed")
+    @NotBlank(message = "ID Card must not be blank")
+    @Size(min = 12, max = 12, message = "ID Card must be 12 digits")
+    private String IDCard;
+
+    @NotNull(message = "Gender must not be null")
+    private boolean gender;
 
     @ManyToOne
     @JoinColumn(name = "major_id")
@@ -64,7 +73,12 @@ public class Student {
 
     private LocalDateTime updateAt = LocalDateTime.now();
 
-    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId, Long campusId) {
+    public Student(UUID studentId) {
+        this.id = studentId;
+    }
+
+
+    public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, String idCard, boolean gender, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId, Long campusId) {
         this.email = email;
         this.studentCode = studentCode;
         this.username = username;
@@ -75,14 +89,12 @@ public class Student {
         this.phone = phone;
         this.address = address;
         this.birthDay = birthDay;
+        this.IDCard = idCard;
+        this.gender = gender;
         this.createAt = createAt;
         this.updateAt = updateAt;
         this.status = status;
         this.major = new Major(majorId);
         this.campus = new Campus(campusId);
-    }
-
-    public Student(UUID studentId) {
-        this.id = studentId;
     }
 }

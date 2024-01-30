@@ -4,10 +4,7 @@ import com.fas.models.entities.Instructor;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -35,13 +32,17 @@ public class InstructorRequestDTO {
 
     private Date birthDay;
 
+    private String IDCard;
+
+    private boolean gender;
+
     private boolean status = true;
 
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
     public Instructor getIntructor() {
-        return new Instructor(email, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, status, createAt, updateAt);
+        return new Instructor(email, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, IDCard, gender, status, createAt, updateAt);
     }
 
 }
