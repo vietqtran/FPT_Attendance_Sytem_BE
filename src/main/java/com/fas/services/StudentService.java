@@ -19,4 +19,6 @@ public interface StudentService {
     public StudentResponseDTO deleteStudent(UUID studentId) throws StudentExceptions;
 
     public List<StudentResponseDTO> getAllStudents();
+
+    public Student findStudentByEmail(String email);
 }

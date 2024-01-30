@@ -13,7 +13,7 @@ public interface MajorService {
 
     public MajorResponseDTO updateMajor(MajorRequestDTO major, UUID majorId);
 
-    public void deleteMajor(UUID majorId);
+    public MajorResponseDTO deleteMajor(UUID majorId);
 
     public Major getMajorById(UUID id);
 

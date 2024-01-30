@@ -93,4 +93,13 @@ public class StudentController {
         }
         return new MessageDetails<>("Get students successfully", new StudentResponseDTO(student), Code.SUCCESS);
     }
+
+    @GetMapping("/student/email/{email}")
+    private MessageDetails<StudentResponseDTO> getStudentByEmail(@PathVariable String email) {
+        Student student = studentService.findStudentByEmail(email);
+        if(student == null) {
+            return new MessageDetails<>("Get student failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get student successfully", new StudentResponseDTO(student), Code.SUCCESS);
+    }
 }

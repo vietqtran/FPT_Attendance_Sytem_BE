@@ -20,6 +20,8 @@ public class MajorResponseDTO {
 
     private String name;
 
+    private boolean status = true;
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
@@ -28,6 +30,7 @@ public class MajorResponseDTO {
         this.id = major.getId();
         this.code = major.getCode();
         this.name = major.getName();
+        this.status = major.isStatus();
         this.createAt = major.getCreateAt();
         this.updateAt = major.getUpdateAt();
     }
