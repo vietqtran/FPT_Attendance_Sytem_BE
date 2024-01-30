@@ -38,16 +38,17 @@ public class InstructorServiceImplementation implements InstructorService {
 
     @Override
     public InstructorResponseDTO createInstructor(InstructorRequestDTO instructorRequestDTO) throws InstructorExceptions {
+        System.out.println(instructorRequestDTO.getIdCard());
         if (accountRepository.findByEmail(instructorRequestDTO.getEmail()) != null) {
             throw new InstructorExceptions("Email already exists");
         }
 
         if(instructorRepository.findByPhone(instructorRequestDTO.getPhone()) != null){
-            throw new StudentExceptions("Phone already exists");
+            throw new InstructorExceptions("Phone already exists");
         }
 
         if(instructorRepository.findByIdCard(instructorRequestDTO.getIdCard()) != null){
-            throw new StudentExceptions("IdCard already exists");
+            throw new InstructorExceptions("IdCard already exists");
         }
 
         Instructor instructor = instructorRequestDTO.getIntructor();
