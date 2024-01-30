@@ -60,8 +60,8 @@ public class Account {
         this.password = password;
         this.role = new Role(roleId);
         this.campus = new Campus(campusId);
-        this.instructor = new Instructor(instructorId);
-        this.systemUser = new SystemUser(systemUserId);
-        this.student = new Student(studentId);
+        this.instructor = instructorId == null ? null : new Instructor(instructorId);
+        this.systemUser = systemUserId == null ? null : new SystemUser(systemUserId);
+        this.student = studentId == null ? null : new Student(studentId);
     }
 }

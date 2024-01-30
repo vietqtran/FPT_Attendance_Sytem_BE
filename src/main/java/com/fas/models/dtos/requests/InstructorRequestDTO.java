@@ -32,7 +32,9 @@ public class InstructorRequestDTO {
 
     private Date birthDay;
 
-    private String IDCard;
+    private String idCard;
+
+    private Long campusId;
 
     private boolean gender;
 
@@ -42,7 +44,7 @@ public class InstructorRequestDTO {
 
     private LocalDateTime updateAt = LocalDateTime.now();
     public Instructor getIntructor() {
-        return new Instructor(email, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, IDCard, gender, status, createAt, updateAt);
+        return new Instructor(email, username, firstName, middleName, lastName, profileImage, phone, address, birthDay, idCard, campusId, gender, status, createAt, updateAt);
     }
 
 }
