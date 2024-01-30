@@ -20,9 +20,9 @@ public interface StudentRepository extends JpaRepository<Student, UUID> {
     @Query("SELECT s FROM Student s WHERE s.phone = :phone AND s.id != :id")
     Student findByPhoneUpdate(@Param("phone") String phone, @Param("id") UUID id);
 
-    @Query("SELECT s FROM Student s WHERE s.IDCard = :IDCard")
+    @Query("SELECT s FROM Student s WHERE s.idCard = :IDCard")
     Student findByIDCard(@Param("IDCard") String IDCard);
 
-    @Query("SELECT s FROM Student s WHERE s.IDCard = :IDCard AND s.id != :id")
+    @Query("SELECT s FROM Student s WHERE s.idCard = :IDCard AND s.id != :id")
     Student findByIDCardUpdate(@Param("IDCard") String IDCard, @Param("id") UUID id);
 }
