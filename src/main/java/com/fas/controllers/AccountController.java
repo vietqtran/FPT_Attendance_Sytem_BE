@@ -27,6 +27,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Random;
+
 @RestController
 @RequestMapping("/account")
 public class AccountController {
@@ -105,16 +107,38 @@ public class AccountController {
         return new MessageDetails<>("Login failed", null, Code.FAILURE);
     }
 
+    public  String generatePassword() {
+        String words = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String radomString = "";
+
+        Random random = new Random();
+        for (int i = 0; i < 8; i++) {
+            int index = random.nextInt(words.length());
+            radomString += words.charAt(index);
+        }
+        return radomString;
+    }
+
+
     @GetMapping("/signin/forgotpassword")
     public MessageDetails<AccountResponseDTO> checkEmailExist(@RequestParam @Valid String email) throws AccountExceptions, RoleExceptions {
         Account account = accountService.findAccountByEmail(email);
-        System.out.println(email);
-        System.out.println(account);
-        if(account != null) {
-            AccountResponseDTO accountResponseDTO = new AccountResponseDTO(account);
-            return new MessageDetails<>("Login successfully", accountResponseDTO, Code.SUCCESS);
+        if(account == null) {
+            return new MessageDetails<>("Email not exist", null, Code.FAILURE);
         }
-        return new MessageDetails<>("Login failed", null, Code.FAILURE);
+        AccountResponseDTO accountResponseDTO = new AccountResponseDTO(account);
+
+        EmailRequestDTO details = new EmailRequestDTO();
+        String password = generatePassword();
+
+        details.setRecipient(account.getEmail());
+        details.setSubject("Reset Password");
+        details.setMsgBody("Your new password is: " + password);
+
+        String status = emailService.sendSimpleMail(details);
+        accountService.changePassword(password, account.getId());
+
+        return new MessageDetails<>("Change password successfully", accountResponseDTO, Code.SUCCESS);
     }
 
 
@@ -150,12 +174,8 @@ public class AccountController {
     }
 
     @PostMapping("/signin/sendMail")
-    public String
-    sendMail(@RequestBody EmailRequestDTO details)
-    {
-        String status
-                = emailService.sendSimpleMail(details);
-
+    public String sendMail(@RequestBody EmailRequestDTO details) {
+        String status = emailService.sendSimpleMail(details);
         return status;
     }
 
