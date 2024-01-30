@@ -50,7 +50,7 @@ public class MajorServiceImplementation implements MajorService {
     public MajorResponseDTO updateMajor(MajorRequestDTO major, UUID majorId) {
         Major existedMajor = getMajorById(majorId);
         Major newMajor = major.getMajor();
-        Major checkMajor = majorRepository.findByCode(newMajor.getCode());
+        Major checkMajor = majorRepository.findByUniqueCode(newMajor.getCode(), majorId);
         if(checkMajor != null) {
             throw new MajorExceptions("Major already exists");
         }
