@@ -55,7 +55,7 @@ public class Student {
     @Pattern(regexp = "^[0-9]*$", message = "Only number allowed")
     @NotBlank(message = "ID Card must not be blank")
     @Size(min = 12, max = 12, message = "ID Card must be 12 digits")
-    private String IDCard;
+    private String idCard;
 
     @NotNull(message = "Gender must not be null")
     private boolean gender;
@@ -89,7 +89,7 @@ public class Student {
         this.phone = phone;
         this.address = address;
         this.birthDay = birthDay;
-        this.IDCard = idCard;
+        this.idCard = idCard;
         this.gender = gender;
         this.createAt = createAt;
         this.updateAt = updateAt;

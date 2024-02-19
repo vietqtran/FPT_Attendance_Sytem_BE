@@ -40,7 +40,7 @@ public class StudentServiceImplementation implements StudentService {
             throw new StudentExceptions("Phone already exists");
         }
 
-        if(studentRepository.findByIDCard(student.getIDCard()) != null){
+        if(studentRepository.findByIDCard(student.getIdCard()) != null){
             throw new StudentExceptions("IDCard already exists");
         }
         Student newStudent = student.getStudent();
@@ -69,7 +69,7 @@ public class StudentServiceImplementation implements StudentService {
         if(studentRepository.findByPhoneUpdate(newStudent.getPhone(), studentId) != null) {
             throw new StudentExceptions("Phone already exists");
         }
-        if(studentRepository.findByIDCardUpdate(newStudent.getIDCard(), studentId) != null) {
+        if(studentRepository.findByIDCardUpdate(newStudent.getIdCard(), studentId) != null) {
             throw new StudentExceptions("ID Card already exists");
         }
         if(newStudent.getEmail() != null){
@@ -108,8 +108,8 @@ public class StudentServiceImplementation implements StudentService {
         if(newStudent.isGender() != oldStudent.isGender()){
             oldStudent.setGender(newStudent.isGender());
         }
-        if(newStudent.getIDCard() != null){
-            oldStudent.setIDCard(newStudent.getIDCard());
+        if(newStudent.getIdCard() != null){
+            oldStudent.setIdCard(newStudent.getIdCard());
         }
 
         oldStudent.setUpdateAt(LocalDateTime.now());

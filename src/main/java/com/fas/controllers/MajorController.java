@@ -3,7 +3,9 @@ package com.fas.controllers;
 
 import com.fas.models.dtos.requests.MajorRequestDTO;
 import com.fas.models.dtos.responses.MajorResponseDTO;
+import com.fas.models.dtos.responses.StudentResponseDTO;
 import com.fas.models.entities.Major;
+import com.fas.models.entities.Student;
 import com.fas.models.enums.Code;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.MajorService;
@@ -30,6 +32,15 @@ public class MajorController {
     private MessageDetails<MajorResponseDTO>  createMajor(@RequestBody @Valid MajorRequestDTO majorReq) {
         MajorResponseDTO major = majorService.createMajor(majorReq);
         return new MessageDetails<MajorResponseDTO>("Major created successfully", major, Code.SUCCESS);
+    }
+
+    @GetMapping("/major/{majorId}")
+    private MessageDetails<MajorResponseDTO> getMajorById(@PathVariable UUID majorId) {
+        Major major = majorService.getMajorById(majorId);
+        if(major == null) {
+            return new MessageDetails<>("Get major failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get major successfully", new MajorResponseDTO(major), Code.SUCCESS);
     }
 
     /**
@@ -70,5 +81,4 @@ public class MajorController {
         }
         return new MessageDetails<MajorResponseDTO>("Delete major successfully", major, Code.SUCCESS);
     }
-
 }

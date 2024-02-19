@@ -1,5 +1,6 @@
 package com.fas.models.dtos.responses;
 
+import com.fas.models.entities.Campus;
 import com.fas.models.entities.Instructor;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,6 +40,8 @@ public class InstructorResponseDTO {
 
     private boolean status = true;
 
+    private Campus campus;
+
     private LocalDateTime createAt = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
 
@@ -56,6 +59,7 @@ public class InstructorResponseDTO {
         this.IdCard = instructor.getIdCard();
         this.gender = instructor.isGender();
         this.status = instructor.isStatus();
+        this.campus = instructor.getCampus();
         this.createAt = instructor.getCreateAt();
         this.updateAt = instructor.getUpdateAt();
     }
