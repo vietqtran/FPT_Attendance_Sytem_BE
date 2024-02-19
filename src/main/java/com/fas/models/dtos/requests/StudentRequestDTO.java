@@ -2,6 +2,8 @@ package com.fas.models.dtos.requests;
 
 import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -40,8 +42,10 @@ public class StudentRequestDTO {
 
     private boolean status = true;
 
+    @NotNull(message = "Major must not be blank")
     private UUID majorId;
 
+    @NotNull(message = "Campus must not be blank")
     private Long campusId;
 
     public Student getStudent() {
