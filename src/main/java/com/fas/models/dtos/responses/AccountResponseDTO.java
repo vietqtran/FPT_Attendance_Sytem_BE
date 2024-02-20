@@ -25,19 +25,19 @@ public class AccountResponseDTO {
 
     private RoleResponseDTO role;
 
-    private Instructor instructor;
+    private InstructorResponseDTO instructor;
 
-    private SystemUser systemUser;
+    private SystemUserResponseDTO systemUser;
 
-    private Student student;
+    private StudentResponseDTO student;
     public AccountResponseDTO(Account account) {
         this.id = account.getId();
         this.email = account.getEmail();
         this.campus = new CampusResponseDTO(account.getCampus());
         this.role = new RoleResponseDTO(account.getRole());
         this.accessToken = accessToken;
-        this.instructor = account.getInstructor() == null ? null : new Instructor(account.getInstructor().getId());
-        this.systemUser = account.getSystemUser() == null ? null : new SystemUser(account.getSystemUser().getId());
-        this.student = account.getStudent() == null ? null : new Student(account.getStudent().getId());
+        this.instructor = account.getInstructor() == null ? null : new InstructorResponseDTO(account.getInstructor());
+        this.systemUser = account.getSystemUser() == null ? null : new SystemUserResponseDTO(account.getSystemUser());
+        this.student = account.getStudent() == null ? null : new StudentResponseDTO(account.getStudent());
     }
 }

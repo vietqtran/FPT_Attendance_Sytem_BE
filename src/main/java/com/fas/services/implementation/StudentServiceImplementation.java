@@ -1,16 +1,15 @@
 package com.fas.services.implementation;
 
+import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
-import com.fas.models.entities.Account;
-import com.fas.models.entities.Role;
 import com.fas.models.entities.Student;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.AccountRepository;
 import com.fas.repositories.StudentRepository;
+import com.fas.services.AccountService;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,16 +27,8 @@ public class StudentServiceImplementation implements StudentService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private AccountService accountService;
 
-
-    /**
-     * Creates a new student based on the information provided in the student request DTO.
-     *
-     * @param  student   the student request DTO containing the information for the new student
-     * @return          the student response DTO containing the information of the newly created student
-     * @throws StudentExceptions   if the email provided already exists in the account repository
-     */
     @Override
     public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
         System.out.println(student);
@@ -55,26 +46,12 @@ public class StudentServiceImplementation implements StudentService {
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
 
-        Account account = new Account();
-
-        account.setCreateAt(LocalDateTime.now());
-        account.setUpdateAt(LocalDateTime.now());
-        account.setEmail(student.getEmail());
-        account.setPassword(passwordEncoder.encode("123456"));
-        account.setRole(new Role(1));
-        account.setStudent(savedStudent);
-        account.setCampus(savedStudent.getCampus());
-        Account savedAccount = accountRepository.save(account);
+        AccountRequestDTO accountRequestDTO = new AccountRequestDTO(savedStudent.getEmail(), "123456", 2, 1, null, null, savedStudent.getId());
+        accountService.createAccount(accountRequestDTO);
 
         return new StudentResponseDTO(savedStudent);
     }
 
-    /**
-     * Find a student by their ID.
-     *
-     * @param  studentId  the ID of the student to find
-     * @return            the student found by the given ID
-     */
     @Override
     public Student findStudentById(UUID studentId) throws StudentExceptions {
         Optional<Student> existedStudent = studentRepository.findById(studentId);
@@ -84,13 +61,7 @@ public class StudentServiceImplementation implements StudentService {
         return existedStudent.get();
     }
 
-    /**
-     * Updates a student with the given student ID using the information in the provided student request.
-     *
-     * @param  studentId  the UUID of the student to be updated
-     * @param  student     the data to update the student with
-     * @return             the response containing the updated student information
-     */
+
     @Override
     public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
@@ -153,12 +124,6 @@ public class StudentServiceImplementation implements StudentService {
         return studentResponseDTO;
     }
 
-    /**
-     * Deletes a student by the given ID and returns the response DTO.
-     *
-     * @param  studentId   the ID of the student to be deleted
-     * @return             the response DTO for the deleted student
-     */
     @Override
     public StudentResponseDTO deleteStudent(UUID studentId) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
@@ -171,11 +136,6 @@ public class StudentServiceImplementation implements StudentService {
         return studentResponseDTO;
     }
 
-    /**
-     * Retrieves a list of all students and transforms them into StudentResponseDTO objects.
-     *
-     * @return         	a list of StudentResponseDTO objects representing the students
-     */
     @Override
     public List<StudentResponseDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();

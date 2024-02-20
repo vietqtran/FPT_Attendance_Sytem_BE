@@ -64,9 +64,8 @@ public class InstructorController {
     @PutMapping("/instructor/delete/{instructorId}")
     private MessageDetails<InstructorResponseDTO> deleteInstructor(@PathVariable UUID instructorId) throws InstructorExceptions {
         InstructorResponseDTO instructorResponseDTO = instructorService.deleteInstructor(instructorId);
-        System.out.println(instructorResponseDTO);
         if(instructorResponseDTO == null){
-            return new MessageDetails<>("Update Instructor failed", null, Code.FAILURE);
+            return new MessageDetails<>("Delete Instructor failed", null, Code.FAILURE);
         }
         return new MessageDetails<>("Instructor deleted successfully", instructorResponseDTO, Code.SUCCESS);
     }

@@ -128,4 +128,11 @@ public class GlobalExceptions {
         MessageDetails errorDetails = new MessageDetails("Instructor information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(EventExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleEventExceptions(EventExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Event information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }

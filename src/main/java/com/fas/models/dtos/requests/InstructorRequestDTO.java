@@ -34,6 +34,7 @@ public class InstructorRequestDTO {
 
     private String idCard;
 
+    @NotNull(message = "Campus must not be blank")
     private Long campusId;
 
     private boolean gender;

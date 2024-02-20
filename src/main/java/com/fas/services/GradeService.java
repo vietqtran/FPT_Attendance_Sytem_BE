@@ -12,12 +12,16 @@ public interface GradeService {
 
     public GradeResponseDTO updateGrade(UUID id, GradeRequestDTO gradeRequestDTO);
 
-    public void deleteGrade(UUID id);
+    public GradeResponseDTO deleteGrade(UUID id);
 
     public List<GradeResponseDTO> getAllGrade();
 
     public Grade getGradeById(UUID id);
 
     public Grade getGradeByCode(String code);
+
+    public GradeResponseDTO assignGradeToStudent(UUID gradeId, UUID studentId);
+
+    public GradeResponseDTO unassignGradeToStudent(UUID gradeId, UUID studentId);
 
 }
