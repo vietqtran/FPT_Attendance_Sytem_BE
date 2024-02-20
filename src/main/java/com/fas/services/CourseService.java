@@ -20,4 +20,7 @@ public interface CourseService {
     public List<CourseResponseDTO> getAllCourse();
 
     public Course getCourseByCode(String code);
+
+    public CourseResponseDTO assignCourseToStudent(UUID courseId, UUID studentId);
+    public CourseResponseDTO unAssignCourseToStudent(UUID courseId, UUID studentId);
 }

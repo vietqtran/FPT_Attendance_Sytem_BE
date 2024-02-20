@@ -63,7 +63,7 @@ public class GradeController {
 
     }
 
-    @PutMapping("/grade/{gradeId}/unassign/{studentId}")
+    @PutMapping("/grade/{gradeId}/unAssign/{studentId}")
     public MessageDetails<GradeResponseDTO> unassignCourse(@PathVariable UUID gradeId, @PathVariable UUID studentId) {
         GradeResponseDTO course = gradeService.unassignGradeToStudent(gradeId, studentId);
         if(course == null) {

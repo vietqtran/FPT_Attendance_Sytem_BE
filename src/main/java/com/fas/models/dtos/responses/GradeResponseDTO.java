@@ -30,5 +30,4 @@ public class GradeResponseDTO {
         this.createdAt = grade.getCreatedAt();
         this.updatedAt = grade.getUpdatedAt();
     }
-
 }

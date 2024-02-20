@@ -39,10 +39,7 @@ public class Course {
     private boolean status = true;
 
     @ManyToMany
-    @JoinTable(name = "course_student",
-            joinColumns = @JoinColumn(name = "course_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id"))
-    private List<Student> student = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

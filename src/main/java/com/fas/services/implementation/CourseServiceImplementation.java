@@ -4,10 +4,12 @@ import com.fas.models.dtos.requests.CourseRequestDTO;
 import com.fas.models.dtos.responses.CourseResponseDTO;
 import com.fas.models.entities.Course;
 import com.fas.models.entities.Major;
+import com.fas.models.entities.Student;
 import com.fas.models.exceptions.CourseExceptions;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.CourseRepository;
 import com.fas.services.CourseService;
+import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ public class CourseServiceImplementation implements CourseService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private StudentService studentService;
 
     /**
      * Creates a major using the provided course request.
@@ -130,5 +135,32 @@ public class CourseServiceImplementation implements CourseService {
     public Course getCourseByCode(String code) {
         Course course = courseRepository.findByCode(code);
         return course;
+    }
+    @Override
+    public CourseResponseDTO assignCourseToStudent(UUID courseId, UUID studentId) {
+        Course course = getCourseById(courseId);
+        Student student = studentService.findStudentById(studentId);
+
+        if(course.getStudents().contains(student)) {
+            throw new CourseExceptions("Student is already assigned to this course");
+        }
+
+        course.getStudents().add(student);
+        student.getCourses().add(course);
+        return new CourseResponseDTO(courseRepository.save(course));
+    }
+
+    @Override
+    public CourseResponseDTO unAssignCourseToStudent(UUID courseId, UUID studentId) {
+        Course course = getCourseById(courseId);
+        Student student = studentService.findStudentById(studentId);
+
+        if(!course.getStudents().contains(student)) {
+            throw new CourseExceptions("Student is not assigned to this course");
+        }
+
+        course.getStudents().remove(student);
+        student.getCourses().remove(course);
+        return new CourseResponseDTO(courseRepository.save(course));
     }
 }

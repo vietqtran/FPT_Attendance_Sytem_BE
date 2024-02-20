@@ -1,5 +1,6 @@
 package com.fas.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.URL;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -68,6 +71,14 @@ public class Student {
 
     @ManyToOne
     private Campus campus;
+
+    @JsonIgnore
+    @ManyToMany
+    private List<Course> courses = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany
+    private List<Grade> grades = new ArrayList<>();
 
     private LocalDateTime createAt = LocalDateTime.now();
 
