@@ -3,6 +3,9 @@ package com.fas.controllers;
 
 import com.fas.models.dtos.requests.CourseRequestDTO;
 import com.fas.models.dtos.responses.CourseResponseDTO;
+import com.fas.models.dtos.responses.EventResponseDTO;
+import com.fas.models.entities.Course;
+import com.fas.models.entities.Event;
 import com.fas.models.enums.Code;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.CourseService;
@@ -27,8 +30,17 @@ public class CourseController {
      */
     @PostMapping("/course")
     private MessageDetails<CourseResponseDTO> createCourse(@RequestBody @Valid CourseRequestDTO courseReq) {
-        CourseResponseDTO course = courseService.creatMajor(courseReq);
+        CourseResponseDTO course = courseService.creatCourse(courseReq);
         return new MessageDetails<CourseResponseDTO>("Course created successfully", course, Code.SUCCESS);
+    }
+
+    @GetMapping("/course/{courseId}")
+    private MessageDetails<CourseResponseDTO> getCourseById(@PathVariable UUID courseId) {
+        Course course = courseService.getCourseById(courseId);
+        if(course == null) {
+            return new MessageDetails<>("Get course failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get course successfully", new CourseResponseDTO(course), Code.SUCCESS);
     }
 
     /**
@@ -49,9 +61,9 @@ public class CourseController {
      * @param  courseId   the ID of the course to update
      * @return            details of the updated course with a success message
      */
-    @PutMapping("/course/{courseId}")
+    @PutMapping("/course/update/{courseId}")
     private MessageDetails<CourseResponseDTO> updateCourse(@RequestBody CourseRequestDTO courseReq, @PathVariable UUID courseId) {
-        CourseResponseDTO course = courseService.updateMajor(courseReq, courseId);
+        CourseResponseDTO course = courseService.updateCourse(courseReq, courseId);
         return new MessageDetails<CourseResponseDTO>("Update Course successfully", course, Code.SUCCESS);
     }
 
@@ -61,9 +73,12 @@ public class CourseController {
      * @param  courseId  the ID of the course to be deleted
      * @return          a message detailing the deletion along with the course response and status code
      */
-    @DeleteMapping("/course/{courseId}")
+    @PutMapping("/course/delete/{courseId}")
     private MessageDetails<CourseResponseDTO> deleteCourse(@PathVariable UUID courseId) {
-        CourseResponseDTO course = courseService.deleteMajor(courseId);
+        CourseResponseDTO course = courseService.deleteCourse(courseId);
+        if(course == null) {
+            return new MessageDetails<>("Delete Course failed", null, Code.FAILURE);
+        }
         return new MessageDetails<CourseResponseDTO>("Delete Course successfully", course, Code.SUCCESS);
     }
 }

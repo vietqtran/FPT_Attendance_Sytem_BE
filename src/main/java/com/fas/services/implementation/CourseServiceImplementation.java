@@ -5,6 +5,7 @@ import com.fas.models.dtos.responses.CourseResponseDTO;
 import com.fas.models.entities.Course;
 import com.fas.models.entities.Major;
 import com.fas.models.exceptions.CourseExceptions;
+import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.CourseRepository;
 import com.fas.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class CourseServiceImplementation implements CourseService {
      * @return                 the response DTO containing the newly created course
      */
     @Override
-    public CourseResponseDTO creatMajor(CourseRequestDTO courseRequest) {
+    public CourseResponseDTO creatCourse(CourseRequestDTO courseRequest) {
         Course course = courseRequest.getCourse();
         Course checkCourse = courseRepository.findByCode(course.getCode());
         if (checkCourse != null) {
@@ -48,13 +49,19 @@ public class CourseServiceImplementation implements CourseService {
      * @return         	description of the updated course response DTO
      */
     @Override
-    public CourseResponseDTO updateMajor(CourseRequestDTO courseRequest, UUID id) {
-        Course existedCourse = getMajorById(id);
+    public CourseResponseDTO updateCourse(CourseRequestDTO courseRequest, UUID id) {
+        Course existedCourse = getCourseById(id);
+        if(!existedCourse.isStatus()) {
+            throw new CourseExceptions("Not available to update");
+        }
+
         Course newCourse = courseRequest.getCourse();
-        Course checkCourse = courseRepository.findByCode(newCourse.getCode());
+        Course checkCourse = courseRepository.findByUniqueCode(newCourse.getCode(), id);
+
         if (checkCourse != null) {
             throw new CourseExceptions("Course already exists");
         }
+
         existedCourse.setCode(newCourse.getCode());
         existedCourse.setName(newCourse.getName());
         existedCourse.setUpdatedAt(LocalDateTime.now());
@@ -72,11 +79,11 @@ public class CourseServiceImplementation implements CourseService {
      * @return     The response DTO of the deleted major
      */
     @Override
-    public CourseResponseDTO deleteMajor(UUID id) {
-        Course existedCourse = getMajorById(id);
+    public CourseResponseDTO deleteCourse(UUID id) {
+        Course existedCourse = getCourseById(id);
 
         existedCourse.setUpdatedAt(LocalDateTime.now());
-        existedCourse.setStatus(false);
+        existedCourse.setStatus(!existedCourse.isStatus());
         Course savedCourse = courseRepository.save(existedCourse);
 
         return new CourseResponseDTO(savedCourse);
@@ -89,7 +96,7 @@ public class CourseServiceImplementation implements CourseService {
      * @return     the major course with the given ID
      */
     @Override
-    public Course getMajorById(UUID id) {
+    public Course getCourseById(UUID id) {
         Optional<Course> course = courseRepository.findById(id);
         if(course.isEmpty()) {
             throw new CourseExceptions("Course not found");

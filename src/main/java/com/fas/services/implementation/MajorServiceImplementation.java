@@ -76,10 +76,12 @@ public class MajorServiceImplementation implements MajorService {
     @Override
     public MajorResponseDTO deleteMajor(UUID majorId) {
         Major existedMajor = getMajorById(majorId);
-        System.out.println(existedMajor);
+
         existedMajor.setUpdateAt(LocalDateTime.now());
         existedMajor.setStatus(!existedMajor.isStatus());
+
         Major savedMajor = majorRepository.save(existedMajor);
+
         MajorResponseDTO majorResponseDTO = new MajorResponseDTO(savedMajor);
         return majorResponseDTO;
     }
