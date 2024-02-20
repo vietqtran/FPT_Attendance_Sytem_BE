@@ -80,6 +80,10 @@ public class InstructorServiceImplementation implements InstructorService {
     @Override
     public InstructorResponseDTO updateInstructor(UUID instructorId, InstructorRequestDTO instructorRequest) throws InstructorExceptions {
         Instructor instructor = findInstructorById(instructorId);
+        if(!instructor.isStatus()) {
+            throw new StudentExceptions("Not available to update");
+        }
+
         Instructor newInstructor = instructorRequest.getIntructor();
 
         if(instructorRepository.findByUniquePhone(newInstructor.getPhone(), instructorId) != null) {

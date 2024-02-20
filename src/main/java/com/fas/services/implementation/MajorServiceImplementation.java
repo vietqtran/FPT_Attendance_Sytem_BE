@@ -49,6 +49,11 @@ public class MajorServiceImplementation implements MajorService {
     @Override
     public MajorResponseDTO updateMajor(MajorRequestDTO major, UUID majorId) {
         Major existedMajor = getMajorById(majorId);
+
+        if(!existedMajor.isStatus()) {
+            throw new MajorExceptions("Not available to update");
+        }
+
         Major newMajor = major.getMajor();
         Major checkMajor = majorRepository.findByUniqueCode(newMajor.getCode(), majorId);
         if(checkMajor != null) {

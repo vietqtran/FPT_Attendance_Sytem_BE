@@ -94,6 +94,11 @@ public class StudentServiceImplementation implements StudentService {
     @Override
     public StudentResponseDTO updateStudent(UUID studentId, StudentRequestDTO student) throws StudentExceptions {
         Student oldStudent = findStudentById(studentId);
+
+        if(!oldStudent.isStatus()) {
+            throw new StudentExceptions("Not available to update");
+        }
+
         Student newStudent = student.getStudent();
         if(studentRepository.findByPhoneUpdate(newStudent.getPhone(), studentId) != null) {
             throw new StudentExceptions("Phone already exists");
