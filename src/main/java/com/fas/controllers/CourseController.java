@@ -25,6 +25,9 @@ public class CourseController {
     @PostMapping("/course")
     private MessageDetails<CourseResponseDTO> createCourse(@RequestBody @Valid CourseRequestDTO courseReq) {
         CourseResponseDTO course = courseService.creatCourse(courseReq);
+        if(course == null) {
+            return new MessageDetails<>("Course created failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Course created successfully", course, Code.SUCCESS);
     }
 
@@ -40,22 +43,37 @@ public class CourseController {
     @GetMapping("/course")
     private MessageDetails<List<CourseResponseDTO>> getAllCourse() {
         List<CourseResponseDTO> courses = courseService.getAllCourse();
-        return new MessageDetails<>("Get all Course successfully", courses, Code.SUCCESS);
+        if(courses == null) {
+            return new MessageDetails<>("Get all courses failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get all courses successfully", courses, Code.SUCCESS);
+    }
+
+    @GetMapping("/course/major/{majorId}")
+    private MessageDetails<List<CourseResponseDTO>> getAllCourseByMajor(@PathVariable UUID majorId) {
+        List<CourseResponseDTO> courses = courseService.getAllCourseByMajor(majorId);
+        if(courses == null) {
+            return new MessageDetails<>("Get all course failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get all course successfully", courses, Code.SUCCESS);
     }
 
     @PutMapping("/course/update/{courseId}")
     private MessageDetails<CourseResponseDTO> updateCourse(@RequestBody CourseRequestDTO courseReq, @PathVariable UUID courseId) {
         CourseResponseDTO course = courseService.updateCourse(courseReq, courseId);
-        return new MessageDetails<>("Update Course successfully", course, Code.SUCCESS);
+        if(course == null) {
+            return new MessageDetails<>("Update course failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Update course successfully", course, Code.SUCCESS);
     }
 
     @PutMapping("/course/delete/{courseId}")
     private MessageDetails<CourseResponseDTO> deleteCourse(@PathVariable UUID courseId) {
         CourseResponseDTO course = courseService.deleteCourse(courseId);
         if(course == null) {
-            return new MessageDetails<>("Delete Course failed", null, Code.FAILURE);
+            return new MessageDetails<>("Delete course failed", null, Code.FAILURE);
         }
-        return new MessageDetails<>("Delete Course successfully", course, Code.SUCCESS);
+        return new MessageDetails<>("Delete course successfully", course, Code.SUCCESS);
     }
 
     @PutMapping("/course/{courseId}/assign/{studentId}")

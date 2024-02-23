@@ -23,12 +23,6 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    /**
-     * A description of the entire Java function.
-     *
-     * @param  student  description of parameter
-     * @return          description of return value
-     */
     @PostMapping("/student")
     private MessageDetails<StudentResponseDTO> createStudent(@Valid @RequestBody StudentRequestDTO student) throws StudentExceptions {
         StudentResponseDTO newStudent = studentService.createStudent(student);
@@ -38,13 +32,6 @@ public class StudentController {
         return new MessageDetails<>("Student created successfully", newStudent, Code.SUCCESS);
     }
 
-    /**
-     * Update a student with the given studentId.
-     *
-     * @param  student    the updated student information
-     * @param  studentId  the ID of the student to be updated
-     * @return            a message details object with the updated student response and success code
-     */
     @PutMapping("/student/update/{studentId}")
     private MessageDetails<StudentResponseDTO> updateStudent(@Valid @RequestBody StudentRequestDTO student, @PathVariable UUID studentId) throws StudentExceptions {
         StudentResponseDTO updatedStudent = studentService.updateStudent(studentId, student);
@@ -55,13 +42,6 @@ public class StudentController {
     }
 
 
-    /**
-     * Deletes a student with the given ID.
-     *
-     * @param  studentId  the ID of the student to be deleted
-     * @return            a MessageDetails object containing the success message, the deleted student, and the code
-     * @throws StudentExceptions if an error occurs while deleting the student
-     */
     @PutMapping("/student/delete/{studentId}")
     private MessageDetails<StudentResponseDTO>  deleteStudent(@PathVariable UUID studentId) throws StudentExceptions {
         StudentResponseDTO student = studentService.deleteStudent(studentId);
@@ -71,11 +51,6 @@ public class StudentController {
         return new MessageDetails<>("Student deleted successfully", student, Code.SUCCESS);
     }
 
-    /**
-     * Get all students.
-     *
-     * @return         	message details with list of student response DTO and success code
-     */
     @GetMapping("/student")
     private MessageDetails<List<StudentResponseDTO>> getAllStudents() {
         List<StudentResponseDTO> student = studentService.getAllStudents();
@@ -101,5 +76,14 @@ public class StudentController {
             return new MessageDetails<>("Get student failed", null, Code.FAILURE);
         }
         return new MessageDetails<>("Get student successfully", new StudentResponseDTO(student), Code.SUCCESS);
+    }
+
+    @GetMapping("/student/grade/{gradeId}")
+    private MessageDetails<List<StudentResponseDTO>> getStudentsByGradeId(@PathVariable UUID gradeId) {
+        List<StudentResponseDTO> students = studentService.getStudentsByGradeId(gradeId);
+        if(students == null) {
+            return new MessageDetails<>("Get students failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get students successfully", students, Code.SUCCESS);
     }
 }

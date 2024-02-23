@@ -21,4 +21,6 @@ public interface StudentService {
     public List<StudentResponseDTO> getAllStudents();
 
     public Student findStudentByEmail(String email);
+
+    public List<StudentResponseDTO> getStudentsByGradeId(UUID gradeId);
 }

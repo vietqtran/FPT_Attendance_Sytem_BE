@@ -9,6 +9,7 @@ import com.fas.models.exceptions.CourseExceptions;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.CourseRepository;
 import com.fas.services.CourseService;
+import com.fas.services.MajorService;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,12 +30,9 @@ public class CourseServiceImplementation implements CourseService {
     @Autowired
     private StudentService studentService;
 
-    /**
-     * Creates a major using the provided course request.
-     *
-     * @param  courseRequest   the course request containing the course information
-     * @return                 the response DTO containing the newly created course
-     */
+    @Autowired
+    private MajorService majorService;
+
     @Override
     public CourseResponseDTO creatCourse(CourseRequestDTO courseRequest) {
         Course course = courseRequest.getCourse();
@@ -46,13 +44,6 @@ public class CourseServiceImplementation implements CourseService {
         return new CourseResponseDTO(newCourse);
     }
 
-    /**
-     * Updates the major course with the provided information and returns the updated course response DTO.
-     *
-     * @param  courseRequest	description of the course request DTO
-     * @param  id	description of the UUID for the major course
-     * @return         	description of the updated course response DTO
-     */
     @Override
     public CourseResponseDTO updateCourse(CourseRequestDTO courseRequest, UUID id) {
         Course existedCourse = getCourseById(id);
@@ -77,12 +68,6 @@ public class CourseServiceImplementation implements CourseService {
         return new CourseResponseDTO(savedCourse);
     }
 
-    /**
-     * Deletes a major by ID and returns the corresponding response DTO.
-     *
-     * @param  id  The UUID of the major to be deleted
-     * @return     The response DTO of the deleted major
-     */
     @Override
     public CourseResponseDTO deleteCourse(UUID id) {
         Course existedCourse = getCourseById(id);
@@ -94,12 +79,6 @@ public class CourseServiceImplementation implements CourseService {
         return new CourseResponseDTO(savedCourse);
     }
 
-    /**
-     * Retrieves a major course by its ID.
-     *
-     * @param  id  the UUID of the major course
-     * @return     the major course with the given ID
-     */
     @Override
     public Course getCourseById(UUID id) {
         Optional<Course> course = courseRepository.findById(id);
@@ -109,11 +88,6 @@ public class CourseServiceImplementation implements CourseService {
         return course.get();
     }
 
-    /**
-     * Retrieves all courses and converts them to response DTOs.
-     *
-     * @return         list of CourseResponseDTOs
-     */
     @Override
     public List<CourseResponseDTO> getAllCourse() {
         List<Course> courses = courseRepository.findAll();
@@ -125,12 +99,6 @@ public class CourseServiceImplementation implements CourseService {
         return listCourse;
     }
 
-    /**
-     * Retrieves a course by its code.
-     *
-     * @param  code  the code of the course to retrieve
-     * @return      the course with the specified code
-     */
     @Override
     public Course getCourseByCode(String code) {
         Course course = courseRepository.findByCode(code);
@@ -163,4 +131,18 @@ public class CourseServiceImplementation implements CourseService {
         student.getCourses().remove(course);
         return new CourseResponseDTO(courseRepository.save(course));
     }
+
+    @Override
+    public List<CourseResponseDTO> getAllCourseByMajor(UUID majorId) {
+        Major major = majorService.getMajorById(majorId);
+        List<Course> courses =  courseRepository.findCoursesByMajorsContaining(major);
+        List<CourseResponseDTO> listCourse = new ArrayList<>();
+        for(Course course : courses) {
+            CourseResponseDTO courseResponseDTO = new CourseResponseDTO(course);
+            listCourse.add(courseResponseDTO);
+        }
+        return listCourse;
+    }
+
+
 }

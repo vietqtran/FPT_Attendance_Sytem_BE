@@ -71,4 +71,13 @@ public class GradeController {
         }
         return new MessageDetails<GradeResponseDTO>("Unassign course successfully", course, Code.SUCCESS);
     }
+
+    @GetMapping("/grade/course/{courseId}")
+    private MessageDetails<List<GradeResponseDTO>> getAllGradeByCourse(@PathVariable UUID courseId) {
+        List<GradeResponseDTO> courses = gradeService.getAllGradeByCourse(courseId);
+        if(courses == null) {
+            return new MessageDetails<List<GradeResponseDTO>>("Get all grade failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<List<GradeResponseDTO>>("Get all grade successfully", courses, Code.SUCCESS);
+    }
 }

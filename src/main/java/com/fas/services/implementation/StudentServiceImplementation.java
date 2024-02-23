@@ -3,11 +3,15 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
+import com.fas.models.entities.Grade;
 import com.fas.models.entities.Student;
+import com.fas.models.exceptions.GradeExceptions;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.AccountRepository;
+import com.fas.repositories.GradeRepository;
 import com.fas.repositories.StudentRepository;
 import com.fas.services.AccountService;
+import com.fas.services.GradeService;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +32,9 @@ public class StudentServiceImplementation implements StudentService {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private GradeRepository gradeRepository;
 
     @Override
     public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
@@ -151,5 +158,17 @@ public class StudentServiceImplementation implements StudentService {
     public Student findStudentByEmail(String email) {
         Student student = studentRepository.findByEmail(email);
         return student;
+    }
+
+    @Override
+    public List<StudentResponseDTO> getStudentsByGradeId(UUID gradeId) {
+        Grade grade = gradeRepository.findById(gradeId).orElseThrow(() -> new GradeExceptions("Grade not found"));
+        List<Student> students = studentRepository.findStudentsByGradeId(grade.getId());
+        List<StudentResponseDTO> listStudent = new ArrayList<>();
+        for (Student student : students) {
+            StudentResponseDTO studentResponseDTO = new StudentResponseDTO(student);
+            listStudent.add(studentResponseDTO);
+        }
+        return listStudent;
     }
 }

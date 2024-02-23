@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS student (
-    id VARBINARY(16) PRIMARY KEY,
+    id BINARY(16) PRIMARY KEY,
     email VARCHAR(255),
     student_code VARCHAR(255),
     username VARCHAR(255),

@@ -1,6 +1,7 @@
 package com.fas.models.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -39,7 +40,18 @@ public class Course {
     private boolean status = true;
 
     @ManyToMany
+    @JoinTable(name="course_student", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students = new ArrayList<>();
+
+//    @ManyToMany
+
+    @ManyToMany(mappedBy = "courses")
+    @JsonIgnore
+    private List<Major> majors = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(name="course_grade", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "grade_id"))
+    private List<Grade> grades = new ArrayList<>();
 
     private LocalDateTime createdAt = LocalDateTime.now();
 

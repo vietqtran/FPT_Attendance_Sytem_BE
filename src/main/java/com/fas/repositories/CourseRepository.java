@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface CourseRepository extends JpaRepository<Course, UUID> {
@@ -13,4 +14,6 @@ public interface CourseRepository extends JpaRepository<Course, UUID> {
 
     @Query("SELECT m FROM Course m WHERE m.code = :code AND m.id != :id")
     Course findByUniqueCode(@Param("code") String code, @Param("id") UUID id);
+
+    List<Course> findCoursesByMajorsContaining(Major major);
 }
