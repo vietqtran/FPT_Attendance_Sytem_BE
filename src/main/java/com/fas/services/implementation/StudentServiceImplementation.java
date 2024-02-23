@@ -53,7 +53,7 @@ public class StudentServiceImplementation implements StudentService {
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
 
-        AccountRequestDTO accountRequestDTO = new AccountRequestDTO(savedStudent.getEmail(), "123456", 2, 1, null, null, savedStudent.getId());
+        AccountRequestDTO accountRequestDTO = new AccountRequestDTO(savedStudent.getEmail(), "123456", 1, 1, null, null, savedStudent.getId());
         accountService.createAccount(accountRequestDTO);
 
         return new StudentResponseDTO(savedStudent);
