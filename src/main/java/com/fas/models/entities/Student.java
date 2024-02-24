@@ -73,14 +73,12 @@ public class Student {
     private Campus campus;
 
     @ManyToMany(mappedBy = "students")
-    @JsonIgnore
     private List<Course> courses = new ArrayList<>();
 
     @ManyToMany(mappedBy = "students")
     private List<Grade> grades = new ArrayList<>();
 
     @ManyToMany(mappedBy = "students")
-    @JsonIgnore
     private List<Term> terms = new ArrayList<>();
 
     private LocalDateTime createAt = LocalDateTime.now();

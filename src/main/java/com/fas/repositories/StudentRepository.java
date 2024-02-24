@@ -26,6 +26,6 @@ public interface StudentRepository extends JpaRepository<Student, UUID> {
     @Query("SELECT s FROM Student s WHERE s.idCard = :IDCard AND s.id != :id")
     Student findByIDCardUpdate(@Param("IDCard") String IDCard, @Param("id") UUID id);
 
-    @Query("SELECT s FROM Student s JOIN s.grades g WHERE g.id = :gradeId")
-    List<Student> findStudentsByGradeId(@Param("gradeId") UUID gradeId);
+    @Query("SELECT s FROM Student s JOIN s.grades g JOIN s.courses c WHERE g.id = :gradeId AND c.id = :courseId")
+    List<Student> findStudentsByGradeIdAndCourseId(@Param("gradeId") UUID gradeId, @Param("courseId") UUID courseId);
 }

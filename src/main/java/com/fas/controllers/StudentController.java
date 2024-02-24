@@ -9,12 +9,12 @@ import com.fas.models.utils.MessageDetails;
 import com.fas.services.StudentService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -78,12 +78,21 @@ public class StudentController {
         return new MessageDetails<>("Get student successfully", new StudentResponseDTO(student), Code.SUCCESS);
     }
 
-    @GetMapping("/student/grade/{gradeId}")
-    private MessageDetails<List<StudentResponseDTO>> getStudentsByGradeId(@PathVariable UUID gradeId) {
-        List<StudentResponseDTO> students = studentService.getStudentsByGradeId(gradeId);
-        if(students == null) {
+    @GetMapping("/student/grade/{gradeId}/course/{courseId}")
+    private MessageDetails<?> getStudentsByGradeId(@PathVariable UUID gradeId,
+                                                   @PathVariable UUID courseId,
+                                                   @RequestParam(required = false) String page,
+                                                   @RequestParam(required = false) String size) {
+        Page<StudentResponseDTO> studentsPage = studentService.getStudentsByGradeId(gradeId, courseId, page, size);
+
+        if(studentsPage == null) {
             return new MessageDetails<>("Get students failed", null, Code.FAILURE);
         }
+
+        Map<String, Object> students = new HashMap<>();
+        students.put("content", studentsPage.getContent());
+        students.put("totalPages", studentsPage.getTotalPages());
+        students.put("currentPage", studentsPage.getNumber() + 1);
         return new MessageDetails<>("Get students successfully", students, Code.SUCCESS);
     }
 }
