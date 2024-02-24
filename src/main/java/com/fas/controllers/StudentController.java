@@ -23,12 +23,6 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    /**
-     * A description of the entire Java function.
-     *
-     * @param  student  description of parameter
-     * @return          description of return value
-     */
     @PostMapping("/student")
     private MessageDetails<StudentResponseDTO> createStudent(@Valid @RequestBody StudentRequestDTO student) throws StudentExceptions {
         StudentResponseDTO newStudent = studentService.createStudent(student);
@@ -38,13 +32,6 @@ public class StudentController {
         return new MessageDetails<>("Student created successfully", newStudent, Code.SUCCESS);
     }
 
-    /**
-     * Update a student with the given studentId.
-     *
-     * @param  student    the updated student information
-     * @param  studentId  the ID of the student to be updated
-     * @return            a message details object with the updated student response and success code
-     */
     @PutMapping("/student/update/{studentId}")
     private MessageDetails<StudentResponseDTO> updateStudent(@Valid @RequestBody StudentRequestDTO student, @PathVariable UUID studentId) throws StudentExceptions {
         StudentResponseDTO updatedStudent = studentService.updateStudent(studentId, student);

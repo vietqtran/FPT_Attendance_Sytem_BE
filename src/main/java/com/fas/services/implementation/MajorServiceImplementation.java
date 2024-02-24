@@ -22,12 +22,6 @@ public class MajorServiceImplementation implements MajorService {
     @Autowired
     private MajorRepository majorRepository;
 
-    /**
-     * Creates a new major based on the given major request.
-     *
-     * @param  majorReq  the major request containing the major to be created
-     * @return          the response containing the newly created major
-     */
     @Override
     public MajorResponseDTO createMajor(MajorRequestDTO majorReq) {
         Major newMajor = majorReq.getMajor();
@@ -39,13 +33,6 @@ public class MajorServiceImplementation implements MajorService {
         return new MajorResponseDTO(savedMajor);
     }
 
-    /**
-     * Updates a major with the given information and returns the updated major as a response DTO.
-     *
-     * @param  major    the MajorRequestDTO containing the updated major information
-     * @param  majorId  the UUID of the major to be updated
-     * @return          the MajorResponseDTO containing the updated major
-     */
     @Override
     public MajorResponseDTO updateMajor(MajorRequestDTO major, UUID majorId) {
         Major existedMajor = getMajorById(majorId);
@@ -67,12 +54,6 @@ public class MajorServiceImplementation implements MajorService {
         return new MajorResponseDTO(savedMajor);
     }
 
-    /**
-     * Deletes a major by its ID.
-     *
-     * @param  majorId  the ID of the major to be deleted
-     * @return          void
-     */
     @Override
     public MajorResponseDTO deleteMajor(UUID majorId) {
         Major existedMajor = getMajorById(majorId);
@@ -86,12 +67,6 @@ public class MajorServiceImplementation implements MajorService {
         return majorResponseDTO;
     }
 
-    /**
-     * Retrieves a Major object by its ID.
-     *
-     * @param  id  the UUID of the Major to retrieve
-     * @return     the Major object with the specified ID
-     */
     @Override
     public Major getMajorById(UUID id) {
         Optional<Major> major = majorRepository.findById(id);
@@ -101,11 +76,6 @@ public class MajorServiceImplementation implements MajorService {
         return major.get();
     }
 
-    /**
-     * Retrieves all majors and converts them to DTOs.
-     *
-     * @return         	list of MajorResponseDTO objects
-     */
     @Override
     public List<MajorResponseDTO> getAllMajors() {
         List<Major> majors = majorRepository.findAll();
