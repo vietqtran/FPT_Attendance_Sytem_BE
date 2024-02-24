@@ -9,6 +9,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -22,6 +24,8 @@ public class MajorResponseDTO {
 
     private boolean status = true;
 
+    private List<CourseResponseDTO> courses = new ArrayList();
+
     private LocalDateTime createAt = LocalDateTime.now();
 
     private LocalDateTime updateAt = LocalDateTime.now();
@@ -31,6 +35,7 @@ public class MajorResponseDTO {
         this.code = major.getCode();
         this.name = major.getName();
         this.status = major.isStatus();
+        this.courses = new ArrayList<>(major.getCourses().stream().map(CourseResponseDTO::new).toList());
         this.createAt = major.getCreateAt();
         this.updateAt = major.getUpdateAt();
     }
