@@ -53,12 +53,6 @@ public class FeedBack {
     @NotBlank(message = "Disposition Towards Students is required")
     private String dispositionStudents;
 
-    @NotBlank(message = "Professional Practices is required")
-    private String professionalPractices;
-
-    @NotBlank(message = "Appearance and Personal is required")
-    private String appearanceAndPersonal;
-
     @NotBlank(message = "Overall Rating is required")
     private String overall;
 
@@ -71,7 +65,7 @@ public class FeedBack {
     @NotNull(message = "updatedAt is required")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public FeedBack(String studentId, String instructorId, String courseId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents, String professionalPractices, String appearanceAndPersonal, String overall, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public FeedBack(String studentId, String instructorId, String courseId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents,  String overall, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.studentId = studentId;
         this.instructorId = instructorId;
         this.courseId = courseId;
@@ -82,8 +76,6 @@ public class FeedBack {
         this.responseQuestion = responseQuestion;
         this.teachingMethods = teachingMethods;
         this.dispositionStudents = dispositionStudents;
-        this.professionalPractices = professionalPractices;
-        this.appearanceAndPersonal = appearanceAndPersonal;
         this.overall = overall;
         this.comment = comment;
         this.createdAt = createdAt;

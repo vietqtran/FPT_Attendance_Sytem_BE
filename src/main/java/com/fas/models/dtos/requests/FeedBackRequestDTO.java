@@ -27,10 +27,6 @@ public class FeedBackRequestDTO {
 
     private String dispositionStudents;
 
-    private String professionalPractices;
-
-    private String appearanceAndPersonal;
-
     private String overall;
 
     private String comment;
@@ -51,8 +47,6 @@ public class FeedBackRequestDTO {
                 ResponseQuestion,
                 teachingMethods,
                 dispositionStudents,
-                professionalPractices,
-                appearanceAndPersonal,
                 overall,
                 comment,
                 createdAt,
