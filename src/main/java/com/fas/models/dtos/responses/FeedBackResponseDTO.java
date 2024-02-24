@@ -4,9 +4,13 @@ import com.fas.models.entities.FeedBack;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 public class FeedBackResponseDTO {
+
+    private UUID id;
+
     private String studentId;
 
     private String instructorId;
@@ -27,10 +31,6 @@ public class FeedBackResponseDTO {
 
     private String dispositionStudents;
 
-    private String professionalPractices;
-
-    private String appearanceAndPersonal;
-
     private String overall;
 
     private String comment;
@@ -40,6 +40,7 @@ public class FeedBackResponseDTO {
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     public FeedBackResponseDTO (FeedBack feedBack) {
+        this.id = feedBack.getId();
         this.studentId = feedBack.getStudentId();
         this.instructorId = feedBack.getInstructorId();
         this.courseId = feedBack.getCourseId();
@@ -50,8 +51,6 @@ public class FeedBackResponseDTO {
         this.ResponseQuestion = feedBack.getResponseQuestion();
         this.teachingMethods = feedBack.getTeachingMethods();
         this.dispositionStudents = feedBack.getDispositionStudents();
-        this.professionalPractices = feedBack.getProfessionalPractices();
-        this.appearanceAndPersonal = feedBack.getAppearanceAndPersonal();
         this.overall = feedBack.getOverall();
         this.comment = feedBack.getComment();
         this.createdAt = feedBack.getCreatedAt();

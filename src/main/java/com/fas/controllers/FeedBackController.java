@@ -41,7 +41,7 @@ public class FeedBackController {
     @GetMapping("/feedback")
     private MessageDetails<List<FeedBackResponseDTO>> getAllCourse() {
         List<FeedBackResponseDTO> feedBacks = feedBackService.getAllFeedBacks();
-        return new MessageDetails<>("Get all Course successfully", feedBacks, Code.SUCCESS);
+        return new MessageDetails<>("Get all Feedback successfully", feedBacks, Code.SUCCESS);
     }
 
     @PutMapping("/feedback/update/{feedbackId}")
@@ -49,5 +49,4 @@ public class FeedBackController {
         FeedBackResponseDTO feedback = feedBackService.updateFeedBack(feedbackId, feedbackReq);
         return new MessageDetails<>("Update Feedback successfully", feedback, Code.SUCCESS);
     }
-
 }

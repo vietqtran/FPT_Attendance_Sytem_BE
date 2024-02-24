@@ -44,8 +44,6 @@ public class FeedBackServiceImplementation implements FeedBackService {
         existedFeedback.setResponseQuestion(newFeedback.getResponseQuestion());
         existedFeedback.setTeachingMethods(newFeedback.getTeachingMethods());
         existedFeedback.setDispositionStudents(newFeedback.getDispositionStudents());
-        existedFeedback.setProfessionalPractices(newFeedback.getProfessionalPractices());
-        existedFeedback.setAppearanceAndPersonal(newFeedback.getAppearanceAndPersonal());
         existedFeedback.setOverall(newFeedback.getOverall());
 
         FeedBack savedFeedback = feedBackRepository.save(existedFeedback);
@@ -69,8 +67,6 @@ public class FeedBackServiceImplementation implements FeedBackService {
             FeedBackResponseDTO feedBackResponseDTO = new FeedBackResponseDTO(feedBack);
             listFeedBacks.add(feedBackResponseDTO);
         }
-        return null;
+        return listFeedBacks;
     }
-
-
 }
