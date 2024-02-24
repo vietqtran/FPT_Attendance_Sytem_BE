@@ -1,27 +1,31 @@
 package com.fas.models.dtos.responses;
 
-
+import com.fas.models.entities.Course;
+import com.fas.models.entities.Student;
 import com.fas.models.entities.Term;
-import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-@Data
 public class TermResponseDTO {
-
     private UUID id;
 
     private String name;
+
 
     private Date startAt;
 
     private Date endAt;
 
     private boolean status = true;
-    private LocalDateTime createAt = LocalDateTime.now();
+    private List<Course> courses = new ArrayList<>();
 
+    private List<Student> students = new ArrayList<>();
+
+    private LocalDateTime createAt = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
 
     public TermResponseDTO (Term term) {
@@ -32,5 +36,7 @@ public class TermResponseDTO {
         this.status = term.isStatus();
         this.createAt = term.getCreateAt();
         this.updateAt = term.getUpdateAt();
+        this.courses = term.getCourses();
+        this.students = term.getStudents();
     }
 }

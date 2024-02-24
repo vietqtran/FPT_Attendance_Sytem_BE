@@ -135,11 +135,11 @@ public class GlobalExceptions {
         MessageDetails errorDetails = new MessageDetails("Event information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
-
     @ExceptionHandler(TermExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleTermExceptions(TermExceptions ex, WebRequest request) {
         MessageDetails errorDetails = new MessageDetails("Term information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
 }

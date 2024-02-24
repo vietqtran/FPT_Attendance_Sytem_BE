@@ -1,6 +1,5 @@
 package com.fas.repositories;
 
-import com.fas.models.entities.Major;
 import com.fas.models.entities.Term;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
