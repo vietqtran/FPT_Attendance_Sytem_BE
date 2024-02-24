@@ -3,11 +3,8 @@ package com.fas.models.dtos.requests;
 import com.fas.models.entities.Course;
 import com.fas.models.entities.Student;
 import com.fas.models.entities.Term;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.FutureOrPresent;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 public class TermRequestDTO {
 
     private UUID id;

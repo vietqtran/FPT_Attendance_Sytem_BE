@@ -34,6 +34,7 @@ public class Term {
     @NotNull(message = "End date must not be blank")
     @FutureOrPresent(message = "End date must be in the present or future")
     private Date endAt;
+
     private boolean status = true;
     @ManyToMany
     @JoinTable(name = "course_term", joinColumns = @JoinColumn(name = "term_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))

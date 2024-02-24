@@ -3,6 +3,7 @@ package com.fas.models.dtos.responses;
 import com.fas.models.entities.Course;
 import com.fas.models.entities.Student;
 import com.fas.models.entities.Term;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Data
 public class TermResponseDTO {
     private UUID id;
 
