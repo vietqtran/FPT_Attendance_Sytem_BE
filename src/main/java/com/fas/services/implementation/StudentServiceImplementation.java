@@ -3,20 +3,28 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
+import com.fas.models.entities.Course;
+import com.fas.models.entities.Grade;
 import com.fas.models.entities.Student;
+import com.fas.models.exceptions.CourseExceptions;
+import com.fas.models.exceptions.GradeExceptions;
 import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.AccountRepository;
+import com.fas.repositories.CourseRepository;
+import com.fas.repositories.GradeRepository;
 import com.fas.repositories.StudentRepository;
 import com.fas.services.AccountService;
+import com.fas.services.GradeService;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class StudentServiceImplementation implements StudentService {
@@ -28,6 +36,12 @@ public class StudentServiceImplementation implements StudentService {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private GradeRepository gradeRepository;
+
+    @Autowired
+    private CourseRepository courseRepository;
 
     @Override
     public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
@@ -46,7 +60,7 @@ public class StudentServiceImplementation implements StudentService {
         Student newStudent = student.getStudent();
         Student savedStudent = studentRepository.save(newStudent);
 
-        AccountRequestDTO accountRequestDTO = new AccountRequestDTO(savedStudent.getEmail(), "123456", 2, 1, null, null, savedStudent.getId());
+        AccountRequestDTO accountRequestDTO = new AccountRequestDTO(savedStudent.getEmail(), "123456", 1, 1, null, null, savedStudent.getId());
         accountService.createAccount(accountRequestDTO);
 
         return new StudentResponseDTO(savedStudent);
@@ -152,4 +166,46 @@ public class StudentServiceImplementation implements StudentService {
         Student student = studentRepository.findByEmail(email);
         return student;
     }
+
+    @Override
+    public Page<StudentResponseDTO> getStudentsByGradeId(UUID gradeId, UUID courseId, String page, String size) {
+        Grade grade = gradeRepository.findById(gradeId).orElseThrow(() -> new GradeExceptions("Grade not found"));
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new CourseExceptions("Course not found"));
+        List<Student> students = studentRepository.findStudentsByGradeIdAndCourseId(grade.getId(), course.getId());
+        List<StudentResponseDTO> listStudent = new ArrayList<>();
+        for (Student student : students) {
+            StudentResponseDTO studentResponseDTO = new StudentResponseDTO(student);
+            listStudent.add(studentResponseDTO);
+        }
+        if (page == null || size == null) {
+            return new PageImpl<>(listStudent);
+        }
+        int pageNumber = Integer.parseInt(page);
+        int sizeNumber = Integer.parseInt(size);
+
+        int totalSize = listStudent.size();
+        int startIndex = (pageNumber - 1) * sizeNumber;
+        int endIndex = Math.min(startIndex + sizeNumber, totalSize);
+        int totalPage = (int) Math.ceil((double) totalSize / sizeNumber);
+
+        if(pageNumber <= 0) {
+            pageNumber = 1;
+        }
+
+        if (pageNumber > totalPage) {
+            pageNumber = totalPage;
+            startIndex = (pageNumber - 1) * sizeNumber;
+            endIndex = Math.min(startIndex + sizeNumber, totalSize);
+        }
+
+        List<StudentResponseDTO> listStudentPage;
+        if (startIndex < totalSize) {
+            listStudentPage = listStudent.subList(startIndex, endIndex);
+        } else {
+            listStudentPage = Collections.emptyList();
+        }
+
+        return new PageImpl<>(listStudentPage, PageRequest.of(pageNumber - 1, sizeNumber), totalSize);
+    }
+
 }

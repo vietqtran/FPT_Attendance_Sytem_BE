@@ -4,6 +4,8 @@ import com.fas.models.entities.Course;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -19,6 +21,8 @@ public class CourseResponseDTO {
 
     private Integer noCredit;
 
+    private List<GradeResponseDTO> grades = new ArrayList();
+
     private boolean status = true;
 
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -32,6 +36,7 @@ public class CourseResponseDTO {
         this.description = newCourse.getDescription();
         this.noCredit = newCourse.getNoCredit();
         this.status = newCourse.isStatus();
+        this.grades = new ArrayList(newCourse.getGrades().stream().map(GradeResponseDTO::new).toList());
         this.createdAt = newCourse.getCreatedAt();
         this.updatedAt = newCourse.getUpdatedAt();
     }

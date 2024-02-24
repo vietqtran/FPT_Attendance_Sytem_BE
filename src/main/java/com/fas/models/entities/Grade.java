@@ -1,5 +1,6 @@
 package com.fas.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,13 @@ public class Grade {
     private boolean status = true;
 
     @ManyToMany
+    @JoinTable(name="grade_student", joinColumns = @JoinColumn(name = "grade_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+    @JsonIgnore
     private List<Student> students = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "grades")
+    @JsonIgnore
+    private List<Course> courses = new ArrayList<> ();
 
     @OneToMany(mappedBy = "grade")
     private List<Assign> assigns = new ArrayList<>();

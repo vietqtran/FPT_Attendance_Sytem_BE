@@ -24,4 +24,6 @@ public interface GradeService {
 
     public GradeResponseDTO unassignGradeToStudent(UUID gradeId, UUID studentId);
 
+    public List<GradeResponseDTO> getAllGradeByCourse(UUID courseId);
+
 }

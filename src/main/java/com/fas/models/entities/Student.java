@@ -72,13 +72,14 @@ public class Student {
     @ManyToOne
     private Campus campus;
 
-    @JsonIgnore
-    @ManyToMany
+    @ManyToMany(mappedBy = "students")
     private List<Course> courses = new ArrayList<>();
 
-    @JsonIgnore
-    @ManyToMany
+    @ManyToMany(mappedBy = "students")
     private List<Grade> grades = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "students")
+    private List<Term> terms = new ArrayList<>();
 
     private LocalDateTime createAt = LocalDateTime.now();
 
@@ -87,7 +88,6 @@ public class Student {
     public Student(UUID studentId) {
         this.id = studentId;
     }
-
 
     public Student(String email, String studentCode, String username, String firstName, String middleName, String lastName, String profileImage, String phone, String address, Date birthDay, String idCard, boolean gender, LocalDateTime createAt, LocalDateTime updateAt, boolean status, UUID majorId, Long campusId) {
         this.email = email;
