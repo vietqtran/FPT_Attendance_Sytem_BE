@@ -50,6 +50,7 @@ public class TermServiceImplementation implements TermService {
 
         if(newTerm.getStartAt().after(newTerm.getEndAt())) {
             throw new TermExceptions("Start date must be before end date");
+            
         }
         existedTerm.setName(newTerm.getName());
         existedTerm.setStartAt(newTerm.getStartAt());
