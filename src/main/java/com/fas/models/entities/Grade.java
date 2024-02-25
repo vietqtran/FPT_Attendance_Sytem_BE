@@ -73,4 +73,8 @@ public class Grade {
         this.major = new Major(majorId);
         this.campus = new Campus(campusId);
     }
+
+    public Grade(UUID gradeId) {
+        this.id = gradeId;
+    }
 }

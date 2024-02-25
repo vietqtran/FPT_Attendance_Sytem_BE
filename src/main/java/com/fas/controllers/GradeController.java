@@ -37,7 +37,7 @@ public class GradeController {
     }
 
     @GetMapping("/grade/{gradeId}")
-    private MessageDetails<GradeResponseDTO> getAllGrade(@PathVariable UUID gradeId) {
+    private MessageDetails<GradeResponseDTO> getGrade(@PathVariable UUID gradeId) {
         Grade grade = gradeService.getGradeById(gradeId);
         if(grade == null) {
             return new MessageDetails<GradeResponseDTO>("Get grade failed", null, Code.FAILURE);

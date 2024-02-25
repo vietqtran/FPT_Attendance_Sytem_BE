@@ -67,4 +67,8 @@ public class Course {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+
+    public Course(UUID courseId) {
+        this.id = courseId;
+    }
 }
