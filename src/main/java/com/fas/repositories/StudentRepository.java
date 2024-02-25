@@ -34,19 +34,27 @@ public interface StudentRepository extends JpaRepository<Student, UUID> {
 
     List<Student> findStudentByMajorAndCampus(Major major, Campus campus);
 
-    @Query("SELECT s FROM Student s JOIN s.grades g JOIN s.courses c " +
-            "WHERE g.id = :gradeId AND c.id = :courseId " +
+    @Query("SELECT s FROM Student s " +
+            "JOIN s.grades g " +
+            "JOIN s.courses c " +
+            "JOIN s.terms t " +
+            "WHERE g.id = :gradeId " +
+            "AND c.id = :courseId " +
+            "AND t.id = :termId " +
             "AND (:majorId IS NULL OR s.major.id = :majorId) " +
             "AND (:searchValue IS NULL OR " +
-            "(LOWER(s.firstName) LIKE LOWER(CONCAT('%', :searchValue, '%')) " +
-            "OR LOWER(s.lastName) LIKE LOWER(CONCAT('%', :searchValue, '%')) " +
-            "OR LOWER(s.middleName) LIKE LOWER(CONCAT('%', :searchValue, '%')) " +
-            "OR LOWER(s.studentCode) LIKE LOWER(CONCAT('%', :searchValue, '%')))) " +
-            "ORDER BY CASE WHEN :order = 'ASC' THEN s.studentCode END ASC, " +
-            "CASE WHEN :order = 'DESC' THEN s.studentCode END DESC")
+            "    LOWER(s.firstName) LIKE LOWER(CONCAT('%', :searchValue, '%')) OR " +
+            "    LOWER(s.lastName) LIKE LOWER(CONCAT('%', :searchValue, '%')) OR " +
+            "    LOWER(s.middleName) LIKE LOWER(CONCAT('%', :searchValue, '%')) OR " +
+            "    LOWER(s.studentCode) LIKE LOWER(CONCAT('%', :searchValue, '%')) " +
+            ") " +
+            "ORDER BY " +
+            "    CASE WHEN :order = 'ASC' THEN s.studentCode END ASC, " +
+            "    CASE WHEN :order = 'DESC' THEN s.studentCode END DESC")
     List<Student> filterAndSortStudents(
             @Param("gradeId") UUID gradeId,
             @Param("courseId") UUID courseId,
+            @Param("termId") UUID termId,
             @Param("majorId") UUID majorId,
             @Param("searchValue") String searchValue,
             @Param("order") String order

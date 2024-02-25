@@ -24,5 +24,5 @@ public interface GradeRepository extends JpaRepository<Grade, UUID> {
     Grade findUniqueCodeToUpdate(@Param("code") String code, @Param("id") UUID id, @Param("campusId") Long campusId);
 
     @Query("SELECT g FROM Grade g WHERE :course MEMBER OF g.courses AND :term MEMBER OF g.terms")
-    List<Grade> findGradesByCoursesContainingAndTermsContaining(@Param("course") Course course, @Param("term") Term term);
+    List<Grade> findGradesByCoursesAndTerms(@Param("course") Course course, @Param("term") Term term);
 }

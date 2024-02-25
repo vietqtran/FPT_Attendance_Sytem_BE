@@ -78,15 +78,16 @@ public class StudentController {
         return new MessageDetails<>("Get student successfully", new StudentResponseDTO(student), Code.SUCCESS);
     }
 
-    @GetMapping("/student/grade/{gradeId}/course/{courseId}")
+    @GetMapping("/student/grade/{gradeId}/course/{courseId}/term/{termId}")
     private MessageDetails<?> getStudentsByGradeId(@PathVariable UUID gradeId,
                                                    @PathVariable UUID courseId,
+                                                   @PathVariable UUID termId,
                                                    @RequestParam(required = false) UUID majorId,
                                                    @RequestParam(required = false) String order,
                                                    @RequestParam(required = false) String search,
                                                    @RequestParam(required = false) String page,
                                                    @RequestParam(required = false) String size) {
-        Page<StudentResponseDTO> studentsPage = studentService.filterAndSortStudents(gradeId, courseId, majorId, search, order, page, size);
+        Page<StudentResponseDTO> studentsPage = studentService.filterAndSortStudents(gradeId, courseId, termId, majorId, search, order, page, size);
 
         if(studentsPage == null) {
             return new MessageDetails<>("Get students failed", null, Code.FAILURE);
