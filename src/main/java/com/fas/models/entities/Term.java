@@ -2,13 +2,16 @@ package com.fas.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,6 +27,15 @@ public class Term {
     @NotBlank(message = "Name must not be blank")
     private String name;
 
+    @NotNull(message = "Start date must not be blank")
+    @FutureOrPresent(message = "Start date must be in the present or future")
+    private Date startAt;
+
+    @NotNull(message = "End date must not be blank")
+    @FutureOrPresent(message = "End date must be in the present or future")
+    private Date endAt;
+
+    private boolean status = true;
     @ManyToMany
     @JoinTable(name = "course_term", joinColumns = @JoinColumn(name = "term_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
