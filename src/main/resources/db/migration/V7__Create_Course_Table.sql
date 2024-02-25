@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS course
     description VARCHAR(255),
     no_credit   INT,
     status      BOOLEAN ,
-    create_at   DATETIME,
-    update_at   DATETIME
+    created_at   DATETIME,
+    updated_at   DATETIME
 );

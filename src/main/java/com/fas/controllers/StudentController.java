@@ -95,4 +95,13 @@ public class StudentController {
         students.put("currentPage", studentsPage.getNumber() + 1);
         return new MessageDetails<>("Get students successfully", students, Code.SUCCESS);
     }
+
+    @GetMapping("/student/major/{majorId}/campus/{campusId}")
+    private MessageDetails<?> getStudentsByGradeId(@PathVariable UUID majorId, @PathVariable Long campusId) {
+        List<StudentResponseDTO> student = studentService.findStudentByMajorAndCampus(majorId, campusId);
+        if(student == null) {
+            return new MessageDetails<>("Get all students failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get all students successfully", student , Code.SUCCESS);
+    }
 }

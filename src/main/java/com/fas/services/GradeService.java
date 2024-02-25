@@ -3,6 +3,7 @@ package com.fas.services;
 import com.fas.models.dtos.requests.GradeRequestDTO;
 import com.fas.models.dtos.responses.GradeResponseDTO;
 import com.fas.models.entities.Grade;
+import com.fas.models.exceptions.GradeExceptions;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +18,8 @@ public interface GradeService {
     public List<GradeResponseDTO> getAllGrade();
 
     public Grade getGradeById(UUID id);
+
+    public List<GradeResponseDTO> getGradeByMajor(UUID id);
 
     public Grade getGradeByCode(String code);
 

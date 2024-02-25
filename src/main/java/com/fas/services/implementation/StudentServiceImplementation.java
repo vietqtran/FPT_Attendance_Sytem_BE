@@ -3,16 +3,11 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.AccountRequestDTO;
 import com.fas.models.dtos.requests.StudentRequestDTO;
 import com.fas.models.dtos.responses.StudentResponseDTO;
-import com.fas.models.entities.Course;
-import com.fas.models.entities.Grade;
-import com.fas.models.entities.Student;
+import com.fas.models.entities.*;
 import com.fas.models.exceptions.CourseExceptions;
 import com.fas.models.exceptions.GradeExceptions;
 import com.fas.models.exceptions.StudentExceptions;
-import com.fas.repositories.AccountRepository;
-import com.fas.repositories.CourseRepository;
-import com.fas.repositories.GradeRepository;
-import com.fas.repositories.StudentRepository;
+import com.fas.repositories.*;
 import com.fas.services.AccountService;
 import com.fas.services.GradeService;
 import com.fas.services.StudentService;
@@ -42,6 +37,11 @@ public class StudentServiceImplementation implements StudentService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private MajorRepository majorRepository;
+    @Autowired
+    private CampusRepository campusRepository;
 
     @Override
     public StudentResponseDTO createStudent(StudentRequestDTO student) throws StudentExceptions {
@@ -208,4 +208,15 @@ public class StudentServiceImplementation implements StudentService {
         return new PageImpl<>(listStudentPage, PageRequest.of(pageNumber - 1, sizeNumber), totalSize);
     }
 
+    public List<StudentResponseDTO> findStudentByMajorAndCampus(UUID majorId, Long campusId) {
+        Major major = majorRepository.findById(majorId).get();
+        Campus campus = campusRepository.findById(campusId).get();
+        List<Student> existedStudent = studentRepository.findStudentByMajorAndCampus(major, campus);
+        List<StudentResponseDTO> studentResponseDTOS = new ArrayList<>();
+        for (Student student : existedStudent) {
+            StudentResponseDTO studentResponseDTO = new StudentResponseDTO(student);
+            studentResponseDTOS.add(studentResponseDTO);
+        }
+        return studentResponseDTOS;
+    }
 }

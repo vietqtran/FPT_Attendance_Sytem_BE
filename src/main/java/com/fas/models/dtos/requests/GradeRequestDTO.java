@@ -18,8 +18,12 @@ public class GradeRequestDTO {
 
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    private UUID majorId;
+
+    private Long campusId;
+
     public Grade getGrade() {
-        return new Grade(id, code, status, createdAt, updatedAt);
+        return new Grade(id, code, status, createdAt, updatedAt, majorId, campusId);
     }
 
 }

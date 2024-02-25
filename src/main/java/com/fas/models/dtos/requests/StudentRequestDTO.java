@@ -42,10 +42,8 @@ public class StudentRequestDTO {
 
     private boolean status = true;
 
-    @NotNull(message = "Major must not be blank")
     private UUID majorId;
 
-    @NotNull(message = "Campus must not be blank")
     private Long campusId;
 
     public Student getStudent() {

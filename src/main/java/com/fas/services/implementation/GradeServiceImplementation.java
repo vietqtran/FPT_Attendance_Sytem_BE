@@ -1,14 +1,17 @@
 package com.fas.services.implementation;
 
+import com.fas.controllers.GradeController;
 import com.fas.models.dtos.requests.GradeRequestDTO;
 import com.fas.models.dtos.responses.GradeResponseDTO;
 import com.fas.models.entities.Course;
 import com.fas.models.entities.Grade;
+import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
 import com.fas.models.exceptions.GradeExceptions;
 import com.fas.repositories.GradeRepository;
 import com.fas.services.CourseService;
 import com.fas.services.GradeService;
+import com.fas.services.MajorService;
 import com.fas.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,10 +34,13 @@ public class GradeServiceImplementation implements GradeService {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private MajorService majorService;
+
     @Override
     public GradeResponseDTO createGrade(GradeRequestDTO gradeRequestDTO) {
         Grade grade = gradeRequestDTO.getGrade();
-        Grade checkGrade = gradeRepository.findByCode(grade.getCode());
+        Grade checkGrade = gradeRepository.findUniqueCodeToAdd(grade.getCode(), grade.getCampus().getId());
         if (checkGrade != null) {
             throw new GradeExceptions("Grade already exists");
         }
@@ -46,12 +52,14 @@ public class GradeServiceImplementation implements GradeService {
     public GradeResponseDTO updateGrade(UUID id, GradeRequestDTO gradeRequestDTO) {
         Grade existedGrade = getGradeById(id);
         Grade newGrade = gradeRequestDTO.getGrade();
-        Grade checkGrade = getGradeByCode(newGrade.getCode());
+        Grade checkGrade = gradeRepository.findUniqueCodeToUpdate(newGrade.getCode(), id, newGrade.getCampus().getId());
         if (checkGrade != null) {
             throw new GradeExceptions("Grade already exists");
         }
         existedGrade.setCode(newGrade.getCode());
         existedGrade.setUpdatedAt(LocalDateTime.now());
+        existedGrade.setMajor(newGrade.getMajor());
+        existedGrade.setCampus(newGrade.getCampus());
 
         Grade savedGrade = gradeRepository.save(existedGrade);
         return new GradeResponseDTO(savedGrade);
@@ -61,7 +69,7 @@ public class GradeServiceImplementation implements GradeService {
     public GradeResponseDTO deleteGrade(UUID id) {
         Grade existedGrade = getGradeById(id);
         existedGrade.setUpdatedAt(LocalDateTime.now());
-        existedGrade.setStatus(false);
+        existedGrade.setStatus(!existedGrade.isStatus());
         return new GradeResponseDTO(gradeRepository.save(existedGrade));
     }
 
@@ -86,6 +94,18 @@ public class GradeServiceImplementation implements GradeService {
     }
 
     @Override
+    public List<GradeResponseDTO> getGradeByMajor(UUID id) {
+        Major major = majorService.getMajorById(id);
+        List<Grade> grades = gradeRepository.findGradeByMajor(major);
+        List<GradeResponseDTO> gradeResponseDTOS = new ArrayList<>();
+        for (Grade grade : grades) {
+            GradeResponseDTO gradeResponseDTO = new GradeResponseDTO(grade);
+            gradeResponseDTOS.add(gradeResponseDTO);
+        }
+        return gradeResponseDTOS;
+    }
+
+    @Override
     public Grade getGradeByCode(String code) {
         Grade grade = gradeRepository.findByCode(code);
         return grade;
@@ -93,6 +113,10 @@ public class GradeServiceImplementation implements GradeService {
 
     public GradeResponseDTO assignGradeToStudent(UUID gradeId, UUID studentId) {
         Grade grade = getGradeById(gradeId);
+        if(grade.getStudents().toArray().length == 30) {
+            throw new GradeExceptions("Grade is full");
+        }
+
         Student student = studentService.findStudentById(studentId);
 
         if(grade.getStudents().contains(student)) {

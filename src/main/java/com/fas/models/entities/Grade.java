@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +25,15 @@ public class Grade {
     private String code;
 
     private boolean status = true;
+
+    @ManyToOne
+    @JsonIgnore
+    private Campus campus;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "major_id")
+    private Major major;
 
     @ManyToMany
     @JoinTable(name="grade_student", joinColumns = @JoinColumn(name = "grade_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
@@ -49,5 +57,15 @@ public class Grade {
         this.status = status;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public Grade(UUID id, String code, boolean status, LocalDateTime createdAt, LocalDateTime updatedAt, UUID majorId, Long campusId) {
+        this.id = id;
+        this.code = code;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.major = new Major(majorId);
+        this.campus = new Campus(campusId);
     }
 }

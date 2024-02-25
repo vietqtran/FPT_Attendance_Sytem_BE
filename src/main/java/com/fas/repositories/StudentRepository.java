@@ -1,5 +1,7 @@
 package com.fas.repositories;
 
+import com.fas.models.entities.Campus;
+import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,4 +30,6 @@ public interface StudentRepository extends JpaRepository<Student, UUID> {
 
     @Query("SELECT s FROM Student s JOIN s.grades g JOIN s.courses c WHERE g.id = :gradeId AND c.id = :courseId")
     List<Student> findStudentsByGradeIdAndCourseId(@Param("gradeId") UUID gradeId, @Param("courseId") UUID courseId);
+
+    List<Student> findStudentByMajorAndCampus(Major major, Campus campus);
 }

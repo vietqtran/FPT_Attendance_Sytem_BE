@@ -2,6 +2,7 @@ package com.fas.controllers;
 
 import com.fas.models.dtos.requests.GradeRequestDTO;
 import com.fas.models.dtos.responses.GradeResponseDTO;
+import com.fas.models.entities.Grade;
 import com.fas.models.enums.Code;
 import com.fas.models.utils.MessageDetails;
 import com.fas.services.GradeService;
@@ -35,8 +36,26 @@ public class GradeController {
         return new MessageDetails<List<GradeResponseDTO>>("Get all grade successfully", courses, Code.SUCCESS);
     }
 
+    @GetMapping("/grade/{gradeId}")
+    private MessageDetails<GradeResponseDTO> getAllGrade(@PathVariable UUID gradeId) {
+        Grade grade = gradeService.getGradeById(gradeId);
+        if(grade == null) {
+            return new MessageDetails<GradeResponseDTO>("Get grade failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<GradeResponseDTO>("Get grade successfully", new GradeResponseDTO(grade), Code.SUCCESS);
+    }
+
+    @GetMapping("/grade/major/{gradeId}")
+    private MessageDetails<List<GradeResponseDTO>> getAllGradeByMajor(@PathVariable UUID gradeId) {
+        List<GradeResponseDTO> grade = gradeService.getGradeByMajor(gradeId);
+        if(grade == null) {
+            return new MessageDetails<List<GradeResponseDTO>>("Get grade failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<List<GradeResponseDTO>>("Get grade successfully", grade, Code.SUCCESS);
+    }
+
     @PutMapping("/grade/update/{gradeId}")
-    private MessageDetails<GradeResponseDTO> updateCourse(@RequestBody GradeRequestDTO gradeReq, @PathVariable UUID gradeId) {
+    private MessageDetails<GradeResponseDTO> updateGrade(@RequestBody GradeRequestDTO gradeReq, @PathVariable UUID gradeId) {
         GradeResponseDTO course = gradeService.updateGrade(gradeId, gradeReq);
         if(course == null) {
             return new MessageDetails<GradeResponseDTO>("Update grade failed", null, Code.FAILURE);
@@ -45,7 +64,7 @@ public class GradeController {
     }
 
     @PutMapping("/grade/delete/{gradeId}")
-    private MessageDetails<GradeResponseDTO> deleteCourse(@PathVariable UUID gradeId) {
+    private MessageDetails<GradeResponseDTO> deleteGrade(@PathVariable UUID gradeId) {
         GradeResponseDTO course = gradeService.deleteGrade(gradeId);
         if(course == null) {
             return new MessageDetails<GradeResponseDTO>("Delete grade failed", null, Code.FAILURE);

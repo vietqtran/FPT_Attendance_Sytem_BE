@@ -1,4 +1,4 @@
-INSERT INTO course (id, code, name, description, no_credit, status, create_at, update_at)
+INSERT INTO course (id, code, name, description, no_credit, status, created_at, updated_at)
 VALUES
     (UUID_TO_BIN('a82586a3-d07d-11ee-a242-106530543950'), 'CSE101', 'Introduction to Computer Science',
      'A beginner course covering basic concepts of computer science', 3, true, CURRENT_TIMESTAMP,
