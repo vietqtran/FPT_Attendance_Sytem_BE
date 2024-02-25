@@ -26,5 +26,5 @@ public interface StudentService {
     public List<StudentResponseDTO> findStudentByMajorAndCampus(UUID majorId, Long campusId);
     Student findStudentByEmail(String email);
 
-    Page<StudentResponseDTO> getStudentsByGradeId(UUID gradeId, UUID courseId, String page, String size);
+    Page<StudentResponseDTO> filterAndSortStudents(UUID gradeId, UUID courseId, UUID majorId, String searchValue, String order, String page, String size);
 }

@@ -168,10 +168,11 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public Page<StudentResponseDTO> getStudentsByGradeId(UUID gradeId, UUID courseId, String page, String size) {
+    public Page<StudentResponseDTO> filterAndSortStudents(UUID gradeId, UUID courseId, UUID majorId, String searchValue, String order, String page, String size) {
         Grade grade = gradeRepository.findById(gradeId).orElseThrow(() -> new GradeExceptions("Grade not found"));
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new CourseExceptions("Course not found"));
-        List<Student> students = studentRepository.findStudentsByGradeIdAndCourseId(grade.getId(), course.getId());
+
+        List<Student> students = studentRepository.filterAndSortStudents(grade.getId(), course.getId(), majorId, searchValue, order);
         List<StudentResponseDTO> listStudent = new ArrayList<>();
         for (Student student : students) {
             StudentResponseDTO studentResponseDTO = new StudentResponseDTO(student);
