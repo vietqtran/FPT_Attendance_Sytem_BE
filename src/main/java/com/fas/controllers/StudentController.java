@@ -81,9 +81,12 @@ public class StudentController {
     @GetMapping("/student/grade/{gradeId}/course/{courseId}")
     private MessageDetails<?> getStudentsByGradeId(@PathVariable UUID gradeId,
                                                    @PathVariable UUID courseId,
+                                                   @RequestParam(required = false) UUID majorId,
+                                                   @RequestParam(required = false) String order,
+                                                   @RequestParam(required = false) String search,
                                                    @RequestParam(required = false) String page,
                                                    @RequestParam(required = false) String size) {
-        Page<StudentResponseDTO> studentsPage = studentService.getStudentsByGradeId(gradeId, courseId, page, size);
+        Page<StudentResponseDTO> studentsPage = studentService.filterAndSortStudents(gradeId, courseId, majorId, search, order, page, size);
 
         if(studentsPage == null) {
             return new MessageDetails<>("Get students failed", null, Code.FAILURE);
