@@ -152,7 +152,7 @@ public class GradeServiceImplementation implements GradeService {
     public List<GradeResponseDTO> getAllGradeByCourseAndTerm(UUID courseId, UUID termId) {
         Course course = courseService.getCourseById(courseId);
         Term term = termService.getTermById(termId);
-        List<Grade> grades = gradeRepository.findGradesByCoursesContainingAndTermsContaining(course, term);
+        List<Grade> grades = gradeRepository.findGradesByCoursesAndTerms(course, term);
         List<GradeResponseDTO> listGrade = new ArrayList<>();
         for (Grade grade : grades) {
             GradeResponseDTO gradeResponseDTO = new GradeResponseDTO(grade);

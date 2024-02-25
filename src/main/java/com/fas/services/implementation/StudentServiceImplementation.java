@@ -7,6 +7,7 @@ import com.fas.models.entities.*;
 import com.fas.models.exceptions.CourseExceptions;
 import com.fas.models.exceptions.GradeExceptions;
 import com.fas.models.exceptions.StudentExceptions;
+import com.fas.models.exceptions.TermExceptions;
 import com.fas.repositories.*;
 import com.fas.services.AccountService;
 import com.fas.services.GradeService;
@@ -37,6 +38,9 @@ public class StudentServiceImplementation implements StudentService {
 
     @Autowired
     private CourseRepository courseRepository;
+
+    @Autowired
+    private TermRepository termRepository;
 
     @Autowired
     private MajorRepository majorRepository;
@@ -168,11 +172,12 @@ public class StudentServiceImplementation implements StudentService {
     }
 
     @Override
-    public Page<StudentResponseDTO> filterAndSortStudents(UUID gradeId, UUID courseId, UUID majorId, String searchValue, String order, String page, String size) {
+    public Page<StudentResponseDTO> filterAndSortStudents(UUID gradeId, UUID courseId, UUID termId, UUID majorId, String searchValue, String order, String page, String size) {
         Grade grade = gradeRepository.findById(gradeId).orElseThrow(() -> new GradeExceptions("Grade not found"));
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new CourseExceptions("Course not found"));
+        Term term = termRepository.findById(termId).orElseThrow(() -> new TermExceptions("Term not found"));
 
-        List<Student> students = studentRepository.filterAndSortStudents(grade.getId(), course.getId(), majorId, searchValue, order);
+        List<Student> students = studentRepository.filterAndSortStudents(grade.getId(), course.getId(), term.getId(), majorId, searchValue, order);
         List<StudentResponseDTO> listStudent = new ArrayList<>();
         for (Student student : students) {
             StudentResponseDTO studentResponseDTO = new StudentResponseDTO(student);
