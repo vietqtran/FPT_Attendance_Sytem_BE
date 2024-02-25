@@ -142,4 +142,10 @@ public class GlobalExceptions {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(AssignFeedBackExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleAssignFeedBackExceptions(AssignFeedBackExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Assign Feed Back information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }
