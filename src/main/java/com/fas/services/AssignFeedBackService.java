@@ -11,6 +11,13 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AssignFeedBackService {
+    public AssignFeedBackResponseDTO creatFeedBack(AssignFeedBackRequestDTO assignFeedBackRequestDTO);
 
+    public AssignFeedBackResponseDTO updateFeedBack(AssignFeedBackRequestDTO assignFeedBackRequestDTO, UUID id);
 
+    public AssignFeedBackResponseDTO deleteFeedBack(UUID id);
+
+    public AssignFeedBackResponseDTO getAssignFeedBack(UUID id);
+
+    public List<AssignFeedBackResponseDTO> getAllAssignFeedBack();
 }
