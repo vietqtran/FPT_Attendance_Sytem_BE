@@ -23,6 +23,7 @@ public class AssignFeedBackController {
 
     @PostMapping("/assignFeedBack")
     private MessageDetails<AssignFeedBackResponseDTO> createAssignFeedBack(@RequestBody @Valid AssignFeedBackRequestDTO feedbackReq) {
+        System.out.println(feedbackReq);
         AssignFeedBackResponseDTO grade = assignFeedBackService.creatFeedBack(feedbackReq);
         if(grade == null) {
             return new MessageDetails<AssignFeedBackResponseDTO>("Create feedback failed", null, Code.FAILURE);

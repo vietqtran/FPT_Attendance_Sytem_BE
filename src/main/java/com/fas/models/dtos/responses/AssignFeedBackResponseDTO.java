@@ -14,8 +14,8 @@ import java.util.UUID;
 public class AssignFeedBackResponseDTO {
 
     private UUID id;
-    private Instructor instructorId;
-    private Grade gradeId;
+    private Instructor instructor;
+    private Grade grade;
     private Date startDate;
     private Date endDate;
     private boolean status;
@@ -24,8 +24,8 @@ public class AssignFeedBackResponseDTO {
 
     public AssignFeedBackResponseDTO (AssignFeedBack assignFeedBack) {
         this.id = assignFeedBack.getId();
-        this.instructorId = assignFeedBack.getInstructor();
-        this.gradeId = assignFeedBack.getGrade();
+        this.instructor = assignFeedBack.getInstructor();
+        this.grade = assignFeedBack.getGrade();
         this.startDate = assignFeedBack.getStartDate();
         this.endDate = assignFeedBack.getEndDate();
         this.status = assignFeedBack.isStatus();

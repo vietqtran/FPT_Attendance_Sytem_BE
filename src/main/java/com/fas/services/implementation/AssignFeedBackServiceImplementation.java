@@ -3,11 +3,13 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.AssignFeedBackRequestDTO;
 import com.fas.models.dtos.responses.AssignFeedBackResponseDTO;
 import com.fas.models.entities.AssignFeedBack;
+import com.fas.models.entities.Instructor;
 import com.fas.models.exceptions.AssignFeedBackExceptions;
 import com.fas.models.exceptions.CourseExceptions;
 import com.fas.models.exceptions.TermExceptions;
 import com.fas.repositories.AssignFeedBackRepository;
 import com.fas.services.AssignFeedBackService;
+import com.fas.services.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +25,14 @@ public class AssignFeedBackServiceImplementation implements AssignFeedBackServic
     @Autowired
     private AssignFeedBackRepository  assignFeedBackRepository;
 
+    @Autowired
+    private InstructorService instructorService;
+
     @Override
     public AssignFeedBackResponseDTO creatFeedBack(AssignFeedBackRequestDTO assignFeedBackRequestDTO) {
         AssignFeedBack feedBack = assignFeedBackRequestDTO.getAssignFeedBack();
-        AssignFeedBack checkFeedBack = assignFeedBackRepository.findAssignFeedBackByInstructorAndGrade(feedBack.getInstructor(), feedBack.getGrade());
+
+        AssignFeedBack checkFeedBack = assignFeedBackRepository.findAssignFeedBackByInstructorAndGrade(feedBack.getInstructor().getId(), feedBack.getGrade().getId());
         if (checkFeedBack != null) {
             throw new AssignFeedBackExceptions("FeedBack already exists");
         }
@@ -73,7 +79,7 @@ public class AssignFeedBackServiceImplementation implements AssignFeedBackServic
     public AssignFeedBackResponseDTO getAssignFeedBack(UUID id) {
         Optional<AssignFeedBack> feedBack = assignFeedBackRepository.findById(id);
         if(feedBack.isEmpty()) {
-            throw new CourseExceptions("FeedBack not found");
+            throw new AssignFeedBackExceptions("FeedBack not found");
         }
         return new AssignFeedBackResponseDTO(feedBack.get());
     }

@@ -11,7 +11,7 @@ import java.util.UUID;
 public interface AssignFeedBackRepository extends JpaRepository<AssignFeedBack, UUID> {
 
     @Query("SELECT m FROM AssignFeedBack m WHERE m.instructor.id = :instructorId AND m.grade.id = :gradeId")
-    AssignFeedBack findAssignFeedBackByInstructorAndGrade(Instructor instructor, Grade grade);
+    AssignFeedBack findAssignFeedBackByInstructorAndGrade(@Param("instructorId") UUID instructorId, @Param("gradeId") UUID gradeId);
 
     @Query("SELECT m FROM AssignFeedBack m WHERE m.instructor.id = :instructorId AND m.grade.id = :gradeId AND m.id != :id")
     AssignFeedBack findAssignFeedBackByInstructorAndGradeUnique(@Param("instructorId") UUID instructorId, @Param("id") UUID id, @Param("gradeId") UUID gradeId);

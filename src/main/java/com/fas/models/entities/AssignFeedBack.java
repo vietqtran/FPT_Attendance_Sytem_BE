@@ -24,11 +24,11 @@ public class AssignFeedBack {
     private UUID id;
 
     @NotNull(message = "Instructor is required")
-    @OneToOne
+    @ManyToOne
     private Instructor instructor;
 
     @NotNull(message = "Grade is required")
-    @OneToOne
+    @ManyToOne
     private Grade grade;
 
     @FutureOrPresent(message = "startDate must be in the present or future")
