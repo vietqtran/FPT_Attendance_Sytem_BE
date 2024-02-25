@@ -36,9 +36,9 @@ public class Term {
     private Date endAt;
 
     private boolean status = true;
-    @ManyToMany
-    @JoinTable(name = "course_term", joinColumns = @JoinColumn(name = "term_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
-    private List<Course> courses = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "terms")
+    private List<Grade> grades = new ArrayList<>();
 
     @ManyToMany
     @JsonIgnore

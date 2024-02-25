@@ -44,8 +44,6 @@ public class Course {
     @JoinTable(name="course_student", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
     private List<Student> students = new ArrayList<>();
 
-//    @ManyToMany
-
     @ManyToMany(mappedBy = "courses")
     @JsonIgnore
     private List<Major> majors = new ArrayList<>();

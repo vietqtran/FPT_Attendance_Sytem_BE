@@ -23,9 +23,9 @@ public class TermResponseDTO {
     private Date endAt;
 
     private boolean status = true;
-    private List<Course> courses = new ArrayList<>();
+    private List<GradeResponseDTO> grades = new ArrayList<>();
 
-    private List<Student> students = new ArrayList<>();
+    private List<StudentResponseDTO> students = new ArrayList<>();
 
     private LocalDateTime createAt = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
@@ -36,9 +36,9 @@ public class TermResponseDTO {
         this.startAt = term.getStartAt();
         this.endAt = term.getEndAt();
         this.status = term.isStatus();
+        this.grades = term.getGrades().stream().map(GradeResponseDTO::new).toList();
+        this.students = term.getStudents().stream().map(StudentResponseDTO::new).toList();
         this.createAt = term.getCreateAt();
         this.updateAt = term.getUpdateAt();
-        this.courses = term.getCourses();
-        this.students = term.getStudents();
     }
 }

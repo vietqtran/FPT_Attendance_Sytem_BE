@@ -3,16 +3,10 @@ package com.fas.services.implementation;
 import com.fas.controllers.GradeController;
 import com.fas.models.dtos.requests.GradeRequestDTO;
 import com.fas.models.dtos.responses.GradeResponseDTO;
-import com.fas.models.entities.Course;
-import com.fas.models.entities.Grade;
-import com.fas.models.entities.Major;
-import com.fas.models.entities.Student;
+import com.fas.models.entities.*;
 import com.fas.models.exceptions.GradeExceptions;
 import com.fas.repositories.GradeRepository;
-import com.fas.services.CourseService;
-import com.fas.services.GradeService;
-import com.fas.services.MajorService;
-import com.fas.services.StudentService;
+import com.fas.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +30,9 @@ public class GradeServiceImplementation implements GradeService {
 
     @Autowired
     private MajorService majorService;
+
+    @Autowired
+    private TermService termService;
 
     @Override
     public GradeResponseDTO createGrade(GradeRequestDTO gradeRequestDTO) {
@@ -143,6 +140,19 @@ public class GradeServiceImplementation implements GradeService {
     public List<GradeResponseDTO> getAllGradeByCourse(UUID courseId) {
         Course course = courseService.getCourseById(courseId);
         List<Grade> grades = gradeRepository.findGradesByCoursesContaining(course);
+        List<GradeResponseDTO> listGrade = new ArrayList<>();
+        for (Grade grade : grades) {
+            GradeResponseDTO gradeResponseDTO = new GradeResponseDTO(grade);
+            listGrade.add(gradeResponseDTO);
+        }
+        return listGrade;
+    }
+
+    @Override
+    public List<GradeResponseDTO> getAllGradeByCourseAndTerm(UUID courseId, UUID termId) {
+        Course course = courseService.getCourseById(courseId);
+        Term term = termService.getTermById(termId);
+        List<Grade> grades = gradeRepository.findGradesByCoursesContainingAndTermsContaining(course, term);
         List<GradeResponseDTO> listGrade = new ArrayList<>();
         for (Grade grade : grades) {
             GradeResponseDTO gradeResponseDTO = new GradeResponseDTO(grade);

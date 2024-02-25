@@ -44,6 +44,11 @@ public class Grade {
     @JsonIgnore
     private List<Course> courses = new ArrayList<> ();
 
+    @ManyToMany
+    @JoinTable(name="grade_term", joinColumns = @JoinColumn(name = "grade_id"), inverseJoinColumns = @JoinColumn(name = "term_id"))
+    @JsonIgnore
+    private List<Term> terms = new ArrayList<> ();
+
     @OneToMany(mappedBy = "grade")
     private List<Assign> assigns = new ArrayList<>();
 

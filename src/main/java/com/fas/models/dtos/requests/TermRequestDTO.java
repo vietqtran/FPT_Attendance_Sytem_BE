@@ -1,6 +1,7 @@
 package com.fas.models.dtos.requests;
 
 import com.fas.models.entities.Course;
+import com.fas.models.entities.Grade;
 import com.fas.models.entities.Student;
 import com.fas.models.entities.Term;
 import lombok.Data;
@@ -25,13 +26,13 @@ public class TermRequestDTO {
     private Date endAt;
 
     private boolean status = true;
-    private List<Course> courses = new ArrayList<>();
+    private List<Grade> grades = new ArrayList<>();
 
     private List<Student> students = new ArrayList<>();
 
     private LocalDateTime createAt = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
     public Term getTerm() {
-        return new Term(id, name, startAt, endAt,status, courses, students ,createAt, updateAt);
+        return new Term(id, name, startAt, endAt,status, grades, students ,createAt, updateAt);
     }
 }
