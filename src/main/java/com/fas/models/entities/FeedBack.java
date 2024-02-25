@@ -1,10 +1,7 @@
 package com.fas.models.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -12,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -25,12 +23,6 @@ public class FeedBack {
 
     @NotBlank(message = "StudentId is required")
     private String studentId;
-
-    @NotBlank(message = "InstructorId is required")
-    private String instructorId;
-
-    @NotBlank(message = "CourseId is required")
-    private String courseId;
 
     @NotBlank(message = "Punctuality is required")
     private String punctuality;
@@ -65,10 +57,11 @@ public class FeedBack {
     @NotNull(message = "updatedAt is required")
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public FeedBack(String studentId, String instructorId, String courseId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents,  String overall, String comment, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    @ManyToOne
+    private AssignFeedBack assignFeedBack;
+
+    public FeedBack(String studentId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents, String overall, String comment, UUID assignFeedBackId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.studentId = studentId;
-        this.instructorId = instructorId;
-        this.courseId = courseId;
         this.punctuality = punctuality;
         this.teachingSkill = teachingSkill;
         this.adequatelySyllabus = adequatelySyllabus;
@@ -78,6 +71,7 @@ public class FeedBack {
         this.dispositionStudents = dispositionStudents;
         this.overall = overall;
         this.comment = comment;
+        this.assignFeedBack = new AssignFeedBack(assignFeedBackId);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }

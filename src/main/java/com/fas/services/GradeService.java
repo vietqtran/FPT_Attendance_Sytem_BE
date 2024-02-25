@@ -34,4 +34,5 @@ public interface GradeService {
 
     public List<GradeResponseDTO> getAllGradeByCourse(UUID courseId);
 
+    public List<GradeResponseDTO> getAllGradeStudent(UUID studentId);
 }

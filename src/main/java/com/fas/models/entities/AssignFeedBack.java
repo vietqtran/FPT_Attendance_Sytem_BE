@@ -54,4 +54,8 @@ public class AssignFeedBack {
         this.createAt = createAt;
         this.updateAt = updateAt;
     }
+
+    public AssignFeedBack(UUID assignFeedBackId) {
+        this.id = assignFeedBackId;
+    }
 }

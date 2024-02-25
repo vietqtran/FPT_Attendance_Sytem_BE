@@ -110,10 +110,6 @@ public class GradeServiceImplementation implements GradeService {
 
     public GradeResponseDTO assignGradeToStudent(UUID gradeId, UUID studentId) {
         Grade grade = getGradeById(gradeId);
-        if(grade.getStudents().toArray().length == 30) {
-            throw new GradeExceptions("Grade is full");
-        }
-
         Student student = studentService.findStudentById(studentId);
 
         if(grade.getStudents().contains(student)) {
@@ -161,5 +157,15 @@ public class GradeServiceImplementation implements GradeService {
         return listGrade;
     }
 
-
+    @Override
+    public List<GradeResponseDTO> getAllGradeStudent(UUID studentId) {
+        Student student = studentService.findStudentById(studentId);
+        List<Grade> grades = gradeRepository.findGradesByStudentsContains(student);
+        List<GradeResponseDTO> listGrade = new ArrayList<>();
+        for (Grade grade : grades) {
+            GradeResponseDTO gradeResponseDTO = new GradeResponseDTO(grade);
+            listGrade.add(gradeResponseDTO);
+        }
+        return listGrade;
+    }
 }

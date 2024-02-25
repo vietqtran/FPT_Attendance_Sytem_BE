@@ -1,5 +1,6 @@
 package com.fas.models.dtos.responses;
 
+import com.fas.models.entities.AssignFeedBack;
 import com.fas.models.entities.FeedBack;
 import lombok.Data;
 
@@ -12,10 +13,6 @@ public class FeedBackResponseDTO {
     private UUID id;
 
     private String studentId;
-
-    private String instructorId;
-
-    private String courseId;
 
     private String Punctuality;
 
@@ -35,6 +32,8 @@ public class FeedBackResponseDTO {
 
     private String comment;
 
+    private AssignFeedBack assignFeedBack;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt = LocalDateTime.now();
@@ -42,8 +41,6 @@ public class FeedBackResponseDTO {
     public FeedBackResponseDTO (FeedBack feedBack) {
         this.id = feedBack.getId();
         this.studentId = feedBack.getStudentId();
-        this.instructorId = feedBack.getInstructorId();
-        this.courseId = feedBack.getCourseId();
         this.Punctuality = feedBack.getPunctuality();
         this.teachingSkill = feedBack.getTeachingSkill();
         this.adequatelySyllabus = feedBack.getAdequatelySyllabus();
@@ -53,6 +50,7 @@ public class FeedBackResponseDTO {
         this.dispositionStudents = feedBack.getDispositionStudents();
         this.overall = feedBack.getOverall();
         this.comment = feedBack.getComment();
+        this.assignFeedBack = feedBack.getAssignFeedBack();
         this.createdAt = feedBack.getCreatedAt();
         this.updatedAt = feedBack.getUpdatedAt();
     }

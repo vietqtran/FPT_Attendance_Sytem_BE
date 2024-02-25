@@ -108,4 +108,13 @@ public class GradeController {
         }
         return new MessageDetails<List<GradeResponseDTO>>("Get all grade successfully", courses, Code.SUCCESS);
     }
+
+    @GetMapping("/grade/student/{studentId}")
+    private MessageDetails<List<GradeResponseDTO>> getAllGradeByStudent(@PathVariable UUID studentId) {
+        List<GradeResponseDTO> grades = gradeService.getAllGradeStudent(studentId);
+        if(grades == null) {
+            return new MessageDetails<List<GradeResponseDTO>>("Get all grade failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<List<GradeResponseDTO>>("Get all grade successfully", grades, Code.SUCCESS);
+    }
 }

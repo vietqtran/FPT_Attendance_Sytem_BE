@@ -18,6 +18,7 @@ import java.util.UUID;
 
 @RestController
 public class AssignFeedBackController {
+
     @Autowired
     private AssignFeedBackService assignFeedBackService;
 
@@ -65,5 +66,14 @@ public class AssignFeedBackController {
             return new MessageDetails<AssignFeedBackResponseDTO>("Delete grade failed", null, Code.FAILURE);
         }
         return new MessageDetails<AssignFeedBackResponseDTO>("Delete grade successfully", feedBackResponseDTO, Code.SUCCESS);
+    }
+
+    @GetMapping("/assignFeedBack/grade/{gradeId}")
+    private MessageDetails<List<AssignFeedBackResponseDTO>> getAssignFeedBackByGrade(@PathVariable UUID gradeId) {
+        List<AssignFeedBackResponseDTO> feedBack = assignFeedBackService.getAllAssignFeedBackByGrade(gradeId);
+        if(feedBack == null) {
+            return new MessageDetails<List<AssignFeedBackResponseDTO>>("Get grade failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<List<AssignFeedBackResponseDTO>>("Get grade successfully", feedBack, Code.SUCCESS);
     }
 }

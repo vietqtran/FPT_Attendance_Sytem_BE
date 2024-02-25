@@ -50,5 +50,9 @@ public class FeedBackController {
         return new MessageDetails<>("Update Feedback successfully", feedback, Code.SUCCESS);
     }
 
-
+    @GetMapping("/feedback/assign/{assignId}/student/{studentId}")
+    private MessageDetails<FeedBackResponseDTO> getAllCourse(@PathVariable UUID assignId, @PathVariable UUID studentId) {
+        FeedBack feedBacks = feedBackService.checkFeedBack(assignId, studentId);
+        return new MessageDetails<>("Get all Feedback successfully", new FeedBackResponseDTO(feedBacks), Code.SUCCESS);
+    }
 }

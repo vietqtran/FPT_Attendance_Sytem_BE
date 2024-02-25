@@ -15,4 +15,6 @@ public interface AssignFeedBackRepository extends JpaRepository<AssignFeedBack, 
 
     @Query("SELECT m FROM AssignFeedBack m WHERE m.instructor.id = :instructorId AND m.grade.id = :gradeId AND m.id != :id")
     AssignFeedBack findAssignFeedBackByInstructorAndGradeUnique(@Param("instructorId") UUID instructorId, @Param("id") UUID id, @Param("gradeId") UUID gradeId);
+
+    List<AssignFeedBack> findByGrade(Grade grade);
 }

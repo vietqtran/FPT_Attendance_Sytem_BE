@@ -3,11 +3,14 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.AssignFeedBackRequestDTO;
 import com.fas.models.dtos.responses.AssignFeedBackResponseDTO;
 import com.fas.models.entities.AssignFeedBack;
+import com.fas.models.entities.Grade;
 import com.fas.models.entities.Instructor;
 import com.fas.models.exceptions.AssignFeedBackExceptions;
 import com.fas.models.exceptions.CourseExceptions;
+import com.fas.models.exceptions.GradeExceptions;
 import com.fas.models.exceptions.TermExceptions;
 import com.fas.repositories.AssignFeedBackRepository;
+import com.fas.repositories.GradeRepository;
 import com.fas.services.AssignFeedBackService;
 import com.fas.services.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,7 @@ public class AssignFeedBackServiceImplementation implements AssignFeedBackServic
     private AssignFeedBackRepository  assignFeedBackRepository;
 
     @Autowired
-    private InstructorService instructorService;
+    private GradeRepository gradeRepository;
 
     @Override
     public AssignFeedBackResponseDTO creatFeedBack(AssignFeedBackRequestDTO assignFeedBackRequestDTO) {
@@ -87,6 +90,21 @@ public class AssignFeedBackServiceImplementation implements AssignFeedBackServic
     @Override
     public List<AssignFeedBackResponseDTO> getAllAssignFeedBack() {
         List<AssignFeedBack> feedBacks = assignFeedBackRepository.findAll();
+        List<AssignFeedBackResponseDTO> listFeedBacks = new ArrayList<>();
+        for (AssignFeedBack feedBack : feedBacks) {
+            AssignFeedBackResponseDTO feedBackResponseDTO = new AssignFeedBackResponseDTO(feedBack);
+            listFeedBacks.add(feedBackResponseDTO);
+        }
+        return listFeedBacks;
+    }
+
+    @Override
+    public List<AssignFeedBackResponseDTO> getAllAssignFeedBackByGrade(UUID gradeId) {
+        Grade grade = gradeRepository.findById(gradeId).get();
+        if (grade == null) {
+            throw new GradeExceptions("Grade not found");
+        }
+        List<AssignFeedBack> feedBacks = assignFeedBackRepository.findByGrade(grade);
         List<AssignFeedBackResponseDTO> listFeedBacks = new ArrayList<>();
         for (AssignFeedBack feedBack : feedBacks) {
             AssignFeedBackResponseDTO feedBackResponseDTO = new AssignFeedBackResponseDTO(feedBack);
