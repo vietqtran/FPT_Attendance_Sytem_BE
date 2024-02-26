@@ -1,6 +1,7 @@
 package com.fas.services;
 
 import com.fas.models.dtos.requests.FeedBackRequestDTO;
+import com.fas.models.dtos.responses.CourseResponseDTO;
 import com.fas.models.dtos.responses.FeedBackResponseDTO;
 import com.fas.models.entities.FeedBack;
 import com.fas.models.exceptions.CourseExceptions;
@@ -18,4 +19,6 @@ public interface FeedBackService {
     public List<FeedBackResponseDTO> getAllFeedBacks();
 
     public FeedBack checkFeedBack(UUID assignFeedBackId, UUID studentId);
+
+    public FeedBackResponseDTO deleteFeedBack(UUID id);
 }

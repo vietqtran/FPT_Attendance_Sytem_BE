@@ -1,13 +1,11 @@
 package com.fas.models.dtos.responses;
 
-import com.fas.models.entities.AssignFeedBack;
-import com.fas.models.entities.Course;
-import com.fas.models.entities.Grade;
-import com.fas.models.entities.Instructor;
+import com.fas.models.entities.*;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -19,6 +17,7 @@ public class AssignFeedBackResponseDTO {
     private Date startDate;
     private Date endDate;
     private boolean status;
+    private List<FeedBack> feedBacks;
     private LocalDateTime createAt;
     private LocalDateTime updateAt;
 
@@ -31,5 +30,6 @@ public class AssignFeedBackResponseDTO {
         this.status = assignFeedBack.isStatus();
         this.createAt = assignFeedBack.getCreateAt();
         this.updateAt = assignFeedBack.getUpdateAt();
+        this.feedBacks = assignFeedBack.getFeedBacks();
     }
 }

@@ -30,6 +30,8 @@ public class FeedBackRequestDTO {
 
     private UUID assignFeedBackId;
 
+    private boolean status = true;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt = LocalDateTime.now();
@@ -46,6 +48,7 @@ public class FeedBackRequestDTO {
                 dispositionStudents,
                 overall,
                 comment,
+                status,
                 assignFeedBackId,
                 createdAt,
                 updatedAt

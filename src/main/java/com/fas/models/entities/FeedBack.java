@@ -52,6 +52,8 @@ public class FeedBack {
     @NotBlank(message = "Comment is required")
     private String comment;
 
+    private boolean status = true;
+
     @NotNull(message = "createdAt is required")
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -62,7 +64,7 @@ public class FeedBack {
     private AssignFeedBack assignFeedBack;
 
 
-    public FeedBack(UUID studentId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents, String overall, String comment, UUID assignFeedBackId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public FeedBack(UUID studentId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents, String overall, String comment, boolean status, UUID assignFeedBackId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.student = new Student(studentId);
         this.punctuality = punctuality;
         this.teachingSkill = teachingSkill;
@@ -73,6 +75,7 @@ public class FeedBack {
         this.dispositionStudents = dispositionStudents;
         this.overall = overall;
         this.comment = comment;
+        this.status = status;
         this.assignFeedBack = new AssignFeedBack(assignFeedBackId);
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;

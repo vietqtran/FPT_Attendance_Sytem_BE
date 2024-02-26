@@ -59,6 +59,15 @@ public class FeedBackController {
         return new MessageDetails<>("Update feedback successfully", feedback, Code.SUCCESS);
     }
 
+    @PutMapping("/feedback/delete/{feedbackId}")
+    private MessageDetails<FeedBackResponseDTO> updateFeedBack(@PathVariable UUID feedbackId) {
+        FeedBackResponseDTO feedback = feedBackService.deleteFeedBack(feedbackId);
+        if(feedback == null) {
+            return new MessageDetails<>("Update feedback failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Update feedback successfully", feedback, Code.SUCCESS);
+    }
+
     @GetMapping("/feedback/assign/{assignId}/student/{studentId}")
     private MessageDetails<FeedBackResponseDTO> getAllCFeedBacksByAssignAndStudent(@PathVariable UUID assignId, @PathVariable UUID studentId) {
         FeedBack feedBacks = feedBackService.checkFeedBack(assignId, studentId);
@@ -67,4 +76,5 @@ public class FeedBackController {
         }
         return new MessageDetails<>("Get all feedbacks successfully", new FeedBackResponseDTO(feedBacks), Code.SUCCESS);
     }
+
 }

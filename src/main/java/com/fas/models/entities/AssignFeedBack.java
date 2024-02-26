@@ -1,5 +1,6 @@
 package com.fas.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -38,6 +40,10 @@ public class AssignFeedBack {
     @NotNull(message = "endDate is required")
     @FutureOrPresent(message = "endDate must be in the present or future")
     private Date endDate;
+
+    @OneToMany(mappedBy = "assignFeedBack")
+    @JsonIgnore
+    private List<FeedBack> feedBacks;
 
     private boolean status = true;
 

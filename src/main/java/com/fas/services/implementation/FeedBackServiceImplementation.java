@@ -2,8 +2,10 @@ package com.fas.services.implementation;
 
 import com.fas.models.dtos.requests.FeedBackRequestDTO;
 import com.fas.models.dtos.responses.FeedBackResponseDTO;
+import com.fas.models.dtos.responses.GradeResponseDTO;
 import com.fas.models.entities.AssignFeedBack;
 import com.fas.models.entities.FeedBack;
+import com.fas.models.entities.Grade;
 import com.fas.models.entities.Student;
 import com.fas.models.exceptions.AssignFeedBackExceptions;
 import com.fas.models.exceptions.CourseExceptions;
@@ -60,6 +62,13 @@ public class FeedBackServiceImplementation implements FeedBackService {
         return new FeedBackResponseDTO(savedFeedback);
     }
 
+    @Override
+    public FeedBackResponseDTO deleteFeedBack(UUID id) {
+        FeedBack existedFeedback = getFeedBackById(id);
+        existedFeedback.setUpdatedAt(LocalDateTime.now());
+        existedFeedback.setStatus(!existedFeedback.isStatus());
+        return new FeedBackResponseDTO(feedBackRepository.save(existedFeedback));
+    }
 
     @Override
     public FeedBack getFeedBackById(UUID feedBackId) {
@@ -89,5 +98,8 @@ public class FeedBackServiceImplementation implements FeedBackService {
 
         return feedBack;
     }
+
+
+
 
 }

@@ -35,6 +35,8 @@ public class FeedBackResponseDTO {
 
     private AssignFeedBack assignFeedBack;
 
+    private boolean status = true;
+
     private LocalDateTime createdAt = LocalDateTime.now();
 
     private LocalDateTime updatedAt = LocalDateTime.now();
@@ -52,6 +54,7 @@ public class FeedBackResponseDTO {
         this.overall = feedBack.getOverall();
         this.comment = feedBack.getComment();
         this.assignFeedBack = feedBack.getAssignFeedBack();
+        this.status = feedBack.isStatus();
         this.createdAt = feedBack.getCreatedAt();
         this.updatedAt = feedBack.getUpdatedAt();
     }
