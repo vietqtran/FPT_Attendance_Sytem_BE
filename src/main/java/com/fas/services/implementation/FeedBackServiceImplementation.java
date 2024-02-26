@@ -1,15 +1,16 @@
 package com.fas.services.implementation;
 
 import com.fas.models.dtos.requests.FeedBackRequestDTO;
-import com.fas.models.dtos.responses.CourseResponseDTO;
 import com.fas.models.dtos.responses.FeedBackResponseDTO;
 import com.fas.models.entities.AssignFeedBack;
-import com.fas.models.entities.Course;
 import com.fas.models.entities.FeedBack;
+import com.fas.models.entities.Student;
+import com.fas.models.exceptions.AssignFeedBackExceptions;
 import com.fas.models.exceptions.CourseExceptions;
+import com.fas.models.exceptions.StudentExceptions;
 import com.fas.repositories.AssignFeedBackRepository;
 import com.fas.repositories.FeedBackRepository;
-import com.fas.services.AssignFeedBackService;
+import com.fas.repositories.StudentRepository;
 import com.fas.services.FeedBackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class FeedBackServiceImplementation implements FeedBackService {
 
     @Autowired
     private AssignFeedBackRepository assignFeedBackRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
     @Override
     public FeedBackResponseDTO createFeedBack(FeedBackRequestDTO feedBackRequestDTO) {
         FeedBack feedBack = feedBackRequestDTO.getFeedBack();
@@ -77,10 +82,11 @@ public class FeedBackServiceImplementation implements FeedBackService {
 
     @Override
     public FeedBack checkFeedBack(UUID assignFeedBackId, UUID studentId) {
-        FeedBack feedBack = feedBackRepository.checkFeedBack(assignFeedBackId, studentId);
-        if(feedBack == null) {
-            throw new CourseExceptions("FeedBack not found");
-        }
+        AssignFeedBack assignFeedBack = assignFeedBackRepository.findById(assignFeedBackId).orElseThrow(() -> new AssignFeedBackExceptions("AssignFeedBack not found"));
+        Student student = studentRepository.findById(studentId).orElseThrow(() -> new StudentExceptions("Student not found"));
+
+        FeedBack feedBack = feedBackRepository.getFeedBackByStudentIdAndAssignFeedBack(student.getId(), assignFeedBack.getId());
+
         return feedBack;
     }
 

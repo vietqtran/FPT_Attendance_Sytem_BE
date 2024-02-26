@@ -12,6 +12,6 @@ import java.util.UUID;
 
 public interface FeedBackRepository extends JpaRepository<FeedBack, UUID> {
 
-    @Query("SELECT m FROM FeedBack m WHERE m.assignFeedBack.id = :assignCode AND m.studentId = :id")
-    FeedBack checkFeedBack(@Param("assignCode") UUID assignCode, @Param("id") UUID id);
+    @Query("SELECT fb FROM FeedBack fb WHERE fb.student.id = :studentId AND fb.assignFeedBack.id = :assignFeedBackId")
+    FeedBack getFeedBackByStudentIdAndAssignFeedBack(UUID studentId, UUID assignFeedBackId);
 }

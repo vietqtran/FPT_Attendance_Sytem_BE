@@ -26,11 +26,14 @@ public class FeedBackController {
     @PostMapping("/feedback")
     private MessageDetails<FeedBackResponseDTO> createFeedBack(@RequestBody @Valid FeedBackRequestDTO feedbackReq) {
         FeedBackResponseDTO feedback = feedBackService.createFeedBack(feedbackReq);
+        if(feedback == null) {
+            return new MessageDetails<>("Feedback created failed", null, Code.FAILURE);
+        }
         return new MessageDetails<>("Feedback created successfully", feedback, Code.SUCCESS);
     }
 
     @GetMapping("/feedback/{feedbackId}")
-    private MessageDetails<FeedBackResponseDTO> getCourseById(@PathVariable UUID feedbackId) {
+    private MessageDetails<FeedBackResponseDTO> getFeedBackById(@PathVariable UUID feedbackId) {
         FeedBack feedBack = feedBackService.getFeedBackById(feedbackId);
         if(feedBack == null) {
             return new MessageDetails<>("Get feedBack failed", null, Code.FAILURE);
@@ -39,20 +42,29 @@ public class FeedBackController {
     }
 
     @GetMapping("/feedback")
-    private MessageDetails<List<FeedBackResponseDTO>> getAllCourse() {
+    private MessageDetails<List<FeedBackResponseDTO>> getAllFeedBacks() {
         List<FeedBackResponseDTO> feedBacks = feedBackService.getAllFeedBacks();
-        return new MessageDetails<>("Get all Feedback successfully", feedBacks, Code.SUCCESS);
+        if(feedBacks == null) {
+            return new MessageDetails<>("Get all feedbacks failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get all feedbacks successfully", feedBacks, Code.SUCCESS);
     }
 
     @PutMapping("/feedback/update/{feedbackId}")
-    private MessageDetails<FeedBackResponseDTO> updateCourse(@RequestBody FeedBackRequestDTO feedbackReq, @PathVariable UUID feedbackId) {
+    private MessageDetails<FeedBackResponseDTO> updateFeedBack(@RequestBody FeedBackRequestDTO feedbackReq, @PathVariable UUID feedbackId) {
         FeedBackResponseDTO feedback = feedBackService.updateFeedBack(feedbackId, feedbackReq);
-        return new MessageDetails<>("Update Feedback successfully", feedback, Code.SUCCESS);
+        if(feedback == null) {
+            return new MessageDetails<>("Update feedback failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Update feedback successfully", feedback, Code.SUCCESS);
     }
 
     @GetMapping("/feedback/assign/{assignId}/student/{studentId}")
-    private MessageDetails<FeedBackResponseDTO> getAllCourse(@PathVariable UUID assignId, @PathVariable UUID studentId) {
+    private MessageDetails<FeedBackResponseDTO> getAllCFeedBacksByAssignAndStudent(@PathVariable UUID assignId, @PathVariable UUID studentId) {
         FeedBack feedBacks = feedBackService.checkFeedBack(assignId, studentId);
-        return new MessageDetails<>("Get all Feedback successfully", new FeedBackResponseDTO(feedBacks), Code.SUCCESS);
+        if(feedBacks == null) {
+            return new MessageDetails<>("Get all feedbacks failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Get all feedbacks successfully", new FeedBackResponseDTO(feedBacks), Code.SUCCESS);
     }
 }

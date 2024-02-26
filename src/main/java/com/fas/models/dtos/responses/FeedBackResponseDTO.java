@@ -2,6 +2,7 @@ package com.fas.models.dtos.responses;
 
 import com.fas.models.entities.AssignFeedBack;
 import com.fas.models.entities.FeedBack;
+import com.fas.models.entities.Student;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ public class FeedBackResponseDTO {
 
     private UUID id;
 
-    private String studentId;
+    private Student student;
 
     private String Punctuality;
 
@@ -40,7 +41,7 @@ public class FeedBackResponseDTO {
 
     public FeedBackResponseDTO (FeedBack feedBack) {
         this.id = feedBack.getId();
-        this.studentId = feedBack.getStudentId();
+        this.student = feedBack.getStudent();
         this.Punctuality = feedBack.getPunctuality();
         this.teachingSkill = feedBack.getTeachingSkill();
         this.adequatelySyllabus = feedBack.getAdequatelySyllabus();

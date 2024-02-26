@@ -21,8 +21,9 @@ public class FeedBack {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @NotBlank(message = "StudentId is required")
-    private String studentId;
+    @OneToOne
+    @NotNull (message = "StudentId is required")
+    private Student student;
 
     @NotBlank(message = "Punctuality is required")
     private String punctuality;
@@ -60,8 +61,9 @@ public class FeedBack {
     @ManyToOne
     private AssignFeedBack assignFeedBack;
 
-    public FeedBack(String studentId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents, String overall, String comment, UUID assignFeedBackId, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.studentId = studentId;
+
+    public FeedBack(UUID studentId, String punctuality, String teachingSkill, String adequatelySyllabus, String support, String responseQuestion, String teachingMethods, String dispositionStudents, String overall, String comment, UUID assignFeedBackId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.student = new Student(studentId);
         this.punctuality = punctuality;
         this.teachingSkill = teachingSkill;
         this.adequatelySyllabus = adequatelySyllabus;

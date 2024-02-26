@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Data
 public class FeedBackRequestDTO {
-    private String studentId;
+    private UUID studentId;
 
     private String Punctuality;
 
