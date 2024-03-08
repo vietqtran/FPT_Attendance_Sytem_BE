@@ -155,4 +155,11 @@ public class GlobalExceptions {
         MessageDetails errorDetails = new MessageDetails("Assign Feed Back information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(BuildingExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleBuildingExceptions(BuildingExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Building information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }
