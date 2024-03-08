@@ -142,6 +142,13 @@ public class GlobalExceptions {
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ChatExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleChatExceptions(ChatExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Chat information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(AssignFeedBackExceptions.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<?> handleAssignFeedBackExceptions(AssignFeedBackExceptions ex, WebRequest request) {

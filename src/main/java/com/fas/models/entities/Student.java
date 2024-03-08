@@ -1,6 +1,7 @@
 package com.fas.models.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -80,6 +81,14 @@ public class Student {
 
     @ManyToMany(mappedBy = "students")
     private List<Term> terms = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "students")
+    private List<Chat> chats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "student")
+    @JsonIgnore
+    private List<Message> messages = new ArrayList<>();
 
     private LocalDateTime createAt = LocalDateTime.now();
 

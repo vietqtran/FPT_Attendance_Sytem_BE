@@ -1,12 +1,15 @@
 package com.fas.models.dtos.responses;
 
 import com.fas.models.entities.Campus;
+import com.fas.models.entities.Chat;
 import com.fas.models.entities.Major;
 import com.fas.models.entities.Student;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -47,6 +50,8 @@ public class StudentResponseDTO {
 
     private Campus campus;
 
+    private List<Chat> chats = new ArrayList<>();
+
     public StudentResponseDTO(Student student) {
         this.id = student.getId();
         this.email = student.getEmail();
@@ -66,5 +71,6 @@ public class StudentResponseDTO {
         this.status = student.isStatus();
         this.major = student.getMajor();
         this.campus = student.getCampus();
+        this.chats = student.getChats();
     }
 }
