@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,11 +30,11 @@ public class Term {
 
     @NotNull(message = "Start date must not be blank")
     @FutureOrPresent(message = "Start date must be in the present or future")
-    private Date startAt;
+    private LocalDate startAt;
 
     @NotNull(message = "End date must not be blank")
     @FutureOrPresent(message = "End date must be in the present or future")
-    private Date endAt;
+    private LocalDate endAt;
 
     private boolean status = true;
 
@@ -47,4 +48,8 @@ public class Term {
 
     private LocalDateTime createAt = LocalDateTime.now();
     private LocalDateTime updateAt = LocalDateTime.now();
+
+    public Term(UUID term) {
+        this.id = term;
+    }
 }

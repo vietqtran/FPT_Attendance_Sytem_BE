@@ -162,4 +162,32 @@ public class GlobalExceptions {
         MessageDetails errorDetails = new MessageDetails("Building information is not true", ex.getMessage(), Code.FAILURE);
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(AssignException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleAssignExceptions(AssignException ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Asssign information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ActivityExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleActivityExceptions(ActivityExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Activity information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RoomExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleRoomExceptions(RoomExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Room information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SlotExceptions.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleSlotExceptions(SlotExceptions ex, WebRequest request) {
+        MessageDetails errorDetails = new MessageDetails("Slot information is not true", ex.getMessage(), Code.FAILURE);
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
 }
