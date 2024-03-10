@@ -28,7 +28,7 @@ public class TermServiceImplementation implements TermService {
         if(checkTerm != null) {
             throw new TermExceptions("Term already exists");
         }
-        if(newTerm.getStartAt().after(newTerm.getEndAt())) {
+        if(newTerm.getStartAt().isAfter(newTerm.getEndAt())) {
             throw new TermExceptions("Start date must be before end date");
         }
         Term savedTerm = termRepository.save(newTerm);
@@ -48,7 +48,7 @@ public class TermServiceImplementation implements TermService {
             throw new TermExceptions("Term already exists");
         }
 
-        if(newTerm.getStartAt().after(newTerm.getEndAt())) {
+        if(newTerm.getStartAt().isAfter(newTerm.getEndAt())) {
             throw new TermExceptions("Start date must be before end date");
         }
         existedTerm.setName(newTerm.getName());

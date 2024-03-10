@@ -7,6 +7,7 @@ import com.fas.models.entities.Term;
 import lombok.Data;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,9 +22,9 @@ public class TermRequestDTO {
     private String name;
 
 
-    private Date startAt;
+    private LocalDate startAt;
 
-    private Date endAt;
+    private LocalDate endAt;
 
     private boolean status = true;
     private List<Grade> grades = new ArrayList<>();
