@@ -5,6 +5,7 @@ import com.fas.models.dtos.responses.MessageResponseDTO;
 import com.fas.models.entities.Chat;
 import com.fas.models.entities.Message;
 import com.fas.models.entities.Student;
+import com.fas.models.exceptions.MessageExceptions;
 import com.fas.repositories.ChatRepository;
 import com.fas.repositories.MessageRepository;
 import com.fas.services.ChatService;
@@ -48,5 +49,14 @@ public class MessageServiceImplementation implements MessageService {
         Chat chat = chatService.findChatById(chatId);
 
         return chat.getMessages().stream().map(MessageResponseDTO::new).toList();
+    }
+
+    @Override
+    public MessageResponseDTO deleteMessage(Long messageId) {
+        Message message = messageRepository.findById(messageId).orElseThrow(() -> new MessageExceptions("Message not found"));
+        message.setStatus(false);
+        message.setUpdateAt(LocalDateTime.now());
+
+        return new MessageResponseDTO(messageRepository.save(message));
     }
 }

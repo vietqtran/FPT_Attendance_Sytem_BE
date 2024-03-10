@@ -26,6 +26,8 @@ public class Message {
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
+    private boolean status = true;
+
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;

@@ -13,14 +13,23 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Assign {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "assign_id")
     public Grade grade;
+
+    @ManyToOne
+    private Instructor instructor;
+
+    @ManyToOne
+    private Term term;
+
+    @ManyToOne
+    private Course course;
+
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 }
