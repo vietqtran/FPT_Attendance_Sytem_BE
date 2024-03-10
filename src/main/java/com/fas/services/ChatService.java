@@ -12,5 +12,5 @@ public interface ChatService {
 
     public Chat findChatById(UUID chatId);
 
-    public List<ChatResponseDTO> findStudentChat(UUID studentId);
+    public List<ChatResponseDTO> findStudentChat(UUID studentId, String query);
 }
