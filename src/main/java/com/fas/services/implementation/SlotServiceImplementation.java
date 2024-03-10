@@ -32,6 +32,16 @@ public class SlotServiceImplementation implements SlotService {
         if (checkSlot != null) {
             throw new SlotExceptions("Slot already exists");
         }
+
+        if(slot.getStartAt().isAfter(slot.getEndAt())) {
+            throw new SlotExceptions("Start time must be before end time");
+        }
+
+        boolean isExistedTime = slotRepository.existsByTimeRangeOverlap(slot.getStartAt(), slot.getEndAt());
+        if(isExistedTime) {
+            throw new SlotExceptions("Slot time already exists");
+        }
+
         Slot newSlot = slotRepository.save(slot);
         return new SlotResponseDTO(newSlot);
     }
@@ -48,6 +58,16 @@ public class SlotServiceImplementation implements SlotService {
         if (checkSlot != null) {
             throw new SlotExceptions("Slot already exists");
         }
+
+        if(newSlot.getStartAt().isAfter(newSlot.getEndAt())) {
+            throw new SlotExceptions("Start time must be before end time");
+        }
+
+        boolean isExistedTime = slotRepository.existsByTimeRangeOverlapExcludingSlot(slotId, newSlot.getStartAt(), newSlot.getEndAt());
+        if(isExistedTime) {
+            throw new SlotExceptions("Slot time already exists");
+        }
+
         existedSlot.setName(newSlot.getName());
         existedSlot.setStartAt(newSlot.getStartAt());
         existedSlot.setEndAt(newSlot.getEndAt());

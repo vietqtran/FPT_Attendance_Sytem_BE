@@ -2,14 +2,12 @@ package com.fas.models.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 
 import java.time.LocalDateTime;
@@ -31,8 +29,6 @@ public class Slot {
 
     @NotBlank(message = "Code must not be blank")
     private String name;
-
-
 
 
     @JsonFormat(pattern = "HH:mm:ss")
