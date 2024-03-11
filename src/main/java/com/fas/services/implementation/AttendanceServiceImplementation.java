@@ -36,6 +36,7 @@ public class AttendanceServiceImplementation implements AttendanceService {
         existedAttendance.setContent(newAttendance.getContent());
         existedAttendance.setStatus(newAttendance.isStatus());
         Attendance savedAttendance = attendanceRepository.save(existedAttendance);
+
         return new AttendanceResposeDTO(savedAttendance);
     }
 }

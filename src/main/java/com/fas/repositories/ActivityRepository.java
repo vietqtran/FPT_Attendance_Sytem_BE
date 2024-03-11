@@ -1,6 +1,7 @@
 package com.fas.repositories;
 
 import com.fas.models.entities.Activity;
+import com.fas.models.entities.Instructor;
 import com.fas.models.entities.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,6 @@ public interface ActivityRepository extends JpaRepository<Activity, UUID> {
     List<Activity> findByAttendances_StudentAndDateIn(Student student, List<LocalDate> weekdays);
 
     List<Activity> findByAssignId(UUID assignId);
+
+    List<Activity> findByInstructorAndDateIn(Instructor instructor, List<LocalDate> weekdays);
 }

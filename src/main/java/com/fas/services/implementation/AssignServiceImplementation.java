@@ -134,6 +134,7 @@ public class AssignServiceImplementation implements AssignService {
                activityRequestDTO.setAssignId(newAssign.getId());
                Activity activity = activityRequestDTO.getActivity();
                activity.setDate(date);
+               activity.setAssign(newAssign);
 
 
                Grade grade = gradeRepository.findById(newAssign.getGrade().getId()).orElseThrow(() -> new GradeExceptions("Grade not found"));

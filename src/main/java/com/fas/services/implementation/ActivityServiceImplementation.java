@@ -3,8 +3,7 @@ package com.fas.services.implementation;
 import com.fas.models.dtos.requests.ActivityRequestDTO;
 import com.fas.models.dtos.responses.ActivityResponseDTO;
 import com.fas.models.dtos.responses.AssignResponseDTO;
-import com.fas.models.entities.Activity;
-import com.fas.models.entities.Student;
+import com.fas.models.entities.*;
 import com.fas.models.exceptions.ActivityExceptions;
 import com.fas.repositories.ActivityRepository;
 import com.fas.services.ActivityService;
@@ -81,31 +80,30 @@ public class ActivityServiceImplementation implements ActivityService {
     public ActivityResponseDTO updateActivity(ActivityRequestDTO activityRequestDTO, UUID activityId) {
         Activity existedActivity = activityRepository.findById(activityId).orElseThrow(() -> new ActivityExceptions("Activity not found"));
 
+        AssignResponseDTO assign = assignService.getAssignById(existedActivity.getAssign().getId());
+
+        if(assign.getTerm().getStartAt().isAfter(activityRequestDTO.getDate()) || assign.getTerm().getEndAt().isBefore(activityRequestDTO.getDate())) {
+            throw new ActivityExceptions("Activity date is not in range of term");
+        }
+
+        List<Activity> activities = activityRepository.findAll();
+
+        activities.forEach(activity -> {
+            if(activity.getDate().equals(activityRequestDTO.getDate()) && !activity.getId().equals(existedActivity.getId())) {
+                if (activity.getSlot().getId().equals(activityRequestDTO.getSlotId()) && !activity.getId().equals(existedActivity.getId())) {
+                    if ((activity.getInstructor().getId().equals(activityRequestDTO.getInstructorId())  || activity.getRoom().getId().equals(activityRequestDTO.getRoomId())) && !activity.getId().equals(existedActivity.getId())) {
+                        throw new ActivityExceptions("Activity already exists");
+                    }
+                }
+            }
+        });
+        Activity newActivity = activityRequestDTO.getActivity();
+
         existedActivity.setUpdateAt(LocalDateTime.now());
-
-
-        if (activityRequestDTO.getActivity().getDate() != null) {
-            existedActivity.setDate(activityRequestDTO.getActivity().getDate());
-        }
-
-
-        if (activityRequestDTO.getActivity().getAssign() != null) {
-            existedActivity.setAssign(activityRequestDTO.getActivity().getAssign());
-        }
-
-
-        if (activityRequestDTO.getActivity().getRoom() != null) {
-            existedActivity.setRoom(activityRequestDTO.getActivity().getRoom());
-        }
-
-        if (activityRequestDTO.getActivity().getSlot() != null) {
-            existedActivity.setSlot(activityRequestDTO.getActivity().getSlot());
-        }
-
-        if (activityRequestDTO.getActivity().getInstructor() != null) {
-            existedActivity.setInstructor(activityRequestDTO.getActivity().getInstructor());
-        }
-
+        existedActivity.setDate(newActivity.getDate());
+        existedActivity.setSlot(newActivity.getSlot());
+        existedActivity.setInstructor(newActivity.getInstructor());
+        existedActivity.setRoom(newActivity.getRoom());
 
         return new ActivityResponseDTO(activityRepository.save(existedActivity));
     }
@@ -150,6 +148,17 @@ public class ActivityServiceImplementation implements ActivityService {
     @Override
     public List<ActivityResponseDTO> findActivityByAssignId(UUID assignId) {
         List<Activity> activities = activityRepository.findByAssignId(assignId);
+        List<ActivityResponseDTO> list = new ArrayList<>();
+        for (Activity activity : activities) {
+            list.add(new ActivityResponseDTO(activity));
+        }
+        return list;
+    }
+
+    @Override
+    public List<ActivityResponseDTO> findActivityByInstructorIdByWeekAndYear(Instructor instructor, Integer week, Integer year) {
+        List<LocalDate> weekdays = findWeekdaysInYear(year, week);
+        List<Activity> activities = activityRepository.findByInstructorAndDateIn(instructor, weekdays);
         List<ActivityResponseDTO> list = new ArrayList<>();
         for (Activity activity : activities) {
             list.add(new ActivityResponseDTO(activity));

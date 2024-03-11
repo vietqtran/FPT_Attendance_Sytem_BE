@@ -2,6 +2,7 @@ package com.fas.services;
 
 import com.fas.models.dtos.requests.ActivityRequestDTO;
 import com.fas.models.dtos.responses.ActivityResponseDTO;
+import com.fas.models.entities.Instructor;
 import com.fas.models.entities.Student;
 
 import java.util.List;
@@ -19,5 +20,7 @@ public interface ActivityService {
     List<ActivityResponseDTO> findActivityByStudentIdByWeekAndYear(Student studentId, Integer week, Integer year);
 
     List<ActivityResponseDTO> findActivityByAssignId(UUID assignId);
+
+    List<ActivityResponseDTO> findActivityByInstructorIdByWeekAndYear(Instructor instructor, Integer week, Integer year);
 
 }
