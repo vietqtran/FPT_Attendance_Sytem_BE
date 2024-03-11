@@ -193,13 +193,15 @@ public class AssignServiceImplementation implements AssignService {
 
 
    @Override
-   public String deleteAssign(UUID id) {
+   public AssignResponseDTO deleteAssign(UUID id) {
        Assign existedAssign = assignRepository.findById(id).get();
        if (existedAssign == null) {
            throw new BuildingExceptions("Assign not found");
        }
-       assignRepository.delete(existedAssign);
-       return "Delete successfully";
+       existedAssign.setDeleted(!existedAssign.isDeleted());
+       existedAssign.setUpdatedAt(LocalDateTime.now());
+       assignRepository.save(existedAssign);
+       return new AssignResponseDTO(existedAssign);
    }
 
 

@@ -69,4 +69,13 @@ public class ActivityController {
         }
         return new MessageDetails<List<ActivityResponseDTO>>("Get activity successfully", activity, Code.SUCCESS);
     }
+
+    @GetMapping("/activity/assign/{assignId}")
+    private MessageDetails<List<ActivityResponseDTO>> findActivityByAssignId(@PathVariable UUID assignId) {
+        List<ActivityResponseDTO> activity = activityService.findActivityByAssignId(assignId);
+        if(activity == null) {
+            return new MessageDetails<List<ActivityResponseDTO>>("Get activity failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<List<ActivityResponseDTO>>("Get activity successfully", activity, Code.SUCCESS);
+    }
 }

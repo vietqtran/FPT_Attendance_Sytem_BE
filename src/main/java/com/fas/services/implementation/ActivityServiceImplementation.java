@@ -83,27 +83,25 @@ public class ActivityServiceImplementation implements ActivityService {
 
         existedActivity.setUpdateAt(LocalDateTime.now());
 
-// Kiểm tra và gán giá trị cho Date
+
         if (activityRequestDTO.getActivity().getDate() != null) {
             existedActivity.setDate(activityRequestDTO.getActivity().getDate());
         }
 
-// Kiểm tra và gán giá trị cho Assign
+
         if (activityRequestDTO.getActivity().getAssign() != null) {
             existedActivity.setAssign(activityRequestDTO.getActivity().getAssign());
         }
 
-// Kiểm tra và gán giá trị cho Room
+
         if (activityRequestDTO.getActivity().getRoom() != null) {
             existedActivity.setRoom(activityRequestDTO.getActivity().getRoom());
         }
 
-// Kiểm tra và gán giá trị cho Slot
         if (activityRequestDTO.getActivity().getSlot() != null) {
             existedActivity.setSlot(activityRequestDTO.getActivity().getSlot());
         }
 
-// Kiểm tra và gán giá trị cho Instructor
         if (activityRequestDTO.getActivity().getInstructor() != null) {
             existedActivity.setInstructor(activityRequestDTO.getActivity().getInstructor());
         }
@@ -142,6 +140,16 @@ public class ActivityServiceImplementation implements ActivityService {
     public List<ActivityResponseDTO> findActivityByStudentIdByWeekAndYear(Student studentId, Integer week, Integer year) {
         List<LocalDate> weekdays = findWeekdaysInYear(year, week);
         List<Activity> activities = activityRepository.findByAttendances_StudentAndDateIn(studentId, weekdays);
+        List<ActivityResponseDTO> list = new ArrayList<>();
+        for (Activity activity : activities) {
+            list.add(new ActivityResponseDTO(activity));
+        }
+        return list;
+    }
+
+    @Override
+    public List<ActivityResponseDTO> findActivityByAssignId(UUID assignId) {
+        List<Activity> activities = activityRepository.findByAssignId(assignId);
         List<ActivityResponseDTO> list = new ArrayList<>();
         for (Activity activity : activities) {
             list.add(new ActivityResponseDTO(activity));

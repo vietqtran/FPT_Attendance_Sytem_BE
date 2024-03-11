@@ -18,4 +18,6 @@ public interface ActivityService {
 
     List<ActivityResponseDTO> findActivityByStudentIdByWeekAndYear(Student studentId, Integer week, Integer year);
 
+    List<ActivityResponseDTO> findActivityByAssignId(UUID assignId);
+
 }

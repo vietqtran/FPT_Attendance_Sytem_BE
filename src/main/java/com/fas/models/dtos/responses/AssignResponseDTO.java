@@ -24,6 +24,7 @@ public class AssignResponseDTO {
    private LocalDateTime createdAt = LocalDateTime.now();
    private LocalDateTime updatedAt = LocalDateTime.now();
 
+   private boolean isDeleted = false;
 
    private List<String> weekdays = new ArrayList<>();
 
@@ -44,6 +45,7 @@ public class AssignResponseDTO {
        this.createdAt = assign.getCreatedAt();
        this.updatedAt = assign.getUpdatedAt();
        this.weekdays = assign.getWeekdays();
+       this.isDeleted = assign.isDeleted();
        this.grade = assign.getGrade();
        this.course = assign.getCourse();
        this.term = assign.getTerm();

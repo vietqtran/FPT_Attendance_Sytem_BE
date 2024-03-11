@@ -23,8 +23,9 @@ public interface AssignService {
    AssignResponseDTO updateAssign(AssignRequestDTO assignRequestDTO, UUID assignId);
 
 
-   String deleteAssign(UUID id);
+   AssignResponseDTO deleteAssign(UUID id);
 
 
    AssignResponseDTO getAssignById(UUID id)  throws AssignException;
+
 }

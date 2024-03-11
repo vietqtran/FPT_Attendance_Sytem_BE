@@ -29,6 +29,8 @@ public class Assign {
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    private boolean isDeleted = false;
+
 
     @ElementCollection
     private List<String> weekdays = new ArrayList<>();
@@ -54,10 +56,12 @@ public class Assign {
     }
 
 
-    public Assign(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, List<String> weekdays, UUID gradeId, UUID courseId, UUID termId) {
+
+    public Assign(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDeleted, List<String> weekdays, UUID gradeId, UUID courseId, UUID termId) {
         this.id = id;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.isDeleted = isDeleted;
         this.weekdays = weekdays;
         this.grade = new Grade(gradeId);
         this.course = new Course(courseId);

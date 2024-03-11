@@ -71,12 +71,12 @@ public class AssignController {
    }
 
 
-   @DeleteMapping("/assign/delete/{assignId}")
-   private MessageDetails<String> deleteAssign(@PathVariable UUID assignId) {
-       String assign = assignService.deleteAssign(assignId);
+   @PutMapping("/assign/delete/{assignId}")
+   private MessageDetails<AssignResponseDTO> deleteAssign(@PathVariable UUID assignId) {
+       AssignResponseDTO assign = assignService.deleteAssign(assignId);
        if(assign == null) {
-           return new MessageDetails<String>("Delete assign failed", null, Code.FAILURE);
+           return new MessageDetails<AssignResponseDTO>("Delete assign failed", null, Code.FAILURE);
        }
-       return new MessageDetails<String>("Delete assign successfully", assign, Code.SUCCESS);
+       return new MessageDetails<AssignResponseDTO>("Delete assign successfully", assign, Code.SUCCESS);
    }
 }

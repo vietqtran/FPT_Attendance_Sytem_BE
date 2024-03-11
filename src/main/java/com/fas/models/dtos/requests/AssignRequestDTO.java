@@ -24,6 +24,8 @@ public class AssignRequestDTO {
    private LocalDateTime createdAt = LocalDateTime.now();
    private LocalDateTime updatedAt = LocalDateTime.now();
 
+   private boolean isDeleted = false;
+
 
    private List<String> weekdays = new ArrayList<>();
 
@@ -38,6 +40,6 @@ public class AssignRequestDTO {
 
 
    public Assign getAssign() {
-       return new Assign(id, createdAt, updatedAt, weekdays, gradeId, courseId, termId);
+       return new Assign(id, createdAt, updatedAt,isDeleted, weekdays, gradeId, courseId, termId);
    }
 }

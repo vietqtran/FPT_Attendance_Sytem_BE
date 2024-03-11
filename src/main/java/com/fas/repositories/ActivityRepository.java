@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface ActivityRepository extends JpaRepository<Activity, UUID> {
 
     List<Activity> findByAttendances_StudentAndDateIn(Student student, List<LocalDate> weekdays);
+
+    List<Activity> findByAssignId(UUID assignId);
 }
