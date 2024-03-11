@@ -37,8 +37,6 @@ public class AssignController {
        if(assign == null) {
            return new MessageDetails<AssignResponseDTO>("Create assign failed", null, Code.FAILURE);
        }
-
-
        return new MessageDetails<AssignResponseDTO>("Create assign successfully", assign, Code.SUCCESS);
    }
 

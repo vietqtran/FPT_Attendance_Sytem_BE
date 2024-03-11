@@ -2,6 +2,7 @@ package com.fas.services;
 
 import com.fas.models.dtos.requests.ActivityRequestDTO;
 import com.fas.models.dtos.responses.ActivityResponseDTO;
+import com.fas.models.entities.Student;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,4 +15,6 @@ public interface ActivityService {
     ActivityResponseDTO updateActivity(ActivityRequestDTO activityRequestDTO, UUID activityId);
 
     ActivityResponseDTO getActivityById(UUID id);
+
+    List<ActivityResponseDTO> findActivityByStudentId(Student studentId);
 }

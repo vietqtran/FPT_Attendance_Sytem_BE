@@ -94,6 +94,11 @@ public class AssignServiceImplementation implements AssignService {
            throw new TermExceptions("Term not found");
        }
 
+       Assign existedAssign = assignRepository.findByTermIdAndCourseIdAndGradeId(term.get().getId(), assign.getCourse().getId(), assign.getGrade().getId());
+
+       if (existedAssign != null) {
+           throw new AssignException("Assign already exists");
+       }
 
        assign.getWeekdays().forEach(weekday -> {
            DayOfWeek dayOfWeek = DayOfWeek.valueOf(weekday);
@@ -141,21 +146,16 @@ public class AssignServiceImplementation implements AssignService {
                grade.getStudents().forEach(student -> {
                  AttendanceRequestDTO attendance = new AttendanceRequestDTO();
 
-
                  attendance.setStudentId(student.getId());
                  attendance.setCreateAt(LocalDateTime.now());
                  attendance.setUpdateAt(LocalDateTime.now());
                  attendance.setContent("");
-
-
-
 
                  Attendance newAttendance = attendanceService.createAttendance(attendance);
 
 
                  activity.getAttendances().add(newAttendance);
                });
-
 
                activityRepository.save(activity);
            });

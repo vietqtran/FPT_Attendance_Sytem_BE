@@ -4,6 +4,7 @@ import com.fas.models.dtos.requests.ActivityRequestDTO;
 import com.fas.models.dtos.responses.ActivityResponseDTO;
 import com.fas.models.dtos.responses.AssignResponseDTO;
 import com.fas.models.entities.Activity;
+import com.fas.models.entities.Student;
 import com.fas.models.exceptions.ActivityExceptions;
 import com.fas.repositories.ActivityRepository;
 import com.fas.services.ActivityService;
@@ -118,5 +119,16 @@ public class ActivityServiceImplementation implements ActivityService {
             return null;
         }
         return new ActivityResponseDTO(activity);
+    }
+
+
+    @Override
+    public List<ActivityResponseDTO> findActivityByStudentId(Student studentId) {
+        List<Activity> activities = activityRepository.findByAttendances_Student(studentId);
+        List<ActivityResponseDTO> list = new ArrayList<>();
+        for (Activity activity : activities) {
+            list.add(new ActivityResponseDTO(activity));
+        }
+        return list;
     }
 }
