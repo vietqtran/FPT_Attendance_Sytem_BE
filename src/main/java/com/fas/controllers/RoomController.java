@@ -84,6 +84,4 @@ public class RoomController {
         }
         return new MessageDetails<List<RoomResponseDTO>>("Get all room successfully", buildings, Code.SUCCESS);
     }
-
-
 }

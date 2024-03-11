@@ -60,9 +60,10 @@ public class ActivityController {
     }
 
     @GetMapping("/activity/student/{studentId}")
-    private MessageDetails<List<ActivityResponseDTO>> findActivityByStudentId(@PathVariable UUID studentId) {
+    private MessageDetails<List<ActivityResponseDTO>> findActivityByStudentId(@PathVariable UUID studentId, @RequestParam Integer week, @RequestParam Integer year) {
+
         Student student = studentService.findStudentById(studentId);
-        List<ActivityResponseDTO> activity = activityService.findActivityByStudentId(student);
+        List<ActivityResponseDTO> activity = activityService.findActivityByStudentIdByWeekAndYear(student, week, year);
         if(activity == null) {
             return new MessageDetails<List<ActivityResponseDTO>>("Get activity failed", null, Code.FAILURE);
         }

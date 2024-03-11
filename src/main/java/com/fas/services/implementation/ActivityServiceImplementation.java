@@ -121,10 +121,27 @@ public class ActivityServiceImplementation implements ActivityService {
         return new ActivityResponseDTO(activity);
     }
 
+    public  List<LocalDate> findWeekdaysInYear(int year, int weekNumber) {
+        List<LocalDate> weekdays = new ArrayList<>();
+
+        // Xác định ngày đầu tiên của năm và số tuần
+        LocalDate firstDayOfYear = LocalDate.of(year, 1, 1);
+        LocalDate firstDayOfGivenWeek = firstDayOfYear.plusWeeks(weekNumber - 1);
+
+        // Thêm các ngày trong tuần vào danh sách kết quả
+        for (int i = 0; i < 7; i++) {
+            weekdays.add(firstDayOfGivenWeek.plusDays(i));
+        }
+
+        return weekdays;
+    }
+
+
 
     @Override
-    public List<ActivityResponseDTO> findActivityByStudentId(Student studentId) {
-        List<Activity> activities = activityRepository.findByAttendances_Student(studentId);
+    public List<ActivityResponseDTO> findActivityByStudentIdByWeekAndYear(Student studentId, Integer week, Integer year) {
+        List<LocalDate> weekdays = findWeekdaysInYear(year, week);
+        List<Activity> activities = activityRepository.findByAttendances_StudentAndDateIn(studentId, weekdays);
         List<ActivityResponseDTO> list = new ArrayList<>();
         for (Activity activity : activities) {
             list.add(new ActivityResponseDTO(activity));

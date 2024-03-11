@@ -16,5 +16,6 @@ public interface ActivityService {
 
     ActivityResponseDTO getActivityById(UUID id);
 
-    List<ActivityResponseDTO> findActivityByStudentId(Student studentId);
+    List<ActivityResponseDTO> findActivityByStudentIdByWeekAndYear(Student studentId, Integer week, Integer year);
+
 }

@@ -88,7 +88,6 @@ public class AssignServiceImplementation implements AssignService {
        List<Activity> activities = activityRepository.findAll();
        Assign assign = assignRequestDTO.getAssign();
 
-
        Optional<Term> term = termRepository.findById(assign.getTerm().getId());
        if (term.isEmpty()) {
            throw new TermExceptions("Term not found");
