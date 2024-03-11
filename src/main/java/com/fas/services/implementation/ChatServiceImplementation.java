@@ -43,8 +43,13 @@ public class ChatServiceImplementation implements ChatService {
     }
 
     @Override
-    public List<ChatResponseDTO> findStudentChat(UUID studentId) {
+    public List<ChatResponseDTO> findStudentChat(UUID studentId, String query) {
         List<Chat> chats = chatRepository.findByStudentsId(studentId);
+
+        if(query != null && !query.isEmpty()) {
+            chats = chatRepository.searchStudentChats(query);
+        }
+
         List<ChatResponseDTO> chatResponseDTOS = new ArrayList<>();
         for (Chat chat : chats) {
             chatResponseDTOS.add(new ChatResponseDTO(chat));

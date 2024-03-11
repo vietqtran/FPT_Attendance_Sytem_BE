@@ -11,4 +11,6 @@ public interface MessageService {
     MessageResponseDTO createMessage(Student student, UUID chatId, MessageRequestDTO message);
 
     List<MessageResponseDTO> findChatsMessages(UUID chatId);
+
+    MessageResponseDTO deleteMessage(Long messageId);
 }

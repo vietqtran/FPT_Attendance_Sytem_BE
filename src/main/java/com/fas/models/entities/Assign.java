@@ -21,46 +21,46 @@ import java.util.UUID;
 public class Assign {
 
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
-   private UUID id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
 
 
-   private LocalDateTime createdAt = LocalDateTime.now();
-   private LocalDateTime updatedAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
 
-   @ElementCollection
-   private List<String> weekdays = new ArrayList<>();
+    @ElementCollection
+    private List<String> weekdays = new ArrayList<>();
 
 
-   @ManyToOne
-   @JsonIgnore
-   private Grade grade;
+    @ManyToOne
+    @JsonIgnore
+    private Grade grade;
 
 
-   @ManyToOne
-   @JsonIgnore
-   private Course course;
+    @ManyToOne
+    @JsonIgnore
+    private Course course;
 
 
-   @JsonIgnore
-   @ManyToOne
-   private Term term;
+    @JsonIgnore
+    @ManyToOne
+    private Term term;
 
 
-   public Assign(UUID assignId) {
-       this.id = assignId;
-   }
+    public Assign(UUID assignId) {
+        this.id = assignId;
+    }
 
 
-   public Assign(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, List<String> weekdays, UUID gradeId, UUID courseId, UUID termId) {
-       this.id = id;
-       this.createdAt = createdAt;
-       this.updatedAt = updatedAt;
-       this.weekdays = weekdays;
-       this.grade = new Grade(gradeId);
-       this.course = new Course(courseId);
-       this.term = new Term(termId);
-   }
+    public Assign(UUID id, LocalDateTime createdAt, LocalDateTime updatedAt, List<String> weekdays, UUID gradeId, UUID courseId, UUID termId) {
+        this.id = id;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.weekdays = weekdays;
+        this.grade = new Grade(gradeId);
+        this.course = new Course(courseId);
+        this.term = new Term(termId);
+    }
 }

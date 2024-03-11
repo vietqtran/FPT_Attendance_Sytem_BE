@@ -41,4 +41,13 @@ public class MessageController {
         }
         return new MessageDetails<>("Find messages successfully", messageResponseDTOS, Code.SUCCESS);
     }
+
+    @PutMapping("/messages/{messageId}")
+    private MessageDetails<MessageResponseDTO> deleteMessage(@PathVariable Long messageId) {
+        MessageResponseDTO messageResponseDTO = messageService.deleteMessage(messageId);
+        if (messageResponseDTO == null) {
+            return new MessageDetails<>("Delete message failed", null, Code.FAILURE);
+        }
+        return new MessageDetails<>("Delete message successfully", messageResponseDTO, Code.SUCCESS);
+    }
 }
